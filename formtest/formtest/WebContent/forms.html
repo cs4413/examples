@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Some example forms</title>
+</head>
+<body>
+<h1>Examples of HTML5 form elements</h1>
+ 
+<section>
+<h2>Form with basic elements</h2>
+
+
+<form action="simpleEcho.php" method="post">
+ <p>
+First name: 
+<input type="text" name="firstName">
+<br>
+Last name: 
+<input type="text" name="lastName">
+<br>
+Gender: 
+<input type="radio" name="gender" value="male" checked>Male 
+<input type="radio" name="gender" value="female">Female
+<br> <br>
+
+Role: 
+<select name="role">
+<option value="student" selected>Student</option>
+<option value="teacher">Teacher</option>
+<option value="administrator">Administrator</option>
+</select>
+<br>
+</p>
+
+<fieldset>
+<legend>Review experience:</legend>
+<input type="checkbox" name="reviewExperience" value="Papers"> I have reviewed papers<br>
+<input type="checkbox" name="reviewExperience" value="Presentations"> I have reviewed presentations<br>
+<input type="checkbox" name="reviewExperience" value="Posters"> I have reviewed posters<br>
+</fieldset>
+
+<br>
+Writing experience: <br>
+<textarea name="message" rows="10" cols="50">
+Describe your writing experience.
+</textarea>
+<br><br>
+<input type="submit" value="Submit">
+</form> 
+</section>
+
+<section>
+<h2>Some new HTML5 input elements</h2>
+<form>
+<p>
+What color for errors: 
+<input type = "color" name = "errorColor">
+<br>
+
+Your email:  
+<input type="email" name="email">
+<br>
+
+Your phone:
+<input type="tel" name="telephone">
+<br>
+</p>
+
+Provide a review rank (between 1 and 5):
+<input type="number" name="rank" min="1" max="5" step="1" value="3">
+<br>
+
+Provide a review score in the range (0 to 100): 
+<input type="range" name="score" min="0" max="100">
+<br>
+
+Select a date for your review (in September):
+<input type="date" name="reviewData" max="2015-9-30" min="2015-9-1">
+<br>
+
+Search for the following: 
+<input type="search" name="sitesearch">
+<br>
+
+Your course web site is:
+<input type="url" name="homepage">
+<br>  <br>
+<input type="submit" name="submitHTML5" value="Submit2">
+</form>
+</section>
+
+</body>
+</html>
