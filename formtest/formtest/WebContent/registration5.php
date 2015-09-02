@@ -35,7 +35,7 @@ Last name:
 <input type="text" name="lastName" value = "<?php echo $lastName?>" required>
 <br><br>
 Email:  
-<input type="email" name="email" value = "<?php echo $lastName?>" required>
+<input type="email" name="email" value = "<?php echo $email?>" required>
 <br><br>
 Gender: 
 <input type="radio" name="gender" value="male" 
