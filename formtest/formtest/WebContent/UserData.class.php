@@ -3,10 +3,10 @@ class UserData {
 	private $errorCount;
 	private $errors;
 	private $formInput;
-	private $userFirstName;
-	private $userLastName;
-	private $userEmail;
-	private $userGender;
+	private $firstName;
+	private $lastName;
+	private $email;
+	private $gender;
 	
 	public function __construct($formInput = null) {
 		$this->formInput = $formInput;
@@ -43,6 +43,10 @@ class UserData {
 
 	public function getFirstName() {
 		return $this->firstName;
+	}
+	
+	public function getGender() {
+		return $this->gender;
 	}
 	
 	public function getLastName() {
