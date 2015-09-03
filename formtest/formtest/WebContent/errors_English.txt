@@ -1,0 +1,3 @@
+LAST_NAME_TOO_SHORT = "Your name is too short"
+EMAIL_INVALID = "Your email is invalid"
+LAST_NAME_INVALID = "Your last name contains invalid characters"
