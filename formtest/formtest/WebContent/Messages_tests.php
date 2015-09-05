@@ -17,3 +17,13 @@ echo "LAST_NAME_INVALID: " .Messages::getError("LAST_NAME_INVALID")."<br>";
 
 ?>
 
+<h2>It should allow reset</h2>
+<?php 
+Messages::reset();
+
+echo "LAST_NAME_TOO_SHORT: " .Messages::getError("LAST_NAME_TOO_SHORT")."<br>";
+echo "EMAIL_INVALID: " .Messages::getError("EMAIL_INVALID")."<br>";
+echo "LAST_NAME_HAS_INVALID_CHARS: " .Messages::getError("HAS_INVALID_CHARS")."<br>";
+
+?>
+

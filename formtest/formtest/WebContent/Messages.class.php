@@ -1,6 +1,7 @@
 <?php
 class Messages {
 	public static $errors = array();
+	public static $locale = "English";
 	
 	public static function setErrors($filename) {
 		$array = array();
@@ -17,6 +18,11 @@ class Messages {
 			return self::$errors[$errorName];
 		else 
 			return "";
+	}
+	
+	public static function reset() {
+		 $fileName = "errors_".self::locale;
+		 self::setErrors($fileName);	 
 	}
 	
 }

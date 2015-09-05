@@ -99,6 +99,7 @@ class UserData {
 			$this->firstName = '';
 		else 
 			$this->firstName = $this->stripInput($this->formInput['firstName']);
+		    // More validation goes here
 	}
 	
 	private function validateLastName() {
@@ -118,6 +119,7 @@ class UserData {
 			$this->email = '';
 		else 
 			$this->email = $this->stripInput($this->formInput['email']);
+		    // More validation goes here
 	}
 	
 	private function validateGender() {
@@ -126,6 +128,7 @@ class UserData {
 			$this->gender = '';
 		else 
 			$this->gender = $this->stripInput($this->formInput['gender']);
+		    // More validation goes here
 	}
 }
 ?>
