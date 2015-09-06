@@ -1,6 +1,6 @@
 <?php
 include ("Messages.class.php");
-class UserData {
+class User {
 	private $errorCount;
 	private $errors;
 	private $formInput;
@@ -51,7 +51,7 @@ class UserData {
 	private function initialize() {
 		$this->errorCount = 0;
 		$errors = array();
-		if (is_null($formInput))
+		if (is_null($this->formInput))
 			$this->initializeEmpty();
 		else  	 
 		   $this->validateUserName();
@@ -63,7 +63,7 @@ class UserData {
 	 	$this->userName = "";
 	}
 
-	private function extract($valueName) {
+	private function extractForm($valueName) {
 		// Extract a stripped value from the form array
 		$value = "";
 		if (isset($this->formInput[$valueName])) {
@@ -76,7 +76,7 @@ class UserData {
 	
 	private function validateUserName() {
 		// Username should only contain letters, numbers, dashes and underscore
-		$this->userName = extract('userName');
+		$this->userName = $this->extractForm('userName');
 		if (empty($this->userName))
 			$this->setError('userName', 'USER_NAME_EMPTY');
 		elseif (!filter_var($this->userName, FILTER_VALIDATE_REGEXP,

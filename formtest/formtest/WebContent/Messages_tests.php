@@ -15,6 +15,8 @@ echo "LAST_NAME_TOO_SHORT: " .Messages::getError("LAST_NAME_TOO_SHORT")."<br>";
 echo "EMAIL_INVALID: " .Messages::getError("EMAIL_INVALID")."<br>";
 echo "LAST_NAME_INVALID: " .Messages::getError("LAST_NAME_INVALID")."<br>";
 
+echo (empty(Messages::getError("LAST_NAME_TOO_SHORT")))?
+      "Failed: it did not set LAST_NAME_TOO_SHORT from file":"";
 ?>
 
 <h2>It should allow reset</h2>
