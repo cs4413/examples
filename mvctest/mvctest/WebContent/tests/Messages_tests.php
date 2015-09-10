@@ -4,7 +4,7 @@
 <h1>UserData tests</h1>
 
 <?php
-include_once("Messages.class.php");
+include_once("../models/Messages.class.php");
 ?>
 
 <h2>It should set errors from a file</h2>

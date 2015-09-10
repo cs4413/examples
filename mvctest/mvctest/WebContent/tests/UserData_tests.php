@@ -8,7 +8,7 @@
 <h1>UserData tests</h1>
 
 <?php
-include_once("UserData.class.php");
+include_once("../models/UserData.class.php");
 ?>
 
 <h2>It should create a valid UserData object when all input is provided</h2>
