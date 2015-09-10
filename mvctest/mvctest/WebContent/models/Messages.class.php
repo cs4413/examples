@@ -21,7 +21,7 @@ class Messages {
 	}
 	
 	public static function reset() {
-		 $fileName = "errors_".self::$locale.".txt";
+		 $fileName = "../resources/errors_".self::$locale.".txt";
 		 self::setErrors($fileName);	 
 	}
 	
