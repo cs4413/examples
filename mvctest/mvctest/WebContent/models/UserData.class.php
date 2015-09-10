@@ -67,6 +67,18 @@ class UserData {
 				"email:[" .$this->email ."] gender:[".$this->gender. "]";
 		return $str;
 	}
+	
+	private function extractForm($valueName) {
+		// Extract a stripped value from the form array
+		$value = "";
+		if (isset($this->formInput[$valueName])) {
+			$value = trim($this->formInput[$valueName]);
+			$value = stripslashes ($value);
+			$value = htmlspecialchars ($value);
+			return $value;
+		}
+	}
+	
 	private function initialize() {
 		$this->errorCount = 0;
 		$errors = array();
@@ -85,50 +97,32 @@ class UserData {
 		$this->gender = "";
 	}
 
-	private function stripInput($data) {
-		// Require most data be free of blanks, slashes and special characters
-		$data = trim ( $data );
-		$data = stripslashes ( $data );
-		$data = htmlspecialchars ( $data );
-		return $data;
-	}
 
-	private function validateFirstName() {
-		// First name should not have quoted characters
-		if (!isset($this->formInput['firstName']))
-			$this->firstName = '';
-		else 
-			$this->firstName = $this->stripInput($this->formInput['firstName']);
-		    // More validation goes here
-	}
-	
-	private function validateLastName() {
-		// First name should not have quoted characters
-		if (!isset($this->formInput['lastName']))
-			$this->lastName = '';
-		else {
-			$this->lastName = $this->stripInput($this->formInput['lastName']);
-			if (strlen($this->lastName) <= 1)   
-		        $this->setError('lastName', "Last name too short"); 
-		}
-	}
+
 	
 	private function validateEmail() {
 		// Email should not have quoted characters
-		if (!isset($this->formInput['email']))
-			$this->email = '';
-		else 
-			$this->email = $this->stripInput($this->formInput['email']);
+		$this->email = $this->extractForm('email');
 		    // More validation goes here
 	}
 	
 	private function validateGender() {
 		// First name should not have quoted characters
-		if (!isset($this->formInput['gender']))
-			$this->gender = '';
-		else 
-			$this->gender = $this->stripInput($this->formInput['gender']);
+		$this->gender = $this->extractForm('gender');
 		    // More validation goes here
+	}
+	
+	private function validateFirstName() {
+		// First name should not have quoted characters
+		$this->firstName = $this->extractForm('firstName');
+		// More validation goes here
+	}
+	
+	private function validateLastName() {
+		// First name should not have quoted characters
+		$this->lastName = $this->extractForm('lastName');
+		if (strlen($this->lastName) <= 1)
+			$this->setError('lastName', "Last name too short");
 	}
 }
 ?>
