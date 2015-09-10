@@ -1,5 +1,5 @@
 <?php  
-class LoginForm {
+class LoginView {
 	
   public static function show($user) {  	
 ?> 
