@@ -23,7 +23,6 @@ class Messages {
 	public static function reset() {
 		 $pathDir = dirname(__FILE__);
 		 $fileName = $pathDir . DIRECTORY_SEPARATOR . "../resources/errors_".self::$locale.".txt";
-		 echo $fileName. "<br><br>";
 		 self::setErrors($fileName);	 
 	}
 	

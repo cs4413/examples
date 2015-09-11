@@ -48,6 +48,17 @@ class User {
 		return $str;
 	}
 	
+	private function extractForm($valueName) {
+		// Extract a stripped value from the form array
+		$value = "";
+		if (isset($this->formInput[$valueName])) {
+			$value = trim($this->formInput[$valueName]);
+			$value = stripslashes ($value);
+			$value = htmlspecialchars ($value);
+			return $value;
+		}
+	}
+	
 	private function initialize() {
 		$this->errorCount = 0;
 		$errors = array();
@@ -63,17 +74,6 @@ class User {
 	 	$this->userName = "";
 	}
 
-	private function extractForm($valueName) {
-		// Extract a stripped value from the form array
-		$value = "";
-		if (isset($this->formInput[$valueName])) {
-			$value = trim($this->formInput[$valueName]);
-			$value = stripslashes ($value);
-			$value = htmlspecialchars ($value);
-		    return $value;
-		}
-	}
-	
 	private function validateUserName() {
 		// Username should only contain letters, numbers, dashes and underscore
 		$this->userName = $this->extractForm('userName');

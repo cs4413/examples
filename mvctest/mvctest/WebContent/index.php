@@ -1,5 +1,5 @@
 <?php
-try {
+//try {
 	include("includer.php");   
 	$url = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 	//echo "URL: $url <br>";
@@ -12,18 +12,16 @@ try {
 		$control = $urlPieces[2];
 	
 	switch ($control) {
-		case "Login": 
+		case "login": 
 			LoginController::run();
 			break;
-		case "Register":
+		case "register":
 			RegisterController::run();
 			break;
 		default:
 			HomeView::show();
 	};
-} catch (Exception $ex) {
-	
-}
-?>	
 
-?>
+//} catch (Exception $ex) {	
+//}
+?>	

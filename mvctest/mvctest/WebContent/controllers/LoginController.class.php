@@ -8,10 +8,8 @@ class LoginController {
 				UserView::show($user);		
 		    else  
 				LoginView::show($user);
-		} else { // Initial link
-			$user = new User();
-			LoginForm::show($user);
-		}
+		} else  // Initial link
+			LoginView::show(null);
 	}
 }
 ?>
