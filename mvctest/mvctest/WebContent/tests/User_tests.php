@@ -46,4 +46,5 @@ echo $test1;
 $props = $s1->getParameters();
 print_r($props);
 ?>
-
+</body>
+</html>

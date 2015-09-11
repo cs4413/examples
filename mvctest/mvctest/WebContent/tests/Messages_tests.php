@@ -1,4 +1,6 @@
-
+<!DOCTYPE html>
+<html>
+<head>
 </head>
 <body>
 <h1>UserData tests</h1>
@@ -40,5 +42,6 @@ echo "EMAIL_INVALID: " .Messages::getError("EMAIL_INVALID")."<br>";
 echo "LAST_NAME_HAS_INVALID_CHARS: " .Messages::getError("LAST_NAME_HAS_INVALID_CHARS")."<br>";
 
 ?>
-
+</body>
+</html>
 
