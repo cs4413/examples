@@ -15,11 +15,11 @@ try {
 		case "Login": 
 			LoginController::run();
 			break;
-		case "Retister":
+		case "Register":
 			RegisterController::run();
 			break;
 		default:
-			ShowHome::show();
+			HomeView::show();
 	};
 } catch (Exception $ex) {
 	
