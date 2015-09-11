@@ -17,10 +17,10 @@ $validTest = array("userName" => "krobbins");
 $s1 = new User($validTest);
 echo "The object is: $s1<br>";
 $test1 = (is_object($s1))?'':
-'Failed:It should create a valid object when valid input is provided';
+'Failed:It should create a valid object when valid input is provided<br>';
 echo $test1;
 $test2 = (empty($s1->getErrors()))?'':
-'Failed:It not have errors when valid input is provided';
+'Failed:It not have errors when valid input is provided<br>';
 echo $test2;
 ?>
 
@@ -34,17 +34,11 @@ print_r($props);
 <?php 
 $invalidTest = array("userName" => "krobbins$");
 $s1 = new User($invalidTest);
-$test2 = (!empty($s1->getErrors()))?'':
-'Failed:It should have errors when invalid input is provided';
+$test2 = (empty($s1->getErrors()))?'':
+'Failed:It should have errors when invalid input is provided<br>';
 echo $test2;
-//foreach()
-
+echo "The error for userName is: ". $s1->getError('userName') ."<br>";
 echo "The object is: $s1<br>";
-$test1 = (is_object($s1))?'':
-'Failed:It should create a valid object when valid input is provided';
-echo $test1;
-$props = $s1->getParameters();
-print_r($props);
 ?>
 </body>
 </html>

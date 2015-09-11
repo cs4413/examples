@@ -1,4 +1,5 @@
 <?php
+include ("Messages.class.php");
 class UserData {
 	private $errorCount;
 	private $errors;
@@ -10,10 +11,8 @@ class UserData {
 	
 	public function __construct($formInput = null) {
 		$this->formInput = $formInput;
-		if (is_null($formInput))
-			$this->initializeEmpty();
-		else
-			$this->initialize();
+		Messages::reset();
+		$this->initialize();
 	}
 
 	public function getError($errorName) {
@@ -25,7 +24,7 @@ class UserData {
 
 	public function setError($errorName, $errorValue) {
 		// Sets a particular error value and increments error count
-		$this->errors[$errorName] = $errorValue;
+		$this->errors[$errorName] =  Messages::getError($errorValue);
 		$this->errorCount ++;
 	}
 
@@ -82,10 +81,14 @@ class UserData {
 	private function initialize() {
 		$this->errorCount = 0;
 		$errors = array();
-		$this->validateFirstName();
-		$this->validateLastName();
-		$this->validateEmail();
-		$this->validateGender();
+		if (is_null($this->formInput))
+			$this->initializeEmpty();
+		else  {	 
+	      $this->validateEmail();
+	      $this->validateGender();
+		  $this->validateFirstName();
+		  $this->validateLastName();
+		}	
 	}
 
 	private function initializeEmpty() {
@@ -107,7 +110,7 @@ class UserData {
 	}
 	
 	private function validateGender() {
-		// First name should not have quoted characters
+		// Gender should not have quoted characters
 		$this->gender = $this->extractForm('gender');
 		    // More validation goes here
 	}
@@ -119,10 +122,11 @@ class UserData {
 	}
 	
 	private function validateLastName() {
-		// First name should not have quoted characters
+		// Last name should not have quoted characters
 		$this->lastName = $this->extractForm('lastName');
+		// Last name should be at least 2 characters
 		if (strlen($this->lastName) <= 1)
-			$this->setError('lastName', "Last name too short");
+			$this->setError('lastName', 'LAST_NAME_TOO_SHORT');
 	}
 }
 ?>
