@@ -125,8 +125,10 @@ class UserData {
 		// Last name should not have quoted characters
 		$this->lastName = $this->extractForm('lastName');
 		// Last name should be at least 2 characters
-		if (strlen($this->lastName) <= 1)
+		if (strlen($this->lastName) <= 1) {
 			$this->setError('lastName', 'LAST_NAME_TOO_SHORT');
+			$this->errorCount ++;
+		}
 	}
 }
 ?>

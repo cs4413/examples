@@ -77,9 +77,10 @@ class User {
 	private function validateUserName() {
 		// Username should only contain letters, numbers, dashes and underscore
 		$this->userName = $this->extractForm('userName');
-		if (empty($this->userName))
+		if (empty($this->userName)) {
 			$this->setError('userName', 'USER_NAME_EMPTY');
-		elseif (!filter_var($this->userName, FILTER_VALIDATE_REGEXP,
+			$this->errorCount ++;
+		} elseif (!filter_var($this->userName, FILTER_VALIDATE_REGEXP,
 			array("options"=>array("regexp" =>"/^([a-zA-Z0-9\-\_])+$/i")) )) {
 			$this->setError('userName', 'LAST_NAME_HAS_INVALID_CHARS');
 			$this->errorCount ++;
