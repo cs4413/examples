@@ -14,6 +14,9 @@
 		case "login": 
 			LoginController::run();
 			break;
+		case "review":
+				ReviewController::run();
+				break;
 		default:
 			HomeView::show();
 	};
