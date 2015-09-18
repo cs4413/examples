@@ -14,7 +14,7 @@ class ReviewView {
 	<h1>ClassBash review form</h1>
 
 	<section>
-		<form method="post" action="">
+		<form method="post" action="review">
 			<p>
 
 				Reviewer first name: <input type="text" name="firstName" required> <br>
