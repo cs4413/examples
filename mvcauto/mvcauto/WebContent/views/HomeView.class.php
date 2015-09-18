@@ -1,7 +1,5 @@
 <?php
-
 class HomeView {
-
   public static function show() {  
 		
 ?>
@@ -13,7 +11,11 @@ class HomeView {
 	<body>
 	<h1>ClassBash: A site for student peer review</h1>
 	<em>Peer reviewing is really nice.</em>
-	<!--  <h3><a href="login">Login</a></h3> -->
+	
+	<h3><a href="login">Would you like to login?</a></h3>  
+	
+	<h3><a href="review">Would you like to review?</a></h3> 
+	 
 	<h3>The footer goes here</h3>	
 	</body>
 	</html>
