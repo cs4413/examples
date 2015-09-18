@@ -53,7 +53,11 @@ class Review {
 	}
 
 	public function __toString() {
-		$str = "First name: ".$this->firstName;
+		$str = "First name: ".$this->firstName.
+		       " Last name: ".$this->lastName.
+		       " Submission ID: ".$this->submissionID.
+		       " Score: ".$this->score.
+		       " Review: ".$this->review;
 		return $str;
 	}
 	

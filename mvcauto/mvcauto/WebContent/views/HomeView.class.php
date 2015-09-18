@@ -15,6 +15,8 @@ class HomeView {
 	<h3><a href="login">Would you like to login?</a></h3>  
 	
 	<h3><a href="review">Would you like to review?</a></h3> 
+	
+	<h3><a href="tests.html">Would you like to run the tests?</a></h3> 
 	 
 	<h3>The footer goes here</h3>	
 	</body>
