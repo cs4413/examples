@@ -14,7 +14,7 @@ include_once("../views/ReviewView.class.php");
 <h2>It should call show </h2>
 <?php 
 
-ReviewView::show($s1);
+ReviewView::show();
 ?>
 </body>
 </html>
