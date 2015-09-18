@@ -14,7 +14,8 @@ include_once("../models/Messages.class.php");
 
 <h2>It should create a valid Student object when all input is provided</h2>
 <?php 
-$validTest = array("firstName" => "Kay");
+$validTest = array("firstName" => "Kay", "lastName" => "Robbins", 
+		           "ipAddress" => "129.10.20.130");
 $s1 = new Student($validTest);
 echo "The object is: $s1<br>";
 $test1 = (is_object($s1))?'':
@@ -39,6 +40,8 @@ $test2 = (empty($s1->getErrors()))?'':
 'Failed:It should have errors when invalid input is provided<br>';
 echo $test2;
 echo "The error for firstName is: ". $s1->getError('firstName') ."<br>";
+echo "The error for lastName is: ". $s1->getError('lastName') ."<br>";
+echo "The error for ipAddress is: ". $s1->getError('ipAddress') ."<br>";
 echo "The object is: $s1<br>";
 ?>
 </body>

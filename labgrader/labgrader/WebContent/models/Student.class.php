@@ -4,6 +4,8 @@ class Student {
 	private $errors;
 	private $formInput;
 	private $firstName;
+	private $lastName;
+	private $ipAddress;
 	
 	public function __construct($formInput = null) {
 		$this->formInput = $formInput;
@@ -36,14 +38,27 @@ class Student {
 		return $this->firstName;
 	}
 	
+	public function getLastName() {
+		return $this->lastName;
+	}
+	
+	public function getIpAddress() {
+		return $this->ipAddress;
+	}
+	
 	public function getParameters() {
 		// Return data fields as an associative array
-		$paramArray = array("firstName" => $this->firstName); 
+		$paramArray = array("firstName" => $this->firstName,
+				            "lastName"  => $this->lastName,
+				            "ipAddress" => $this->ipAddress
+		); 
 		return $paramArray;
 	}
 
 	public function __toString() {
-		$str = "First name: ".$this->firstName;
+		$str = "First name: ".$this->firstName.
+		        " Last name: ".$this->lastName.
+		        " IP address: ".$this->ipAddress;
 		return $str;
 	}
 	
@@ -65,6 +80,8 @@ class Student {
 			$this->initializeEmpty();
 		else  	 
 		   $this->validateFirstName();
+	   	   $this->validateLastName();
+		   $this->validateIpAddress();
 	}
 
 	private function initializeEmpty() {
@@ -74,15 +91,39 @@ class Student {
 	}
 
 	private function validateFirstName() {
-		// Username should only contain letters 
+		// First name should only contain letters 
 		$this->firstName = $this->extractForm('firstName');
-		if (empty($this->firstName))
+		if (empty($this->firstName)) {
 			$this->setError('firstName', 'FIRST_NAME_EMPTY');
-		elseif (!filter_var($this->firstName, FILTER_VALIDATE_REGEXP,
+			$this->errorCount ++;
+		}elseif (!filter_var($this->firstName, FILTER_VALIDATE_REGEXP,
 			array("options"=>array("regexp" =>"/^([a-zA-Z0-9\-\_])+$/i")) )) {
 			$this->setError('firstName', 'FIRST_NAME_HAS_INVALID_CHARS');
 			$this->errorCount ++;
 		}
-	}	
+	}
+	
+	private function validateLastName() {
+		// Last name should only contain letters
+		$this->lastName = $this->extractForm('lastName');
+		if (empty($this->lastName)) {
+			$this->setError('lastName', 'LAST_NAME_EMPTY');
+			$this->errorCount ++;
+		} elseif (!filter_var($this->lastName, FILTER_VALIDATE_REGEXP,
+				array("options"=>array("regexp" =>"/^([a-zA-Z0-9\-\_])+$/i")) )) {
+			$this->setError('lastName', 'LAST_NAME_HAS_INVALID_CHARS');
+			$this->errorCount ++;
+		}
+	}
+	
+	private function validateIpAddress() {
+		// IP address should only contain numbers and periods
+		$this->ipAddress = $this->extractForm('ipAddress');
+		if (empty($this->ipAddress)) {
+			$this->setError('ipAddress', 'IP_ADDRESS_EMPTY');
+			$this->errorCount ++;
+		}
+		// TODO: Find regular expression to check IP address validity
+	}
 }
 ?>
