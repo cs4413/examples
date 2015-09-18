@@ -2,19 +2,24 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Basic tests for User</title>
+<title>Basic tests for Review</title>
 </head>
 <body>
-<h1>User tests</h1>
+<h1>Review tests</h1>
 
 <?php
-include_once("../models/User.class.php");
+include_once("../models/Review.class.php");
 ?>
 
-<h2>It should create a valid User object when all input is provided</h2>
+<h2>It should create a valid Review object when all input is provided</h2>
 <?php 
-$validTest = array("userName" => "krobbins");
-$s1 = new User($validTest);
+$validTest = array("firstName" => "Kay",
+                   "lastName" => "Robbins",
+             	   "submissionID" => "R3023",
+	           	   "score" => "5",
+		           "review" => "This was a great presentation"
+		          );
+$s1 = new Review($validTest);
 echo "The object is: $s1<br>";
 $test1 = (is_object($s1))?'':
 'Failed:It should create a valid object when valid input is provided<br>';
@@ -30,14 +35,14 @@ $props = $s1->getParameters();
 print_r($props);
 ?>
 
-<h2>It should have an error when the user name contains invalid characters</h2>
+<h2>It should have an error when the first name contains invalid characters</h2>
 <?php 
-$invalidTest = array("userName" => "krobbins$");
-$s1 = new User($invalidTest);
+$invalidTest = array("firstName" => "krobbins$");
+$s1 = new Review($invalidTest);
 $test2 = (empty($s1->getErrors()))?'':
 'Failed:It should have errors when invalid input is provided<br>';
 echo $test2;
-echo "The error for userName is: ". $s1->getError('userName') ."<br>";
+echo "The error for firstName is: ". $s1->getError('firstName') ."<br>";
 echo "The object is: $s1<br>";
 ?>
 </body>
