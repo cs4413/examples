@@ -1,5 +1,6 @@
 <?php
 class GradesView {
+	public static $numberLabs = 1;
     public static function show($grades) {  		
 ?>
 	<!DOCTYPE html>
@@ -16,7 +17,6 @@ class GradesView {
 	foreach($list as $student) {
 ?>  
        <tr>
-          <td> <?php echo $student; ?>
            <td><?php echo $student->getLastName(); ?></td>
            <td><?php echo $student->getFirstName(); ?></td>
            <td><?php echo $student->getIpAddress(); ?></td> 
@@ -28,5 +28,6 @@ class GradesView {
 	</html>
 <?php
   }
+  
 }
 ?>

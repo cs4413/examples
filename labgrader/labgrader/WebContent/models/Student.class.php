@@ -46,6 +46,12 @@ class Student {
 		return $this->ipAddress;
 	}
 	
+	public function getLabString($number) {
+		$str = strtolower($this->lastName[0]).
+		       strtolower($this->firstName[0]). "_lab".$number;
+		return $str;
+	}
+	
 	public function getParameters() {
 		// Return data fields as an associative array
 		$paramArray = array("firstName" => $this->firstName,
