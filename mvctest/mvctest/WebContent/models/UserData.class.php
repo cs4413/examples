@@ -24,8 +24,10 @@ class UserData {
 
 	public function setError($errorName, $errorValue) {
 		// Sets a particular error value and increments error count
-		$this->errors[$errorName] =  Messages::getError($errorValue);
-		$this->errorCount ++;
+		if (!isset($this->errors, $errorName)) {
+			$this->errors[$errorName] =  Messages::getError($errorValue);
+			$this->errorCount ++;
+		}
 	}
 
 	public function getErrorCount() {
@@ -125,10 +127,8 @@ class UserData {
 		// Last name should not have quoted characters
 		$this->lastName = $this->extractForm('lastName');
 		// Last name should be at least 2 characters
-		if (strlen($this->lastName) <= 1) {
+		if (strlen($this->lastName) <= 1) 
 			$this->setError('lastName', 'LAST_NAME_TOO_SHORT');
-			$this->errorCount ++;
-		}
 	}
 }
 ?>

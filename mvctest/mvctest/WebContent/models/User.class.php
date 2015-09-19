@@ -21,8 +21,10 @@ class User {
 
 	public function setError($errorName, $errorValue) {
 		// Sets a particular error value and increments error count
-		$this->errors[$errorName] =  Messages::getError($errorValue);
-		$this->errorCount ++;
+		if (!isset($this->errors, $errorName)) {
+			$this->errors[$errorName] =  Messages::getError($errorValue);
+			$this->errorCount ++;
+		}
 	}
 
 	public function getErrorCount() {
@@ -77,13 +79,11 @@ class User {
 	private function validateUserName() {
 		// Username should only contain letters, numbers, dashes and underscore
 		$this->userName = $this->extractForm('userName');
-		if (empty($this->userName)) {
+		if (empty($this->userName)) 
 			$this->setError('userName', 'USER_NAME_EMPTY');
-			$this->errorCount ++;
-		} elseif (!filter_var($this->userName, FILTER_VALIDATE_REGEXP,
+		elseif (!filter_var($this->userName, FILTER_VALIDATE_REGEXP,
 			array("options"=>array("regexp" =>"/^([a-zA-Z0-9\-\_])+$/i")) )) {
 			$this->setError('userName', 'LAST_NAME_HAS_INVALID_CHARS');
-			$this->errorCount ++;
 		}
 	}	
 }
