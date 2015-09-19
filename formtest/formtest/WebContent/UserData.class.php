@@ -22,11 +22,12 @@ class UserData {
 		else
 			return "";
 	}
-
 	public function setError($errorName, $errorValue) {
 		// Sets a particular error value and increments error count
-		$this->errors[$errorName] = $errorValue;
-		$this->errorCount ++;
+		if (!isset ( $this->errors, $errorName)) {
+			$this->errors [$errorName] = Messages::getError ($errorValue);
+			$this->errorCount ++;
+		}
 	}
 
 	public function getErrorCount() {
