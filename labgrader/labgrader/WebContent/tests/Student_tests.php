@@ -31,6 +31,11 @@ echo $test2;
 $props = $s1->getParameters();
 print_r($props);
 ?>
+<h2>The get methods should return the right values</h2>
+<?php echo "First name:  ".$s1->getFirstName()." <br>";
+echo "Last name:  ".$s1->getLastName()." <br>";
+echo "IP address:  ".$s1->getIpAddress() <br>";?>
+
 
 <h2>It should have an error when the first name contains invalid characters</h2>
 <?php 

@@ -33,7 +33,7 @@ class Grades {
 		return $this->errors;
 	}
 
-	public function getclassList() {
+	public function getClassList() {
 		return $this->classList;
 	}
 	
