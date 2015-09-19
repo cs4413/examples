@@ -1,5 +1,5 @@
 <?php
-class GradeController {
+class GradesController {
 
 	public static function run() {
 		HomeView::show();

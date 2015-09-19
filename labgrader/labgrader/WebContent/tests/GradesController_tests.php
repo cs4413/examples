@@ -9,7 +9,7 @@
 
 <?php
 include_once("../models/Messages.class.php");
-include_once("../controllers/GradeController.class.php");
+include_once("../controllers/GradesController.class.php");
 include_once("../models/Student.class.php");
 include_once("../models/Lab.class.php");
 include_once("../views/HomeView.class.php");
@@ -17,7 +17,7 @@ include_once("../views/HomeView.class.php");
 
 <h2>It should call the run method without crashing</h2>
 <?php 
-GradeController::run();
+GradesController::run();
 ?>
 </body>
 </html>
