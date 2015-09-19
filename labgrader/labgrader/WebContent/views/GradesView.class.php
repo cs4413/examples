@@ -15,11 +15,18 @@ class GradesView {
 <?php 
 	$list = $grades->getClassList();
 	foreach($list as $student) {
+	
 ?>  
        <tr>
            <td><?php echo $student->getLastName(); ?></td>
            <td><?php echo $student->getFirstName(); ?></td>
-           <td><?php echo $student->getIpAddress(); ?></td> 
+         
+           <?php 	
+              for ($k = 1; $k <= GradesView::$numberLabs; $k++) {
+              	  $ip = $student->getIpAddress()."/".$student->getLabString($k);
+              	  echo '<td><a href="http://'.$ip.'">'.$ip.'</a></td>';
+              }
+            ?>
        </tr>
 <?php } ?>               	
 	</table>
