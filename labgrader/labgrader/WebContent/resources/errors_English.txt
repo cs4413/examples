@@ -1,4 +1,5 @@
 CLASS_LIST_INPUT_FILE_INVALID The file containing class list was not valid
+CLASS_LIST_HAS_INVALID_ENTRY The class list file has an invalid line
 EMAIL_INVALID Your email is invalid
 FIRST_NAME_EMPTY Your first name can not be empty or only contain white space
 FIRST_NAME_HAS_INVALID_CHARS Your first name contains invalid characters
@@ -8,5 +9,6 @@ LAST_NAME_EMPTY Your last name can not be empty or only contain white space
 LAST_NAME_HAS_INVALID_CHARS Your last name contains invalid characters
 LAST_NAME_TOO_SHORT Your last name is too short
 LIST_FILE_ADDRESS_EMPTY You must provide the name of a file containing the class list
+LIST_FILE_INVALID The file name for class list does not correspond to a valid file
 USER_NAME_EMPTY Your user name can not be empty or only contain white space
 USER_NAME_HAS_INVALID_CHARS Your user name can only contain letters, numbers, dashes and underscores

@@ -51,7 +51,9 @@ class Grades {
 
 	public function __toString() {
 		$str = "File name: ".$this->listFile.
-		        "<br><br>ClassList: ". print_r($this->classList, true);
+		        "<br>ClassList:<br>";
+		foreach($this->classList as $element)
+			$str = $str."<br>". $element;
 		return $str;
 	}
 	
@@ -76,7 +78,7 @@ class Grades {
 		   if (empty($this->getError('classList')))
 		       $this->validateClassList();
 		   else
-		   	   $this->setError('classList', CLASS_LIST_INPUT_FILE_INVALID);
+		   	   $this->setError('classList', 'CLASS_LIST_INPUT_FILE_INVALID');
 		}
 	}
 
@@ -94,41 +96,32 @@ class Grades {
 	private function validateListFile() {
 		$this->listFile = "";
 		if (isset($this->formInput['listFile'])) 
-			$this->listFile = trim($this->formInput[$valueName]);
-		setClassList($this->listFile);
+			$this->listFile = trim($this->formInput['listFile']);
+		    $this->setClassList($this->listFile);
 	}
 	
 	private function setClassList($filename) {
-		if (empty($this->listFile)) {
+		$this->classList = array();
+		if (empty($this->listFile)) 
 			$this->setError('listFile', 'LIST_FILE_ADDRESS_EMPTY');
-			$this->errorCount ++;
-		if (($handle = fopen($filename, "r")) == FALSE) {
+		elseif (!file_exists ($filename)) 
 			$this->setError('listFile', 'LIST_FILE_INVALID');
-			$this->errorCount ++;
-			while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-				$num = count($data);
-				echo "<p> $num fields in line $row: <br /></p>\n";
-				$row++;
-				for ($c=0; $c < $num; $c++) {
-					echo $data[$c] . "<br />\n";
-				}
-			}
-			fclose($handle);
+		else {
+		    foreach (file($filename) as $line) {
+			   list($lastName, $firstName, $ipAddress) = 
+			               explode(',', $line, 3) + array(NULL, NULL, NULL);
+			   $array = array('lastName' => $lastName,
+			   		          'firstName' => $firstName,
+			   		          'ipAddress' => $ipAddress);
+			   $student = new Student($array);
+			   if ($student -> getErrorCount() > 0) {
+			   	   $this->setError('classList', 'CLASS_LIST_HAS_INVALID_ENTRY');
+			   	   break;
+			   }
+			   $this->classList[] = $student;
+		    }
 		}
-// 		foreach (file($filename) as $line) {
-// 			list($lastName, $firstName, $ipAddress) = 
-// 			    explode(',', $line, 3) + array(NULL, NULL, NULL);
-// 			if ($lastName !== NULL) {
-// 				$array = array('lastName' => $lastName, 
-// 						       'firstName' => $firstName,
-// 						       'ipAddress' => $ipAddress);
-// 				array_push($this->classList, new Student($array));
-// 			}	 
-// 		}
-		
-		
 	}
-	
 	
 }
 ?>
