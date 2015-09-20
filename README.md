@@ -18,3 +18,9 @@ We will modify it in class.
 
 ## mvctest
 This holds a working MVC project with central controller and URL rewriting.
+
+## mvcauto
+This holds a working MVC project with central controller and URL rewriting. It also has some error-handling for models and autoloading. The controllers and views are wrapped in classes. However, no objects are being sent into the show methods of the views. Hence, when there is an error, the view blanks out all of the previous information.  This project is a good starting point for your lab 2.
+
+## mvcform
+This project starts with mvcauto and adds the correct form handling so that when a user makes an error, the message shows on the form and the form still has the values already typed.
