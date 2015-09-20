@@ -1,0 +1,5 @@
+LAST_NAME_TOO_SHORT Su apellido es demasiado corto
+EMAIL_INVALID Tu correo electrónico es inválido
+LAST_NAME_HAS_INVALID_CHARS Su apellido contiene caracteres no válidos
+USER_NAME_EMPTY Tu nombre de usuario no puede estar vacío o sólo contienen espacios en blanco
+USER_NAME_HAS_INVALID_CHARS Tu nombre de usuario sólo puede contener letras, números, guiones y guiones bajos
