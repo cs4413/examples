@@ -26,5 +26,14 @@ echo "The review $theReview";
 echo "The first name is ". $theReview->getFirstName() ."<br>";
 ReviewView::show($theReview);
 ?>
+
+<h2>It should show display the review form with errors at the top if invalid entry</h2>
+<?php 
+$input = array("firstName" => "Kay#");
+$theReview = new Review($input);
+echo "The review $theReview";
+echo "The first name is ". $theReview->getFirstName() ."<br>";
+ReviewView::show($theReview);
+?>
 </body>
 </html>
