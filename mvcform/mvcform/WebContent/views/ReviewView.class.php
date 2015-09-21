@@ -1,6 +1,6 @@
 <?php
 class ReviewView {
-	public static function show() {
+	public static function show($review) {
 		?>
 
 
@@ -17,7 +17,9 @@ class ReviewView {
 		<form method="post" action="review">
 			<p>
 
-				Reviewer first name: <input type="text" name="firstName" required> <br>
+				Reviewer first name: <input type="text" name="firstName" 
+				                 value= 'georage' 
+				                         required> <br>
 				<br> Reviewer last name: <input type="text" name="lastName" required>
 				<br>
 				<br> Review submission ID: <input type="text" name="submissionID"

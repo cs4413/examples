@@ -9,12 +9,22 @@
 
 <?php
 include_once("../views/ReviewView.class.php");
+include_once("../models/Review.class.php")
 ?>
 
 <h2>It should call show </h2>
 <?php 
 
-ReviewView::show();
+ReviewView::show(null);
+?>
+
+<h2>It should show successfully when review is passed to show</h2>
+<?php 
+$input = array("firstName" => "Kay");
+$theReview = new Review($input);
+echo "The review $theReview";
+echo "The first name is ". $theReview->getFirstName() ."<br>";
+ReviewView::show($theReview);
 ?>
 </body>
 </html>
