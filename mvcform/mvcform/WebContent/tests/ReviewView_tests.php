@@ -9,6 +9,7 @@
 
 <?php
 include_once("../views/ReviewView.class.php");
+include_once("../views/MasterView.class.php");
 include_once("../models/Review.class.php")
 ?>
 

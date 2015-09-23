@@ -1,14 +1,13 @@
-<?php
+<?php  
 class ReviewView {
 	public static function show($review) {
-		?>
-     <!DOCTYPE html>
-     <html>
-     <head>
-     <meta charset="ISO-8859-1">
-     <title>Review form for ClassBash</title>
-     </head>
-     <body>
+		MasterView::showHeader("Review form for ClassBash");
+		ReviewView::showDetails($review);
+		MasterView::showFooter("<h3>The footer goes here</h3>");
+	}
+	
+	public static function showDetails($review) {
+?>	
 	 <h1>ClassBash review form</h1>
      
 	 <section>
@@ -38,10 +37,8 @@ class ReviewView {
 			<br> <br> <input type="submit" value="Submit">	
 		</form>
 	</section>
-
-</body>
-</html>
 <?php 
-}
+	}
 }
 ?>
+
