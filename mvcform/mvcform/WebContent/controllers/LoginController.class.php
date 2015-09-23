@@ -5,7 +5,7 @@ class LoginController {
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			$user = new User($_POST);  
 			if ($user->getErrorCount() == 0) 
-				HomeView::show();		
+				HomeView::show($user);		
 		    else  
 				LoginView::show($user);
 		} else  // Initial link

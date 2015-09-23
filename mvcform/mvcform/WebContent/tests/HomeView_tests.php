@@ -9,6 +9,7 @@
 
 <?php
 include_once("../views/HomeView.class.php");
+include_once("../views/MasterView.class.php");
 include_once("../models/User.class.php");
 ?>
 
