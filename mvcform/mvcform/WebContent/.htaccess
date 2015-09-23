@@ -1,3 +1,3 @@
 RewriteEngine on
  
-FallbackResource /mvcauto/index.php
+FallbackResource /mvcform/index.php
