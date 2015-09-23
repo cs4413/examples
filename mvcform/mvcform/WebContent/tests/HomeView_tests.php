@@ -9,11 +9,19 @@
 
 <?php
 include_once("../views/HomeView.class.php");
+include_once("../models/User.class.php");
 ?>
 
 <h2>It should call show without crashing</h2>
 <?php 
-HomeView::show();
+HomeView::show(null);
+?>
+
+<h2>It should say hello x if user exists</h2>
+<?php 
+$validTest = array("userName" => "krobbins");
+$s1 = new User($validTest);
+HomeView::show($s1);
 ?>
 </body>
 </html>

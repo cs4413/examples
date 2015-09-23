@@ -1,6 +1,6 @@
 <?php
 class HomeView {
-  public static function show() {  
+  public static function show($user) {  
 		
 ?>
 	<!DOCTYPE html>
