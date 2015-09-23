@@ -1,16 +1,14 @@
 <?php  
 class LoginView {
+	public static function show($user) {
+		MasterView::showHeader("ClassBash Login Form");
+		LoginView::showDetails($user);
+		MasterView::showFooter("<h3>The footer goes here</h3>");
+	}
 	
-  public static function show($user) {  	
-?> 
-	<!DOCTYPE html>
-	<html>
-	<head>
-	<title>ClassBash Login Form</title>
-	<meta name= "keywords" content=" ClassBash login">
-	<meta name="description" content = "Login for ClassBash">
-	</head>
-	<body>
+	public static function showDetails($user) {
+?>	
+	
 	<h1>ClassBash login</h1>
 	<form action ="login" method="Post">
 	<p>User name: <input type="text" name ="userName" 
@@ -25,8 +23,6 @@ class LoginView {
 	<p>New user?  <a href="register">Sign up here</a></p>
 	
 	<p>Forget your password?  Well good luck with that.... </p>
-    </body>
-    </html>
 <?php 
   }
 }
