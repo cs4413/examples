@@ -12,6 +12,7 @@ include_once("../controllers/LoginController.class.php");
 include_once("../models/User.class.php");
 include_once("../views/HomeView.class.php");
 include_once("../views/LoginView.class.php");
+include_once("../views/MasterView.class.php");
 ?>
 
 <h2>It should call the run method for valid input during $POST</h2>

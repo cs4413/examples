@@ -2,14 +2,15 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Basic tests for Login Controller</title>
+<title>Basic tests for Review Controller</title>
 </head>
 <body>
-<h1>Login controller tests</h1>
+<h1>Review controller tests</h1>
 
 <?php
 include_once("../controllers/ReviewController.class.php");
 include_once("../views/ReviewView.class.php");
+include_once("../views/MasterView.class.php");
 ?>
 
 <h2>It should call the run method</h2>

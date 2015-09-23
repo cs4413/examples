@@ -3,9 +3,13 @@ class ReviewController {
 
 	public static function run() {
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			HomeView::show();
+			$review = new Review($_POST);  
+			if ($review->getErrorCount() == 0) 
+				HomeView::show(null);		
+		    else  
+				ReviewView::show($review);
 		} else  // Initial link
-			ReviewView::show();
-	 }
+			ReviewView::show(null);
+	}
 }
 ?>
