@@ -24,3 +24,6 @@ This holds a working MVC project with central controller and URL rewriting. It a
 
 ## mvcform
 This project starts with mvcauto and adds the correct form handling so that when a user makes an error, the message shows on the form and the form still has the values already typed.
+
+## mvcdb
+This project starts with mvcform and adds a simple database persistence layer for the objects using an ORM.
