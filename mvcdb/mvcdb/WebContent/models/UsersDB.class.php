@@ -3,7 +3,7 @@ class UsersDB {
 
 	public static function getAll() {
 	   $query = "SELECT * FROM USERS";
-	   $userProfiles = array();
+	   $users = array();
 	   try {
 	      $db = Database::getDB();
 	      $statement = $db->prepare($query);
