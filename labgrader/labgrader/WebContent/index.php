@@ -12,7 +12,7 @@
 	
 	switch ($control) {
 		case "input": 
-			GradeController::run();
+			GradesController::run(2);
 			break;
 		default:
 			HomeView::show();

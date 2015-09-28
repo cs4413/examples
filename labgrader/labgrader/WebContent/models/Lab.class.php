@@ -47,6 +47,8 @@ class Lab {
 		return $str;
 	}
 	
+
+	
 	private function extractForm($valueName) {
 		// Extract a stripped value from the form array
 		$value = "";
@@ -80,6 +82,7 @@ class Lab {
 			$this->setError('labName', 'LAB_NAME_EMPTY');
 			$this->errorCount ++;
 		}
-	}	
+	}
+
 }
 ?>

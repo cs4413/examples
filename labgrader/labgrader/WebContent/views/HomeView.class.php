@@ -12,6 +12,9 @@ class HomeView {
 	<em>This will be fun to write.</em>
 	
 	<h3><a href="tests.html">Link to tests</a></h3>
+	<h3>PhPinfo</h3>
+
+	<h3><a href="input">Show lab status</a></h3>
 	<h3>The footer goes here</h3>	
 	</body>
 	</html>

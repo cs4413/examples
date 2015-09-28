@@ -1,0 +1,3 @@
+RewriteEngine on
+ 
+FallbackResource /labgrader/index.php
