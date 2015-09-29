@@ -13,7 +13,7 @@ include_once("../models/User.class.php");
 
 <h2>It should create a valid User object when all input is provided</h2>
 <?php 
-$validTest = array("userName" => "krobbins");
+$validTest = array("userName" => "krobbins", "password" => "123");
 $s1 = new User($validTest);
 echo "The object is: $s1<br>";
 $test1 = (is_object($s1))?'':
@@ -38,6 +38,7 @@ $test2 = (empty($s1->getErrors()))?'':
 'Failed:It should have errors when invalid input is provided<br>';
 echo $test2;
 echo "The error for userName is: ". $s1->getError('userName') ."<br>";
+echo "The error for password is: ". $s1->getError('password') ."<br>";
 echo "The object is: $s1<br>";
 ?>
 </body>

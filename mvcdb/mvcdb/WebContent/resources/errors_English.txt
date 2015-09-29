@@ -4,6 +4,7 @@ FIRST_NAME_HAS_INVALID_CHARS Your first name contains invalid characters
 LAST_NAME_EMPTY Your last name can not be empty or only contain white space
 LAST_NAME_HAS_INVALID_CHARS Your last name contains invalid characters
 LAST_NAME_TOO_SHORT Your last name is too short
+PASSWORD_EMPTY You must provide a password
 REVIEW_EMPTY You must provide an actual review
 SCORE_EMPTY You must provide a score between 1 and 5
 SUBMISSION_ID_EMPTY You indicate the ID of the item you are reviewing

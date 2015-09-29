@@ -1,6 +1,6 @@
 <?php
 include("../models/Database.class.php");
-include("./makeTestDatabase.php");
+include("./makeDB.php");
 include("../models/User.class.php");
 include("../models/UsersDB.class.php");
 

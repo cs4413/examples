@@ -5,6 +5,7 @@ class User {
 	private $errors;
 	private $formInput;
 	private $userName;
+	private $password;   // will ultimately be a hash
 	
 	public function __construct($formInput = null) {
 		$this->formInput = $formInput;
@@ -32,6 +33,10 @@ class User {
 	public function getErrors() {
 		return $this->errors;
 	}
+	
+	public function getPassword() {
+		return $this->password;
+	}
 
 	public function getUserName() {
 		return $this->userName;
@@ -39,12 +44,14 @@ class User {
 	
 	public function getParameters() {
 		// Return data fields as an associative array
-		$paramArray = array("userName" => $this->userName); 
+		$paramArray = array("userName" => $this->userName,
+				            "password" => $this->password
+		); 
 		return $paramArray;
 	}
 
 	public function __toString() {
-		$str = "User name: ".$this->userName;
+		$str = "User name: ".$this->userName."<br>Password: ".$this->password;
 		return $str;
 	}
 	
@@ -64,14 +71,17 @@ class User {
 		$errors = array();
 		if (is_null($this->formInput))
 			$this->initializeEmpty();
-		else  	 
+		else  {	 
 		   $this->validateUserName();
+		   $this->validatePassword();
+		}
 	}
 
 	private function initializeEmpty() {
 		$this->errorCount = 0;
 		$errors = array();
 	 	$this->userName = "";
+	 	$this->password = "";
 	}
 
 	private function validateUserName() {
@@ -83,6 +93,13 @@ class User {
 			array("options"=>array("regexp" =>"/^([a-zA-Z0-9\-\_])+$/i")) )) {
 			$this->setError('userName', 'USER_NAME_HAS_INVALID_CHARS');
 		}
-	}	
+	}
+	
+	private function validatePassword() {
+		// Password should not be blank
+		$this->password = $this->extractForm('password');
+		if (empty($this->password))
+			$this->setError('password', 'PASSWORD_EMPTY');
+	}
 }
 ?>
