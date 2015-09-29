@@ -37,6 +37,28 @@ class UsersDB {
 		return $users;
 	}
 	
+	public static function getUserBy($type, $value) {
+		// Returns a User object whose $type field has value $value
+		$allowed = ["userId", "userName"];
+		$user = NULL;
+		try {
+			if (!in_array($type, $allowed))
+				throw new PDOException("$type not an allowed search criterion for User");
+			$query = "SELECT * FROM USERS WHERE ($type = :$type)";
+			$db = Database::getDB ();
+			$statement = $db->prepare($query);
+			$statement->bindParam(":$type", $value);
+			$statement->execute ();
+			$userRows = $statement->fetch(PDO::FETCH_ASSOC);
+			if (!empty($userRows))
+				$user = new User($userRows);
+			$statement->closeCursor ();
+		} catch ( PDOException $e ) { // Not permanent error handling
+			echo "<p>Error getting user by $type: " . $e->getMessage () . "</p>";
+		}
+		return $user;
+	}
+	
 	
 	public static function getUsersArray($rowSets) {
 		$users = array();

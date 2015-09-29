@@ -30,4 +30,20 @@ $invalidUser = new User(array("userName" => "krobbins$"));
 $userId = UsersDB::addUser($invalidUser);
 echo "Number of users in db after added is: ". count(UsersDB::getAllUsers()) ."<br>";
 echo "User ID of new user is: $userId<br>";
+
+echo "<h2>It should get a User by userName</h2>";
+$user = UsersDB::getUserBy('userName', 'George');
+echo "The value of User George is:<br>$user<br>";
+
+echo "<h2>It should get a User by userId</h2>";
+$user = UsersDB::getUserBy('userId', '3');
+echo "The value of User 3 is:<br>$user<br>";
+
+echo "<h2>It should not get a User not in Users</h2>";
+$user = UsersDB::getUserBy('userName', 'Alfred');
+echo "The value of User Alfred is:<br>$user<br>";
+
+echo "<h2>It should not get a User by a field that isn't there</h2>";
+$user = UsersDB::getUserBy('telephone', '21052348234');
+echo "The value of User with a specified telephone number is:<br>$user<br>";
 ?>
