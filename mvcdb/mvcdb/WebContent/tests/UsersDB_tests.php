@@ -8,7 +8,7 @@ echo "<h1>Tests for UsersDB</h1>";
 
 echo "<h2>It should create get all users from a test database</h2>";
 
-$myDb = makeTestDatabase('testie');
+$myDb = makeDB('mytest');
 
 $users = UsersDB::getAll();
 $userCount = count($users);
