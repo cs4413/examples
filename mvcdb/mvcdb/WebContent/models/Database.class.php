@@ -1,23 +1,28 @@
 <?php
 // Responsibility: maintains open DB connection (singleton)
 class Database {
-private static $db;
+    private static $db;
 	private static $dsn = 'mysql:host=localhost;dbname=';
 	private static $dbName;
-	private static $username = 'root';
-	private static $password = '';
+	private static $username;
 	private static $options = 
 	   array (PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 	
-	public static function getDB($dbName = 'classbash') {
-		if (!isset (self::$db)) {
+	public static function getDB($dbName = 'classbash', 
+			                     $configPath ="../../myConfig.ini") {
+		if (! isset ( self::$db )) {
 			try {
+				$thePath = dirname(__FILE__).DIRECTORY_SEPARATOR.$configPath;
+				echo "path:$thePath";
+				$passArray = parse_ini_file($configPath);
+				$username = $passArray["username"];
+				$password = $passArray["password"];
+				print_r($passArray);
 				self::$dbName = $dbName;
-				$dbspec = self::$dsn . self::$dbName;
-				self::$db = new PDO ($dbspec, self::$username,
-					  	             self::$password, self::$options);
-			} catch (PDOException $e ) {
-			echo $e->getMessage ();  // not final error handling
+				$dbspec = self::$dsn.self::$dbName.";charset=utf8";
+				self::$db = new PDO ($dbspec, $username, $password, self::$options);
+			} catch ( PDOException $e ) {
+				echo "Failed to open connection to ".self::$dbName. $e->getMessage();
 			}
 		}
 		return self::$db;
