@@ -1,6 +1,6 @@
 DROP DATABASE if EXISTS classbash;
 CREATE DATABASE classbash;
-USE classBash;
+USE classbash;
 
 DROP TABLE if EXISTS Users;
 CREATE TABLE Users (
