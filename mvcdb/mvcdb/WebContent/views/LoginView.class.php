@@ -17,6 +17,11 @@ class LoginView {
 	   <?php if (!is_null($user)) {echo $user->getError('userName');}?>
 	</span></p>
 	
+	<p>Password: <input type="text" name ="password"> 
+	<span class="error">
+	   <?php if (!is_null($user)) {echo $user->getError('password');}?>
+	</span></p>
+	
 	<p><input type = "submit" name = "submit" value="Submit"></p>
 	</form>
 	

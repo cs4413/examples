@@ -13,11 +13,19 @@ include_once("../views/MasterView.class.php");
 include_once("../models/User.class.php");
 ?>
 
-<h2>It should call show when $user has an input</h2>
+<h2>It should show when $user has an input</h2>
 <?php 
-$validTest = array("userName" => "krobbins");
+$validTest = array("userName" => "krobbins",  "password" => "xyz");
 $s1 = new User($validTest);
 LoginView::show($s1);
 ?>
+
+<h2>It should show when an error when $user is invalid</h2>
+<?php 
+$invalidTest = array("userName" => "krobbins");
+$s1 = new User($invalidTest);
+LoginView::show($s1);
+?>
+
 </body>
 </html>

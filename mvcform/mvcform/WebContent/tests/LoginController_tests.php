@@ -22,6 +22,8 @@ $_POST = array("userName" => "krobbins");
 LoginController::run();
 ?>
 
+
+
 <h2>It should call show the login page for a $GET request</h2>
 <?php 
 $_SERVER ["REQUEST_METHOD"] = "GET";
