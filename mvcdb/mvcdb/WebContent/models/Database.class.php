@@ -13,11 +13,9 @@ class Database {
 		if (! isset ( self::$db )) {
 			try {
 				$thePath = dirname(__FILE__).DIRECTORY_SEPARATOR.$configPath;
-				echo "path:$thePath";
 				$passArray = parse_ini_file($configPath);
 				$username = $passArray["username"];
 				$password = $passArray["password"];
-				print_r($passArray);
 				self::$dbName = $dbName;
 				$dbspec = self::$dsn.self::$dbName.";charset=utf8";
 				self::$db = new PDO ($dbspec, $username, $password, self::$options);

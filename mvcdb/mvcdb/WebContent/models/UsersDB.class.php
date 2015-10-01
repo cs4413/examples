@@ -3,7 +3,7 @@ class UsersDB {
 	
 	public static function addUser($user) {
 		// Inserts the User object $user into the Users table and returns userId
-		$query = "INSERT INTO USERS (userName, password)
+		$query = "INSERT INTO Users (userName, password)
 		                      VALUES(:userName, :password)";
 		$returnId = 0;
 		try {
@@ -23,7 +23,7 @@ class UsersDB {
 	}
 
 	public static function getAllUsers() {
-	   $query = "SELECT * FROM USERS";
+	   $query = "SELECT * FROM Users";
 	   $users = array();
 	   try {
 	      $db = Database::getDB();
@@ -44,7 +44,7 @@ class UsersDB {
 		try {
 			if (!in_array($type, $allowed))
 				throw new PDOException("$type not an allowed search criterion for User");
-			$query = "SELECT * FROM USERS WHERE ($type = :$type)";
+			$query = "SELECT * FROM Users WHERE ($type = :$type)";
 			$db = Database::getDB ();
 			$statement = $db->prepare($query);
 			$statement->bindParam(":$type", $value);
