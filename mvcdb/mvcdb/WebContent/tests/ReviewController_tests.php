@@ -9,8 +9,10 @@
 
 <?php
 include_once("../controllers/ReviewController.class.php");
-include_once("../views/ReviewView.class.php");
+include_once("../models/Messages.class.php");
+include_once("../models/Review.class.php");
 include_once("../views/MasterView.class.php");
+include_once("../views/ReviewView.class.php");
 ?>
 
 <h2>It should call the run method</h2>

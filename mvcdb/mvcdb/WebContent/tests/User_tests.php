@@ -8,6 +8,7 @@
 <h1>User tests</h1>
 
 <?php
+include_once("../models/Messages.class.php");
 include_once("../models/User.class.php");
 ?>
 

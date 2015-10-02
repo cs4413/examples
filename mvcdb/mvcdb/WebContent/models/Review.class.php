@@ -1,5 +1,4 @@
 <?php
-include ("Messages.class.php");
 class Review {
 	private $errorCount;
 	private $errors;

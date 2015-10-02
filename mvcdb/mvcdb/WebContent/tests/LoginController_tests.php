@@ -9,13 +9,14 @@
 
 <?php
 include_once("../controllers/LoginController.class.php");
+include_once("../models/Database.class.php");
+include_once("../models/Messages.class.php");
 include_once("../models/User.class.php");
+include_once("../models/UsersDB.class.php");
 include_once("../views/HomeView.class.php");
 include_once("../views/LoginView.class.php");
 include_once("../views/MasterView.class.php");
-include_once("../models/Database.class.php");
 include_once("./makeDB.php");
-include_once("../models/UsersDB.class.php");
 ?>
 
 <h2>It should call the run method for valid input during $POST</h2>

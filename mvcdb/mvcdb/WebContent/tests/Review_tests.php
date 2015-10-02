@@ -8,6 +8,7 @@
 <h1>Review tests</h1>
 
 <?php
+include_once("../models/Messages.class.php");
 include_once("../models/Review.class.php");
 ?>
 

@@ -1,6 +1,4 @@
 <?php
-require_once(dirname(__FILE__)."/../models/Database.class.php");
-
 function makeDB($dbName) {
 	// Creates a database named $dbName for testing and returns connection
 	$db = Database::getDB('');

@@ -2,23 +2,25 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Basic tests for User View</title>
+<title>Basic tests for Submission View</title>
 </head>
 <body>
-<h1>User view tests</h1>
+<h1>Submission view tests</h1>
 
 <?php
 include_once("../models/Messages.class.php");
+include_once("../models/Submission.class.php");
 include_once("../models/User.class.php");
-include_once("../views/UserView.class.php");
 include_once("../views/MasterView.class.php");
+include_once("../views/SubmissionView.class.php");
 ?>
 
-<h2>It should show successfully when user is passed to show</h2>
+<h2>It should show when $submission has an input</h2>
 <?php 
 $validTest = array("userName" => "krobbins");
-$s1 = new User($validTest);
-UserView::show($s1);
+$s1 = new Submission($validTest);
+SubmissionView::show($s1);
 ?>
+
 </body>
 </html>

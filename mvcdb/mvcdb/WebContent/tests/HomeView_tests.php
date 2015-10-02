@@ -8,9 +8,10 @@
 <h1>Home view tests</h1>
 
 <?php
+include_once("../models/Messages.class.php");
+include_once("../models/User.class.php");
 include_once("../views/HomeView.class.php");
 include_once("../views/MasterView.class.php");
-include_once("../models/User.class.php");
 ?>
 
 <h2>It should call show without crashing</h2>

@@ -8,6 +8,7 @@
 <h1>Master view tests</h1>
 
 <?php
+include_once("../models/Messages.class.php");
 include_once("../views/MasterView.class.php");
 ?>
 

@@ -1,10 +1,10 @@
 <?php
-class User {
+class Submission {
 	private $errorCount;
 	private $errors;
 	private $formInput;
 	private $userName;
-	private $password;   // will ultimately be a hash
+	private $submissionFile;   // will ultimately be a hash
 	
 	public function __construct($formInput = null) {
 		$this->formInput = $formInput;
@@ -33,8 +33,8 @@ class User {
 		return $this->errors;
 	}
 	
-	public function getPassword() {
-		return $this->password;
+	public function getSubmissionFile() {
+		return $this->submissionFile;
 	}
 
 	public function getUserName() {
@@ -44,13 +44,13 @@ class User {
 	public function getParameters() {
 		// Return data fields as an associative array
 		$paramArray = array("userName" => $this->userName,
-				            "password" => $this->password
+				            "submissionFile" => $this->submissionFile
 		); 
 		return $paramArray;
 	}
 
 	public function __toString() {
-		$str = "User name: ".$this->userName."<br>Password: ".$this->password;
+		$str = "User name: ".$this->userName."<br>SubmissionFile: ".$this->submissionFile;
 		return $str;
 	}
 	
@@ -72,7 +72,7 @@ class User {
 			$this->initializeEmpty();
 		else  {	 
 		   $this->validateUserName();
-		   $this->validatePassword();
+		   $this->validateSubmissionFile();
 		}
 	}
 
@@ -80,7 +80,7 @@ class User {
 		$this->errorCount = 0;
 		$errors = array();
 	 	$this->userName = "";
-	 	$this->password = "";
+	 	$this->submissionFile = "";
 	}
 
 	private function validateUserName() {
@@ -94,11 +94,11 @@ class User {
 		}
 	}
 	
-	private function validatePassword() {
+	private function validateSubmissionFile() {
 		// Password should not be blank
-		$this->password = $this->extractForm('password');
-		if (empty($this->password))
-			$this->setError('password', 'PASSWORD_EMPTY');
+		$this->submissionFile = $this->extractForm('submission');
+		if (empty($this->submission))
+			$this->setError('submission', 'SUBMISSION_EMPTY');
 	}
 }
 ?>

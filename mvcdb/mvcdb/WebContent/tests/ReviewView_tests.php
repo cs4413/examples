@@ -8,9 +8,10 @@
 <h1>Review view tests</h1>
 
 <?php
-include_once("../views/ReviewView.class.php");
+include_once("../models/Messages.class.php");
+include_once("../models/Review.class.php");
 include_once("../views/MasterView.class.php");
-include_once("../models/Review.class.php")
+include_once("../views/ReviewView.class.php");
 ?>
 
 <h2>It should call show </h2>

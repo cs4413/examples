@@ -32,16 +32,6 @@ echo "LAST_NAME_HAS_INVALID_CHARS: " .Messages::getError("LAST_NAME_HAS_INVALID_
 
 ?>
 
-<h2>It should allow change of locale</h2>
-<?php 
-Messages::$locale = 'Spanish';
-Messages::reset();
-
-echo "LAST_NAME_TOO_SHORT: " .Messages::getError("LAST_NAME_TOO_SHORT")."<br>";
-echo "EMAIL_INVALID: " .Messages::getError("EMAIL_INVALID")."<br>";
-echo "LAST_NAME_HAS_INVALID_CHARS: " .Messages::getError("LAST_NAME_HAS_INVALID_CHARS")."<br>";
-
-?>
 </body>
 </html>
 
