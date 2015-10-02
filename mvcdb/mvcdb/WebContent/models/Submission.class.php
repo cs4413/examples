@@ -10,6 +10,8 @@ class Submission {
 		$this->formInput = $formInput;
 		Messages::reset();
 		$this->initialize();
+		echo "<br> in submission: ";
+		print_r($formInput);
 	}
 
 	public function getError($errorName) {
@@ -96,9 +98,16 @@ class Submission {
 	
 	private function validateSubmissionFile() {
 		// Password should not be blank
-		$this->submissionFile = $this->extractForm('submission');
-		if (empty($this->submission))
-			$this->setError('submission', 'SUBMISSION_EMPTY');
+		$this->submissionFile = '';
+		if (isset($this->formInput['submissionFile'])) {
+			$file = $this->formInput['submissionFile'];
+			if (is_null($file) || !isset($file["name"]))
+		   	    $this->setError('submissionFile', 'SUBMISSION_EMPTY');
+		    else
+		    	$this->submissionFile = $file["name"];
+		} else
+			$this->setError('submissionFile', 'SUBMISSION_EMPTY');
+		print_r($this->errors);
 	}
 }
 ?>

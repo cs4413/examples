@@ -2,8 +2,12 @@
 class SubmissionController {
 
 	public static function run() {
+		print_r($_FILES);
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			$submission = new Submission($_POST);  
+			$new_post = $_POST;
+			if (isset($_FILES["submissionFile"]))
+			   $new_post["submissionFile"] = $_FILES["submissionFile"];
+			$submission = new Submission($new_post);  
 			if ($submission->getErrorCount() != 0) 
 				SubmissionView::show($submission);
 			else {

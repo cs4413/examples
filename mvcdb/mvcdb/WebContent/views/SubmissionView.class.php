@@ -25,7 +25,7 @@ class SubmissionView {
 	   ?>
 	</span></p>
     <input type="hidden" name="MAX_FILE_SIZE" value="500000" />
-     Upload submission: <input name="submission" type="file" />
+     Upload submission: <input name="submissionFile" type="file" />
      <br><br>
     <input type="submit" value="Submit" />
   </form>
