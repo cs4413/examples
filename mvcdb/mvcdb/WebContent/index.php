@@ -9,15 +9,17 @@
 		$control = "none";
 	else 
 		$control = $urlPieces[2];
-	
 	switch ($control) {
-		case "login": 
-			LoginController::run();
+		case "login" :
+			LoginController::run ();
 			break;
-		case "review":
-				ReviewController::run();
-				break;
+		case "review" :
+			ReviewController::run ();
+			break;
+		case "submission" :
+			SubmissionController::run ();
+			break;
 		default:
 			HomeView::show(null);
-	};
+		};
 ?>	
