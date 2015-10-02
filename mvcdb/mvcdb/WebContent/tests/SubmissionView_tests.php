@@ -15,6 +15,11 @@ include_once("../views/MasterView.class.php");
 include_once("../views/SubmissionView.class.php");
 ?>
 
+<h2>It should show when $submission is null</h2>
+<?php 
+SubmissionView::show(null);
+?>
+
 <h2>It should show when $submission has an input</h2>
 <?php 
 $validTest = array("userName" => "krobbins");

@@ -2,7 +2,7 @@
 class SubmissionController {
 
 	public static function run() {
-		print_r($_FILES);
+
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			$new_post = $_POST;
 			if (isset($_FILES["submissionFile"]))

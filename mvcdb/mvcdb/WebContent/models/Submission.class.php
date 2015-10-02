@@ -1,5 +1,6 @@
 <?php
 class Submission {
+	private $uploadDir = 'uploads';
 	private $errorCount;
 	private $errors;
 	private $formInput;
@@ -10,8 +11,6 @@ class Submission {
 		$this->formInput = $formInput;
 		Messages::reset();
 		$this->initialize();
-		echo "<br> in submission: ";
-		print_r($formInput);
 	}
 
 	public function getError($errorName) {
@@ -99,14 +98,24 @@ class Submission {
 	private function validateSubmissionFile() {
 		// Password should not be blank
 		$this->submissionFile = '';
-		if (isset($this->formInput['submissionFile'])) {
-			$file = $this->formInput['submissionFile'];
-			if (is_null($file) || !isset($file["name"]))
-		   	    $this->setError('submissionFile', 'SUBMISSION_EMPTY');
-		    else
-		    	$this->submissionFile = $file["name"];
-		} else
-			$this->setError('submissionFile', 'SUBMISSION_EMPTY');
+		if (!isset($this->formInput['submissionFile'])) {
+  		   $this->setError('submissionFile', 'SUBMISSION_EMPTY');
+		   return;
+		}
+		$file = $this->formInput['submissionFile'];
+		if (is_null($file) || !isset($file["name"]) || !isset($file["tmp_name"])) {
+		   $this->setError('submissionFile', 'SUBMISSION_EMPTY');
+		   return;
+		}
+		$this->submissionFile = basename(trim($file["name"]));
+		$targetFile = dirname(__FILE__).DIRECTORY_SEPARATOR."..".
+		              DIRECTORY_SEPARATOR.$this->uploadDir.
+		              DIRECTORY_SEPARATOR.$this->submissionFile;
+
+		if (!move_uploaded_file($_FILES["submissionFile"]["tmp_name"], $targetFile)) {
+			$this->setError('submissionFile', 'SUBMISSION_UPLOAD_ERROR');
+		    return;
+		}
 		print_r($this->errors);
 	}
 }
