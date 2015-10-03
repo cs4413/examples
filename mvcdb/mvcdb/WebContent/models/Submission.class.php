@@ -4,8 +4,9 @@ class Submission {
 	private $errorCount;
 	private $errors;
 	private $formInput;
+    private $assignmentNumber;
+	private $submissionFile;   
 	private $userName;
-	private $submissionFile;   // will ultimately be a hash
 	
 	public function __construct($formInput = null) {
 		$this->formInput = $formInput;
@@ -34,6 +35,10 @@ class Submission {
 		return $this->errors;
 	}
 	
+	public function getAssignmentNumber() {
+		return $this->assignmentNumber;
+	}
+	
 	public function getSubmissionFile() {
 		return $this->submissionFile;
 	}
@@ -45,13 +50,17 @@ class Submission {
 	public function getParameters() {
 		// Return data fields as an associative array
 		$paramArray = array("userName" => $this->userName,
-				            "submissionFile" => $this->submissionFile
+				            "assignmentNumber" => $this->assignmentNumber,
+				            "submissionFile" => $this->submissionFile,
+				          
 		); 
 		return $paramArray;
 	}
 
 	public function __toString() {
-		$str = "User name: ".$this->userName."<br>SubmissionFile: ".$this->submissionFile;
+		$str = "User name: ".$this->userName."<br>".
+			    "Assignment number: ".$this->assignmentNumber."<br>".
+				"Submission file: ".$this->submissionFile;
 		return $str;
 	}
 	
@@ -73,6 +82,7 @@ class Submission {
 			$this->initializeEmpty();
 		else  {	 
 		   $this->validateUserName();
+		   $this->validateAssignmentNumber();
 		   $this->validateSubmissionFile();
 		}
 	}
@@ -82,6 +92,23 @@ class Submission {
 		$errors = array();
 	 	$this->userName = "";
 	 	$this->submissionFile = "";
+	}
+	
+	private function validateAssignmentNumber() {
+		// Username should only contain letters, numbers, dashes and underscore
+		$this->assignmentNumber = $this->extractForm('assignmentNumber');
+		if (empty($this->assignmentNumber))
+			$this->setError('assignmentNumber', 'ASSIGNMENT_NUMBER_EMPTY');
+		elseif (!is_numeric($this->assignmentNumber))
+	     	$this->setError('assignmentNumber', 'ASSIGNMENT_NUMBER_INVALID');
+		elseif (!filter_var($this->assignmentNumber, FILTER_VALIDATE_REGEXP,
+				array("options"=>array("regexp" =>"/^([0-9])+$/i")) )) {
+			$this->setError('assignmentNumber', 'ASSIGNMENT_NUMBER_INVALID');
+		} else {
+			$value = intval($this->assignmentNumber);
+			if ($value <= 0)
+				$this->setError('assignmentNumber', 'ASSIGNMENT_NUMBER_INVALID');
+		}
 	}
 
 	private function validateUserName() {
@@ -107,16 +134,18 @@ class Submission {
 		   $this->setError('submissionFile', 'SUBMISSION_EMPTY');
 		   return;
 		}
-		$this->submissionFile = basename(trim($file["name"]));
+		$info = new SplFileInfo(basename($file['name']));
+		$this->submissionFile = $this->userName . $this->assignmentNumber. "." .
+				                $info->getExtension();
+
 		$targetFile = dirname(__FILE__).DIRECTORY_SEPARATOR."..".
 		              DIRECTORY_SEPARATOR.$this->uploadDir.
 		              DIRECTORY_SEPARATOR.$this->submissionFile;
-
-		if (!move_uploaded_file($_FILES["submissionFile"]["tmp_name"], $targetFile)) {
+		
+		if (!move_uploaded_file($file["tmp_name"], $targetFile)) {
 			$this->setError('submissionFile', 'SUBMISSION_UPLOAD_ERROR');
 		    return;
 		}
-		print_r($this->errors);
 	}
 }
 ?>

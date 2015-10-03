@@ -22,7 +22,9 @@ SubmissionView::show(null);
 
 <h2>It should show when $submission has an input</h2>
 <?php 
-$validTest = array("userName" => "krobbins");
+$validTest = array("userName" => "krobbins", "assignmentNumber" => "1",
+		           "submissionFile" => array("name" => "myText.apl", "tmp_name" => "temp.1"));
+
 $s1 = new Submission($validTest);
 SubmissionView::show($s1);
 ?>

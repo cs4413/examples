@@ -1,3 +1,5 @@
+ASSIGNMENT_NUMBER_EMPTY You must give an assignment number
+ASIGNMENT_NUMBER_INVALID
 EMAIL_INVALID Your email is invalid
 FIRST_NAME_EMPTY Your first name can not be empty or only contain white space
 FIRST_NAME_HAS_INVALID_CHARS Your first name contains invalid characters
