@@ -9,7 +9,8 @@ class Database {
 	   array (PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 	
 	public static function getDB($dbName = 'classbash', 
-			                     $configPath ="../../../myConfig.ini") {
+			                     $configPath ="..". DIRECTORY_SEPARATOR. ".." . DIRECTORY_SEPARATOR.
+			                                   ".." . DIRECTORY_SEPARATOR . "myConfig.ini") {
 		if (! isset ( self::$db )) {
 			try {
 				$thePath = dirname(__FILE__).DIRECTORY_SEPARATOR.$configPath;
