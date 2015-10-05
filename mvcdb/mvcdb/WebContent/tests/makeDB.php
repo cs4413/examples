@@ -16,6 +16,7 @@ function makeDB($dbName) {
 					userId             int(11) NOT NULL AUTO_INCREMENT,
 					userName           varchar (255) UNIQUE NOT NULL COLLATE utf8_unicode_ci,
 					password           varchar(255) COLLATE utf8_unicode_ci,
+				    dateCreated    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 					PRIMARY KEY (userId)
 			)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci"
 		);
@@ -24,11 +25,12 @@ function makeDB($dbName) {
 		$st = $db->prepare( 
 		             "CREATE TABLE Submissions (
 			  	             submissionId       int(11) NOT NULL AUTO_INCREMENT,
-				             userName           varchar (255) NOT NULL COLLATE utf8_unicode_ci,
+				             userId             int(11) NOT NULL COLLATE utf8_unicode_ci,
 				             assignmentNumber   int COLLATE utf8_unicode_ci,
 				             submissionFile     varchar (255) UNIQUE NOT NULL COLLATE utf8_unicode_ci,
-				             submissionDateCreated    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-				             PRIMARY KEY (submissionId)
+				             dateCreated    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+				             PRIMARY KEY (submissionId),
+				             FOREIGN KEY (userId) REFERENCES Users(userId)
 		              )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;"
 		 );
 		$st->execute();
@@ -41,14 +43,14 @@ function makeDB($dbName) {
 	    $st->execute(array(':userId' => 3, ':userName' => 'Alice', ':password' => 'zzz'));
 	    $st->execute(array(':userId' => 4, ':userName' => 'George', ':password' => 'www'));
 		
-	    $sql = "INSERT INTO Submissions (submissionId, userName, assignmentNumber, submissionFile) 
-	                             VALUES (:submissionId, :userName, :assignmentNumber, :submissionFile)";
+	    $sql = "INSERT INTO Submissions (submissionId, userId, assignmentNumber, submissionFile) 
+	                             VALUES (:submissionId, :userId, :assignmentNumber, :submissionFile)";
 		$st = $db->prepare($sql);
-		$st->execute(array(':submissionId' => 1, ':userName' => 'Kay', 
+		$st->execute(array(':submissionId' => 1, ':userId' => 1, 
 		                   ':assignmentNumber' => '1', ':submissionFile' =>'Kay1.txt'));
-		$st->execute(array(':submissionId' => 2, ':userName' => 'Kay', 
+		$st->execute(array(':submissionId' => 2, ':userId' => 1, 
 		                   ':assignmentNumber' => '2', ':submissionFile' =>'Kay2.txt'));
-		$st->execute(array(':submissionId' => 3, ':userName' => 'John', 
+		$st->execute(array(':submissionId' => 3, ':userId' => 2, 
 		                   ':assignmentNumber' => '1', ':submissionFile' =>'John1.txt'));
 	     
 	} catch ( PDOException $e ) {
