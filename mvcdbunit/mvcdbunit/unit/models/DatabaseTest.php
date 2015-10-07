@@ -6,6 +6,7 @@ class DatabaseTest extends PHPUnit_Framework_TestCase {
 	
 	public function testOpenConnectionToValidDatabase() {
 	  DBMaker::create( 'ptest1' );
+	  Database::clearDB();
 	  $db = Database::getDB($dbName = 'ptest1', 
 	  		$configPath ="C:".DIRECTORY_SEPARATOR."xampp".DIRECTORY_SEPARATOR."myConfig.ini");
 	  $this->assertTrue($db != null, 

@@ -16,7 +16,6 @@ class Database {
 			   	    $configPath = dirname(__FILE__).DIRECTORY_SEPARATOR."..". 
 				             DIRECTORY_SEPARATOR. ".." . DIRECTORY_SEPARATOR.
 					           ".." . DIRECTORY_SEPARATOR . "myConfig.ini";
-				echo $configPath ."<br>";
 				$passArray = parse_ini_file($configPath);
 				$username = $passArray["username"];
 				$password = $passArray["password"];
