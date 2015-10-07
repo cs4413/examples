@@ -19,7 +19,7 @@ include_once("../models/Site.class.php");
 <?php 
 $validTest = array('listFile' => 'c:\\xampp\\htdocs\\classList.csv');
 $s1 = new Grades($validTest);
-GradesView::show($s1, 2);
+GradesView::show($s1, 3);
 ?>
 </body>
 </html>
