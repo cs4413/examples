@@ -1,6 +1,6 @@
 <?php
-require_once dirname(__FILE__).'\..\..\WebContent\models\Review.class.php'; 
 require_once dirname(__FILE__).'\..\..\WebContent\models\Messages.class.php';
+require_once dirname(__FILE__).'\..\..\WebContent\models\Review.class.php';
 
 class ReviewTest extends PHPUnit_Framework_TestCase {
 	
