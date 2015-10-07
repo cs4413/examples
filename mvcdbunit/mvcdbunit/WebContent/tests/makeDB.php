@@ -26,6 +26,8 @@ function makeDB($dbName) {
 		);
 		$st->execute();
 		
+		$st = $db->prepare("DROP TABLE if EXISTS Submissions");
+		$st->execute();
 		$st = $db->prepare( 
 		             "CREATE TABLE Submissions (
 			  	             submissionId       int(11) NOT NULL AUTO_INCREMENT,

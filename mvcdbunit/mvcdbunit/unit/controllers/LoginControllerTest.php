@@ -12,7 +12,8 @@ class LoginControllerTest extends PHPUnit_Framework_TestCase {
 	public function testCallRunFromPost() {
 		DBMaker::create ( 'ptest1' );
 		Database::clearDB ();
-		$db = Database::getDB ( $dbName = 'ptest1', $configPath = "C:" . DIRECTORY_SEPARATOR . "xampp" . DIRECTORY_SEPARATOR . "myConfig.ini" );
+		$db = Database::getDB ( $dbName = 'ptest1', 
+				$configPath = "C:" . DIRECTORY_SEPARATOR . "xampp" . DIRECTORY_SEPARATOR . "myConfig.ini" );
 		$_SERVER ["REQUEST_METHOD"] = "POST";
 		$_POST = array (
 				"userName" => "Kay",

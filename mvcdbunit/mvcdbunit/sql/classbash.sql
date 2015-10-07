@@ -11,6 +11,7 @@ CREATE TABLE Users (
   PRIMARY KEY (userId)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+DROP TABLE if EXISTS Submissions;
 CREATE TABLE Submissions (
   submissionId       int(11) NOT NULL AUTO_INCREMENT,
   userId             int(11) NOT NULL COLLATE utf8_unicode_ci,

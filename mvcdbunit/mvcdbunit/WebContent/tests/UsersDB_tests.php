@@ -17,7 +17,7 @@ include_once("./makeDB.php");
 ?>
 
 
-<h2>It should create get all users from a test database</h2>
+<h2>It should get all users from a test database</h2>
 <?php
 makeDB('ptest'); 
 Database::clearDB();
@@ -70,14 +70,17 @@ else echo "The value of User Alfred is:<br>$users[0]<br>";
 
 <h2>It should not get a User by a field that isn't there</h2>
 <?php
-$user = UsersDB::getUserBy('telephone', '21052348234');
-echo "The value of User with a specified telephone number is:<br>$user<br>";
+$users = UsersDB::getUsersBy('telephone', '21052348234');
+if (empty($users))
+	echo "No User with this telephone number";
+else 
+	echo "The value of User with a specified telephone number is:<br>$user<br>";
 ?>
 
 <h2>It should get a user name by user id</h2>
 <?php
-$userName = UsersDB::getUserValuesBy('userId', 1, 'userName');
-print_r($userName);
+$userNames = UsersDB::getUserValuesBy('userId', 1, 'userName');
+print_r($userNames);
 ?>
 </body>
 </html>
