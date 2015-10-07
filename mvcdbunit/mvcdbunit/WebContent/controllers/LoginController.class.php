@@ -7,9 +7,9 @@ class LoginController {
 			if ($user->getErrorCount() != 0) 
 				LoginView::show($user);
 			else {
-				$user1 = UsersDB::getUserBy('userName', $user->getUserName());
-			    if ($user1 != null) 
-				   HomeView::show($user);		
+				$users = UsersDB::getUsersBy('userName', $user->getUserName());
+			    if (!empty($users)) 
+				   HomeView::show($users[0]);		
 		        else {
 		           $user->setError('userName', 'USER_NAME_DOES_NOT_EXIST');
 				   LoginView::show($user);
