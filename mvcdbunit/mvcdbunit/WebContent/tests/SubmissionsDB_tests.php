@@ -2,10 +2,10 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Basic tests for UsersDB</title>
+<title>Basic tests for SubmissionsDB</title>
 </head>
 <body>
-<h1>UsersDB tests</h1>
+<h1>SubmissionsDB tests</h1>
 
 
 <?php

@@ -12,7 +12,14 @@ class SubmissionTest extends PHPUnit_Framework_TestCase {
     $s1 = new Submission($validTest);
     $this->assertTrue(is_a($s1, 'Submission'),
 		'It should create a valid Submission object when valid input is provided');
-
+  }
+  
+  public function testInvalidNoSubmissionFileName() {
+  	$invalidTest = array("userName" => "krobbins", "assignmentNumber" => "1");
+  	$s1 = new Submission($invalidTest);
+  	$this->assertGreaterThan(0, $s1->getErrorCount(),
+  			'It should have an error if the submission upload was not correct');
+  
   }
   
 }
