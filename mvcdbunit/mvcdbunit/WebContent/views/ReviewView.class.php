@@ -21,12 +21,12 @@ class ReviewView {
 	         ?>
 	    </section>
 		<form method="post" action="review">
-			Reviewer first name: <input type="text" name="firstName" 
+			Reviewer user name: <input type="text" name="userName" 
 			<?php if (!is_null($review)) 
-			      {echo 'value = "'. $review->getFirstName() .'"';}?>
-			required> <br>
-			<br> Reviewer last name: <input type="text" name="lastName" required>
-			<br>
+			      {echo 'value = "'. $review->getUserName() .'"';}?>
+			required
+			> <br>
+			
 			<br> Review submission ID: <input type="text" name="submissionID"
 					required> <br>
 			<br> Score: <input type="number" name="score" required min="1"

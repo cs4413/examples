@@ -17,7 +17,6 @@ class UserTest extends PHPUnit_Framework_TestCase {
   	$s1 = new User($invalidTest);
   	$this->assertGreaterThan(0, $s1->getErrorCount(),
   			'It should have an error if the user name is invalid');
-  
   }
 
 }

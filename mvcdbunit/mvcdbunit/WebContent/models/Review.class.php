@@ -3,8 +3,7 @@ class Review {
 	private $errorCount;
 	private $errors;
 	private $formInput;
-	private $firstName;
-	private $lastName;
+	private $userName;
 	private $submissionID;
 	private $score;
 	private $review;
@@ -38,14 +37,13 @@ class Review {
 		return $this->errors;
 	}
 
-	public function getFirstName() {
-		return $this->firstName;
+	public function getUserName() {
+		return $this->userName;
 	}
 	
 	public function getParameters() {
 		// Return data fields as an associative array
-		$paramArray = array("firstName" => $this->firstName,
-				            "lastName" => $this->lastName,
+		$paramArray = array("userName" => $this->userName,
 				            "submissionID" => $this->submissionID,
 				            "score" => $this->score,
 				            "review" => $this->review
@@ -54,8 +52,7 @@ class Review {
 	}
 
 	public function __toString() {
-		$str = "First name: ".$this->firstName.
-		       " Last name: ".$this->lastName.
+		$str = "User name: ".$this->userName.
 		       " Submission ID: ".$this->submissionID.
 		       " Score: ".$this->score.
 		       " Review: ".$this->review;
@@ -78,8 +75,7 @@ class Review {
 		if (is_null ( $this->formInput ))
 			$this->initializeEmpty();
 		else {
-			$this->validateFirstName();
-			$this->validateLastName();
+			$this->validateUserName();
 			$this->validateSubmissionID();
 			$this->validateScore();
 			$this->validateReview();
@@ -89,43 +85,12 @@ class Review {
 	private function initializeEmpty() {
 		$this->errorCount = 0;
 		$errors = array();
-	 	$this->firstName = "";
-	 	$this->lastName = "";
-	 	$this->submissionIDName = "";
-	 	$this->score = "";
-	 	$this->review = "";
+		$this->review = "";
+		$this->score = "";
+	 	$this->userName = "";
+	 	$this->submissionID = "";	
 	}
 
-	private function validateFirstName() {
-		// First name should only contain letters
-		$this->firstName = $this->extractForm('firstName');
-		if (empty($this->firstName))
-			$this->setError('firstName', 'FIRST_NAME_EMPTY');
-		elseif (!filter_var($this->firstName, FILTER_VALIDATE_REGEXP,
-			array("options"=>array("regexp" =>"/^([a-zA-Z])+$/i")) )) {
-			$this->setError('firstName', 'FIRST_NAME_HAS_INVALID_CHARS');
-		}
-	}
-	
-	private function validateLastName() {
-		// Last name should only contain letters, blanks, hyphens and '
-		$this->lastName = $this->extractForm('lastName');
-		if (empty($this->lastName)) 
-			$this->setError('lastName', 'LAST_NAME_EMPTY');
-		elseif (!filter_var($this->lastName, FILTER_VALIDATE_REGEXP, //todo
-				array("options"=>array("regexp" =>"/^([a-zA-Z])+$/i")) )) {
-			$this->setError('lastName', 'LAST_NAME_HAS_INVALID_CHARS');
-		}
-	}
-	
-	private function validateSubmissionID() {
-		// Submission ID should contain ..... TODO
-		$this->submissionID = $this->extractForm('submissionID');
-		if (empty($this->submissionID)) 
-			$this->setError('submissionID', 'SUBMISSION_ID_EMPTY');
-		// todo
-	}
-	
 	private function validateScore() {
 		// Score such contain ... TODO
 		$this->score = $this->extractForm('score');
@@ -138,6 +103,25 @@ class Review {
 		$this->review = $this->extractForm('review');
 		if (empty($this->review)) 
 			$this->setError('review', 'REVIEW_EMPTY');
+	}
+	
+	private function validateSubmissionID() {
+		// Submission ID should contain ..... TODO
+		$this->submissionID = $this->extractForm('submissionID');
+		if (empty($this->submissionID))
+			$this->setError('submissionID', 'SUBMISSION_ID_EMPTY');
+		// todo
+	}
+	
+	private function validateUserName() {
+		// Username should only contain letters, numbers, dashes and underscore
+		$this->userName = $this->extractForm('userName');
+		if (empty($this->userName))
+			$this->setError('userName', 'USER_NAME_EMPTY');
+		elseif (!filter_var($this->userName, FILTER_VALIDATE_REGEXP,
+				array("options"=>array("regexp" =>"/^([a-zA-Z0-9\-\_])+$/i")) )) {
+			$this->setError('userName', 'USER_NAME_HAS_INVALID_CHARS');
+		}
 	}
 }
 ?>
