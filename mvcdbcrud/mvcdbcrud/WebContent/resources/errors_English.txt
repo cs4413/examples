@@ -1,0 +1,17 @@
+ASSIGNMENT_NUMBER_EMPTY You must give an assignment number
+ASIGNMENT_NUMBER_INVALID
+EMAIL_INVALID Your email is invalid
+FIRST_NAME_EMPTY Your first name can not be empty or only contain white space
+FIRST_NAME_HAS_INVALID_CHARS Your first name contains invalid characters
+LAST_NAME_EMPTY Your last name can not be empty or only contain white space
+LAST_NAME_HAS_INVALID_CHARS Your last name contains invalid characters
+LAST_NAME_TOO_SHORT Your last name is too short
+PASSWORD_EMPTY You must provide a password
+REVIEW_EMPTY You must provide an actual review
+SCORE_EMPTY You must provide a score between 1 and 5
+SUBMISSION_ID_EMPTY You indicate the ID of the item you are reviewing
+SUBMISSION_EMPTY You must include a non-empty submission
+SUBMISSION_UPLOAD_ERROR Your file could not be uploaded
+USER_NAME_EMPTY Your user name can not be empty or only contain white space
+USER_NAME_HAS_INVALID_CHARS Your user name can only contain letters, numbers, dashes and underscores
+USER_NAME_DOES_NOT_EXIST This user name does not exist
