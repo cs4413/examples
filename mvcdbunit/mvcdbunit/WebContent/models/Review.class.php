@@ -3,10 +3,12 @@ class Review {
 	private $errorCount;
 	private $errors;
 	private $formInput;
-	private $userName;
-	private $submissionID;
-	private $score;
 	private $review;
+	private $reviewId;
+	private $score;
+	private $submissionID;
+	private $userName;
+
 	
 	public function __construct($formInput = null) {
 		$this->formInput = $formInput;
@@ -21,13 +23,6 @@ class Review {
 			return "";
 	}
 
-	public function setError($errorName, $errorValue) {
-		// Sets a particular error value and increments error count
-		if (!isset($this->errors, $errorName)) {
-   		   $this->errors[$errorName] =  Messages::getError($errorValue);
-		   $this->errorCount ++;
-		}
-	}
 
 	public function getErrorCount() {
 		return $this->errorCount;
@@ -50,12 +45,26 @@ class Review {
 		); 
 		return $paramArray;
 	}
-
+	
+	public function setError($errorName, $errorValue) {
+		// Set a particular error value and increments error count
+		if (!isset($this->errors, $errorName)) {
+			$this->errors[$errorName] =  Messages::getError($errorValue);
+			$this->errorCount ++;
+		}
+	}
+	
+	public function setReviewId($id) {
+		// Set the value of the reviewId to $id
+		$this->reviewId = $id;
+	}
+	
 	public function __toString() {
 		$str = "User name: ".$this->userName.
 		       " Submission ID: ".$this->submissionID.
 		       " Score: ".$this->score.
-		       " Review: ".$this->review;
+		       " Review: ".$this->review.
+		       " Review id: ".$this->reviewId;
 		return $str;
 	}
 	
@@ -71,6 +80,7 @@ class Review {
 	}
 	private function initialize() {
 		$this->errorCount = 0;
+		$this->reviewId = 0;
 		$errors = array ();
 		if (is_null ( $this->formInput ))
 			$this->initializeEmpty();

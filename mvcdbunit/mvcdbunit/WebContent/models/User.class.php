@@ -3,8 +3,10 @@ class User {
 	private $errorCount;
 	private $errors;
 	private $formInput;
-	private $userName;
 	private $password;   // will ultimately be a hash
+	private $userId;
+	private $userName;
+
 	
 	public function __construct($formInput = null) {
 		$this->formInput = $formInput;
@@ -13,17 +15,13 @@ class User {
 	}
 
 	public function getError($errorName) {
+		// Return the error string associated with $errorName
 		if (isset($this->errors[$errorName]))
 			return $this->errors[$errorName];
 		else
 			return "";
 	}
 
-	public function setError($errorName, $errorValue) {
-		// Sets a particular error value and increments error count
-		$this->errors[$errorName] =  Messages::getError($errorValue);
-		$this->errorCount ++;
-	}
 
 	public function getErrorCount() {
 		return $this->errorCount;
@@ -41,12 +39,24 @@ class User {
 		return $this->userName;
 	}
 	
+
 	public function getParameters() {
 		// Return data fields as an associative array
 		$paramArray = array("userName" => $this->userName,
 				            "password" => $this->password
 		); 
 		return $paramArray;
+	}
+	
+	public function setError($errorName, $errorValue) {
+		// Set a particular error value and increments error count
+		$this->errors[$errorName] =  Messages::getError($errorValue);
+		$this->errorCount ++;
+	}
+	
+	public function setUserId($id) {
+		// Set the value of the userId to $id
+		$this->userId = $id;
 	}
 
 	public function __toString() {

@@ -27,7 +27,7 @@ class ReviewView {
 			required
 			> <br>
 			
-			<br> Review submission ID: <input type="text" name="submissionID"
+			<br> Submission ID: <input type="text" name="submissionID"
 					required> <br>
 			<br> Score: <input type="number" name="score" required min="1"
 					max="5"> <br>

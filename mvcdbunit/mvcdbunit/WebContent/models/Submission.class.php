@@ -4,8 +4,9 @@ class Submission {
 	private $errorCount;
 	private $errors;
 	private $formInput;
-    private $assignmentNumber;
-	private $submissionFile;   
+	private $assignmentNumber;
+	private $submissionFile;
+	private $submissionId;
 	private $userName;
 	
 	public function __construct($formInput = null) {
@@ -21,11 +22,6 @@ class Submission {
 			return "";
 	}
 
-	public function setError($errorName, $errorValue) {
-		// Sets a particular error value and increments error count
-		$this->errors[$errorName] =  Messages::getError($errorValue);
-		$this->errorCount ++;
-	}
 
 	public function getErrorCount() {
 		return $this->errorCount;
@@ -42,6 +38,10 @@ class Submission {
 	public function getSubmissionFile() {
 		return $this->submissionFile;
 	}
+	
+	public function getSubmissionId() {
+		return $this->submissionId;
+	}
 
 	public function getUserName() {
 		return $this->userName;
@@ -50,17 +50,29 @@ class Submission {
 	public function getParameters() {
 		// Return data fields as an associative array
 		$paramArray = array("userName" => $this->userName,
-				            "assignmentNumber" => $this->assignmentNumber,
-				            "submissionFile" => $this->submissionFile,
-				          
-		); 
+				"assignmentNumber" => $this->assignmentNumber,
+				"submissionFile" => $this->submissionFile,
+				"submissionId" => $this->submissionId
+		);
 		return $paramArray;
 	}
-
+	
+	public function setError($errorName, $errorValue) {
+		// Set a particular error value and increments error count
+		$this->errors[$errorName] =  Messages::getError($errorValue);
+		$this->errorCount ++;
+	}
+	
+	public function setSubmissionId($id) {
+		// Set the value of the submissionId to $id
+		$this->submissionId = $id;
+	}
+	
 	public function __toString() {
 		$str = "User name: ".$this->userName."<br>".
 			    "Assignment number: ".$this->assignmentNumber."<br>".
-				"Submission file: ".$this->submissionFile;
+				"Submission file: ".$this->submissionFile."<br>".
+		        "Submission id: ". $this->submissionId;
 		return $str;
 	}
 	
@@ -77,6 +89,7 @@ class Submission {
 	
 	private function initialize() {
 		$this->errorCount = 0;
+		$this->submissionId = 0;
 		$errors = array();
 		if (is_null($this->formInput))
 			$this->initializeEmpty();
