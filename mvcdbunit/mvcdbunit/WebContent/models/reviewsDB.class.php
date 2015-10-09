@@ -1,31 +1,32 @@
 <?php
-class SubmissionsDB {
-	
+class ReviewsDB {
+
 	public static function getAllReviews() {
        // Return all of the reviews as an array of Review objects
-	   $query = "SELECT Submissions.assignmentNumber, Submissions.submissionFile, 
-	   		            Users.userName FROM Submissions LEFT JOIN Users ON Submissions.userId = Users.userId ";
-	   $submissions = array();
+	   $query = "SELECT Reviews.reviewId, Reviews.submissionId, Users.userName,
+	   		            Reviews.score, Reviews.review 
+	   		             FROM Reviews LEFT JOIN Users ON Reviews.userId = Users.userId ";
+	   $reviews = array();
 	   try {
 	      $db = Database::getDB();
 	      $statement = $db->prepare($query);
 	      $statement->execute();
-	      $submissions = SubmissionsDB::getSubmissionsArray ($statement->fetchAll(PDO::FETCH_ASSOC));
+	      $reviews = ReviewsDB::getReviewsArray ($statement->fetchAll(PDO::FETCH_ASSOC));
 	      $statement->closeCursor();
 		} catch (PDOException $e) { // Not permanent error handling
-			echo "<p>Error getting all submissions " . $e->getMessage () . "</p>";
+			echo "<p>Error getting all reviews " . $e->getMessage () . "</p>";
 		}
-		return $submissions;
+		return $reviews;
 	}
 	
-	public static function getSubmissionsArray($rowSets) {
-		// Return an array of User objects extracted from $rowSets
-		$submissions = array();
-		foreach ($rowSets as $submissionRow ) {
-			$submission = new Submission($submissionRow);
-			array_push ($submissions, $submission );
+	public static function getReviewsArray($rowSets) {
+		// Return an array of Review objects extracted from $rowSets
+		$reviews = array();
+		foreach ($rowSets as $reviewRow ) {
+			$review = new Review($reviewRow);
+			array_push ($reviews, $review);
 		}
-		return $submissions;
+		return $reviews;
 	}
 
 }
