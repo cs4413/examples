@@ -11,9 +11,9 @@ class SubmissionController {
 			if ($submission->getErrorCount() != 0) 
 				SubmissionView::show($submission);
 			else {
-				$user = UsersDB::getUserBy('userName', $submission->getUserName());
-			    if ($user != null) 
-				   HomeView::show($user);		
+				$users = UsersDB::getUsersBy('userName', $submission->getUserName());
+			    if ($users != null && !empty($users)) 
+				   HomeView::show($users[0]);		
 		        else {
 		           $submission->setError('userName', 'USER_NAME_DOES_NOT_EXIST');
 				   SubmissionView::show($submission);
