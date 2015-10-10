@@ -7,17 +7,20 @@
 	//print_r($urlPieces);
 	if (count($urlPieces) < 2)
 		$control = "none";
-	else 
+	else {
 		$control = $urlPieces[2];
+		$action = array_slice($urlPieces, 2);
+	}
+	print_r($action);
 	switch ($control) {
 		case "login" :
-			LoginController::run ();
+			LoginController::run ($action);
 			break;
 		case "review" :
-			ReviewController::run ();
+			ReviewController::run ($action);
 			break;
 		case "submission" :
-			SubmissionController::run ();
+			SubmissionController::run ($action);
 			break;
 		default:
 			HomeView::show(null);
