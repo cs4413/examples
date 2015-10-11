@@ -17,7 +17,7 @@ include_once("../views/ReviewView.class.php");
 <h2>It should call show </h2>
 <?php 
 
-ReviewView::show(null);
+ReviewView::show(array());
 ?>
 
 <h2>It should show successfully when review is passed to show</h2>

@@ -15,12 +15,10 @@ class LoginControllerTest extends PHPUnit_Framework_TestCase {
 		$db = Database::getDB ( $dbName = 'ptest1', 
 				$configPath = "C:" . DIRECTORY_SEPARATOR . "xampp" . DIRECTORY_SEPARATOR . "myConfig.ini" );
 		$_SERVER ["REQUEST_METHOD"] = "POST";
-		$_POST = array (
-				"userName" => "Kay",
-				"password" => "xyz" 
-		);
+		$_POST = array ("userName" => "Kay", "password" => "xyz");
+		$sessionInfo = array('base' => 'mvcdbcrud');
 		ob_start ();
-		LoginController::run ();
+        LoginController::run($sessionInfo);
 		$output = ob_get_clean ();
 		$this->assertFalse ( empty ( $output ), "It should show something from a POST" );
 	}
@@ -30,8 +28,9 @@ class LoginControllerTest extends PHPUnit_Framework_TestCase {
 		Database::clearDB ();
 		$db = Database::getDB ( $dbName = 'ptest1', $configPath = "C:" . DIRECTORY_SEPARATOR . "xampp" . DIRECTORY_SEPARATOR . "myConfig.ini" );
 		$_SERVER ["REQUEST_METHOD"] = "GET";
+		$sessionInfo = array('base' => 'mvcdbcrud');
 		ob_start ();
-		LoginController::run ();
+       LoginController::run($sessionInfo);
 		$output = ob_get_clean ();
 		$this->assertFalse ( empty ( $output ), "It should show something from a GET" );
 	}

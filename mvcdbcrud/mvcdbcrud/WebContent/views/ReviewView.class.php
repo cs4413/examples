@@ -1,15 +1,15 @@
 <?php  
 class ReviewView {
 	public static function show($sessionInfo) {
-		$session_info['headertitle'] = "Review form for ClassBash";
+		$sessionInfo['headertitle'] = "Review form for ClassBash";
 		MasterView::showHeader($sessionInfo);
 		ReviewView::showNew($sessionInfo);
-		$session_info['footertitle'] ="<h3>The footer goes here</h3>";
+		$sessionInfo['footertitle'] ="<h3>The footer goes here</h3>";
         MasterView::showFooter($sessionInfo);
 	}
 	
 	public static function showNew($sessionInfo) {
-	   $review = (array_key_exists('review', $session_info))?$session_info['review']:null;
+	   $review = (array_key_exists('review', $sessionInfo))?$sessionInfo['review']:null;
 	   echo '<h1>ClassBash review form</h1>';
        echo '<section>';
 	   if (!is_null($review) && $review->getErrors() > 0) {
