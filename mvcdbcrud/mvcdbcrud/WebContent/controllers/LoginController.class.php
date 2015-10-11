@@ -14,8 +14,10 @@ class LoginController {
 		$sessionInfo['user'] = $user;
 		if (is_null($user) || $user->getErrorCount() != 0) 
 		   LoginView::show($sessionInfo);
-		else 
-		   HomeView::show($sessionInfo);		
+		else  {
+		   HomeView::show($sessionInfo);
+		   header('Location: http://'.$_SERVER["HTTP_HOST"].'/'.$sessionInfo['base']);
+		}
 	}
 }
 ?>

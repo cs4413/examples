@@ -10,7 +10,6 @@ class MasterView {
     
     public static function showNavBar($sessionInfo) {
     	echo "<nav>";
-    	print_r($sessionInfo);
     	if (array_key_exists('user', $sessionInfo) && !is_null($sessionInfo['user']))
     		echo "Hello " . $sessionInfo['user']->getUserName();
     	echo "</nav>";
