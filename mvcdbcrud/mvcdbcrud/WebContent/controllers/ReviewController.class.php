@@ -1,15 +1,16 @@
 <?php
 class ReviewController {
 
-	public static function run() {
-		if ($_SERVER["REQUEST_METHOD"] == "POST") {
+	public static function run($sessionInfo) {
+		$review = null;
+		if ($_SERVER["REQUEST_METHOD"] == "POST")  
 			$review = new Review($_POST);  
-			if ($review->getErrorCount() == 0) 
-				HomeView::show(null);		
-		    else  
-				ReviewView::show($review);
-		} else  // Initial link
-			ReviewView::show(null);
+		
+		if (is_null($review) || $review->getErrorCount() != 0) {
+			$sessionInfo['review'] = $review;
+			reviewView::showNew($sessionInfo);
+		} else
+			HomeView::show($sessionInfo);
 	}
 }
 ?>

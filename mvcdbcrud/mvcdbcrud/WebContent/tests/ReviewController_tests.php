@@ -19,7 +19,10 @@ include_once("../views/ReviewView.class.php");
 <?php 
 //$_SERVER ["REQUEST_METHOD"] = "POST";
 //$_POST = array("firstName" => "Kay");
-ReviewController::run();
+$session_info = array('base' => 'mvcdbcrud', 'control' => 'review',
+		'action' =>'new', 'arguments' => null);
+$_POST = array("userName" => "Kay");
+ReviewController::run($session_info);
 ?>
 </body>
 </html>

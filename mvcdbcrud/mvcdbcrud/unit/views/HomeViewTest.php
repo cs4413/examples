@@ -9,18 +9,18 @@ class HomeViewTest extends PHPUnit_Framework_TestCase {
   public function testShowHomeViewWithUser() {
   	$validTest = array('userName' => 'krobbins', 'password' => '123');
   	$s1 = new User($validTest);
-  	$session_info = array('user' => $s1, 'base' => 'mvcdbcrud');
+  	$sessionInfo = array('user' => $s1, 'base' => 'mvcdbcrud');
   	ob_start();
-  	HomeView::show($session_info);
+  	HomeView::show($sessionInfo);
   	$output = ob_get_clean();
   	$this->assertFalse(empty($output),
   			"It should show a Home view when passed a valid user");
   }
   
   public function testShowHomeViewWithNullUser() {
-  	$session_info = array('user' => null, 'base' => 'mvcdbcrud');
+  	$sessionInfo = array('user' => null, 'base' => 'mvcdbcrud');
   	ob_start();
-  	$return = HomeView::show($session_info);
+  	$return = HomeView::show($sessionInfo);
   	$output = ob_get_clean();
   	$this->assertFalse(empty($output),
   			"It should show a Home view when passed a null user");

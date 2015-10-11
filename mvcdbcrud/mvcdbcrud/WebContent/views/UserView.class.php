@@ -1,9 +1,9 @@
 <?php  
 class UserView {
 	public static function show($sessionInfo) {
-		MasterView::showHeader("ClassBash User Page");
+		MasterView::showHeader($sessionInfo);
 		UserView::showDetails($sessionInfo);
-		MasterView::showFooter("<h3>The footer goes here</h3>");
+		MasterView::showFooter($sessionInfo);
 	}
 	
 	public static function showDetails($sessionInfo) {

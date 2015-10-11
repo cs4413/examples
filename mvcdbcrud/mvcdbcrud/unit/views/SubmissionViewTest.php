@@ -11,8 +11,9 @@ class SubmissionViewTest extends PHPUnit_Framework_TestCase {
 		               "submissionFile" => array("name" => "myText.apl", 
 		           		                     "tmp_name" => "temp.1"));
   	$s1 = new Submission($validTest);
+  	$sessionInfo = array('submission' => $s1, 'base' => 'mbcdbcrud');
   	ob_start();
-    SubmissionView::show($s1, "ClassBash Submission Form", "<h3>The footer goes here</h3>");
+    SubmissionView::show($sessionInfo);
     $output = ob_get_clean();
     $this->assertFalse(empty($output), 
     		"It should show a Submission view when passed a valid Submission and a header and footer");
@@ -23,8 +24,9 @@ class SubmissionViewTest extends PHPUnit_Framework_TestCase {
   			"submissionFile" => array("name" => "myText.apl",
   					"tmp_name" => "temp.1"));
   	$s1 = new Submission($validTest);
+  	$sessionInfo = array('submission' => $s1, 'base' => 'mbcdbcrud');
   	ob_start();
-  	SubmissionView::show($s1);
+  	SubmissionView::show($sessionInfo);
   	$output = ob_get_clean();
   	$this->assertFalse(empty($output),
   			"It should show a Submission view when passed a valid Submission");
@@ -37,8 +39,9 @@ class SubmissionViewTest extends PHPUnit_Framework_TestCase {
   	$s1 = new Submission($validTest);
   	$s1 -> setSubmissionId(1);
   	$submissions = array($s1, $s1);
+  	$sessionInfo = array('submissions' => $submissions, 'base' => 'mbcdbcrud');
   	ob_start();
-  	SubmissionView::showall($submissions, "ClassBash Submissions", "<h3>The footer goes here</h3>");
+  	SubmissionView::showall($sessionInfo);
   	$output = ob_get_clean();
   	$this->assertFalse(empty($output),
   			"It should show a table of Submissions when passed valid input and a header and footer");
@@ -51,8 +54,9 @@ class SubmissionViewTest extends PHPUnit_Framework_TestCase {
   	$s1 = new Submission($validTest);
   	$s1 -> setSubmissionId(1);
   	$submissions = array($s1, $s1);
+  	$sessionInfo = array('submissions' => $submissions, 'base' => 'mvcdbcrud');
   	ob_start();
-  	SubmissionView::showall($submissions);
+  	SubmissionView::showall($sessionInfo);
   	$output = ob_get_clean();
   	$this->assertFalse(empty($output),
   			"It should show a table of Submissions when passed valid input and a header and footer");

@@ -22,8 +22,9 @@ class ReviewControllerTest extends PHPUnit_Framework_TestCase {
 	           	   "score" => "5",
 		           "review" => "This was a great presentation"
 		          );
+		$sessionInfo = array('base' => "mvcdbcrud");
 		ob_start ();
-		ReviewController::run ();
+		ReviewController::run ($sessionInfo);
 		$output = ob_get_clean ();
 		$this->assertFalse ( empty ( $output ), "It should show something from a POST" );
 	}
@@ -33,8 +34,9 @@ class ReviewControllerTest extends PHPUnit_Framework_TestCase {
 		Database::clearDB ();
 		$db = Database::getDB ( $dbName = 'ptest1', $configPath = "C:" . DIRECTORY_SEPARATOR . "xampp" . DIRECTORY_SEPARATOR . "myConfig.ini" );
 		$_SERVER ["REQUEST_METHOD"] = "GET";
+		$sessionInfo = array('base' => "mvcdbcrud");
 		ob_start ();
-		ReviewController::run ();
+		ReviewController::run ($sessionInfo);
 		$output = ob_get_clean ();
 		$this->assertFalse ( empty ( $output ), "It should show something from a GET" );
 	}

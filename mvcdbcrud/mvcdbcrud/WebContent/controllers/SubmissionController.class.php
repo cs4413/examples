@@ -1,15 +1,15 @@
 <?php
 class SubmissionController {
 
-	public static function run($session_info) {
+	public static function run($sessionInfo) {
        // Perform actions related to a submission
-		$action = $session_info['action'];
-		$arguments = $session_info['arguments'];
+		$action = $sessionInfo['action'];
+		$arguments = $sessionInfo['arguments'];
         switch ($action) {
         	case null:
         		break;
         	case "new":
-        		self::newSubmission($session_info);
+        		self::newSubmission($sessionInfo);
         		break;
         	case "showdetails":
         		break;
@@ -22,7 +22,7 @@ class SubmissionController {
         }
 	}
 	
-	public static function newSubmission($session_info) {
+	public static function newSubmission($sessionInfo) {
 		// Process a new submission
 		$user = null;
 		$submission = null;
@@ -40,10 +40,10 @@ class SubmissionController {
 			}
 		}
 		if (is_null($submission) || $submission->getErrorCount() != 0) {
-			$session_info['submission'] = $submission;
-			SubmissionView::showNew($session_info);
+			$sessionInfo['submission'] = $submission;
+			SubmissionView::showNew($sessionInfo);
 		} else 
-			HomeView::show($session_info);		
+			HomeView::show($sessionInfo);		
 
 	}
 }

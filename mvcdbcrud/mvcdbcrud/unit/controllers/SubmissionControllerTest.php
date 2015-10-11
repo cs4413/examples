@@ -19,8 +19,10 @@ class SubmissionControllerTest extends PHPUnit_Framework_TestCase {
 		$_POST = array("userName" => "krobbins", "assignmentNumber" => "1",
 		           "submissionFile" => array("name" => "myText.apl", 
 		           		                     "tmp_name" => "temp.1"));
-		ob_start ();
-		SubmissionController::run ("new", null);
+		$sessionInfo = array('base' => 'mvcdbcrud', 'control' => 'submission',
+				'action' =>'new', 'arguments' => null);
+	    ob_start ();
+		SubmissionController::run ($sessionInfo);
 		$output = ob_get_clean ();
 		$this->assertFalse ( empty ( $output ), "It should show something from a POST" );
 	}
@@ -30,8 +32,10 @@ class SubmissionControllerTest extends PHPUnit_Framework_TestCase {
 		Database::clearDB ();
 		$db = Database::getDB ( $dbName = 'ptest1', $configPath = "C:" . DIRECTORY_SEPARATOR . "xampp" . DIRECTORY_SEPARATOR . "myConfig.ini" );
 		$_SERVER ["REQUEST_METHOD"] = "GET";
+		$sessionInfo = array('base' => 'mvcdbcrud', 'control' => 'submission',
+				'action' =>'new', 'arguments' => null);
 		ob_start ();
-		SubmissionController::run ("new", null);
+		SubmissionController::run ($sessionInfo);
 		$output = ob_get_clean ();
 		$this->assertFalse ( empty ( $output ), "It should show something from a GET" );
 	}
