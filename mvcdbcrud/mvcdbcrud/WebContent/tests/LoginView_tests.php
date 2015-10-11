@@ -18,14 +18,16 @@ include_once("../views/MasterView.class.php");
 <?php 
 $validTest = array("userName" => "krobbins",  "password" => "xyz");
 $s1 = new User($validTest);
-LoginView::show($s1);
+$sessionInfo = array('user' => $s1, 'base' => 'mbcdbcrud');
+LoginView::show($sessionInfo);
 ?>
 
 <h2>It should show when an error when $user is invalid</h2>
 <?php 
 $invalidTest = array("userName" => "krobbins");
 $s1 = new User($invalidTest);
-LoginView::show($s1);
+$sessionInfo = array('user' => $s1, 'base' => 'mbcdbcrud');
+LoginView::show($sessionInfo);
 ?>
 
 </body>

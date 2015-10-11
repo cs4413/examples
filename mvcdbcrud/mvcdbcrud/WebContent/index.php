@@ -34,7 +34,7 @@
 			SubmissionController::run ($session_info);
 			break;
 		default:
-			HomeView::show($base, null);
+			HomeView::show($session_info);
 	};
 	
 ?>	

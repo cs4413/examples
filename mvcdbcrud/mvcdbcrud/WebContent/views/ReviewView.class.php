@@ -1,43 +1,35 @@
 <?php  
 class ReviewView {
-	public static function show($review) {
-		MasterView::showHeader("Review form for ClassBash");
-		ReviewView::showDetails($review);
-		MasterView::showFooter("<h3>The footer goes here</h3>");
+	public static function show($sessionInfo) {
+		$session_info['headertitle'] = "Review form for ClassBash";
+		MasterView::showHeader($sessionInfo);
+		ReviewView::showNew($sessionInfo);
+		$session_info['footertitle'] ="<h3>The footer goes here</h3>";
+        MasterView::showFooter($sessionInfo);
 	}
 	
-	public static function showDetails($review) {
-?>	
-	 <h1>ClassBash review form</h1>
-     
-	 <section>
-	    <section>
-	         <?php
-	         if (!is_null($review) && $review->getErrors() > 0) {
-	             $errors = $review->getErrors();
-	             foreach($errors as $key => $value) 
-	             	echo $value . "<br>";
-	         }
-	         ?>
-	    </section>
-		<form method="post" action="review">
-			Reviewer user name: <input type="text" name="userName" 
-			<?php if (!is_null($review)) 
-			      {echo 'value = "'. $review->getUserName() .'"';}?>
-			required
-			> <br>
+	public static function showNew($sessionInfo) {
+	   $review = (array_key_exists('review', $session_info))?$session_info['review']:null;
+	   echo '<h1>ClassBash review form</h1>';
+       echo '<section>';
+	   if (!is_null($review) && $review->getErrors() > 0) {
+	      $errors = $review->getErrors();
+	      foreach($errors as $key => $value) 
+	          echo $value . "<br>";
+	   }
+	   echo '</section><form method="post" action="review">';
+	   echo 'Reviewer user name: <input type="text" name="userName"';
+	   if (!is_null($review)) 
+		   echo 'value = "'. $review->getUserName() .'"';
+	   echo 'required> <br>';
 			
-			<br> Submission ID: <input type="text" name="submissionID"
-					required> <br>
-			<br> Score: <input type="number" name="score" required min="1"
-					max="5"> <br>
-			<br> Review:<br>
-			<textarea name="review" placeholder="Write your review here"
-					rows="10" cols="80" required></textarea>
-			<br> <br> <input type="submit" value="Submit">	
-		</form>
-	</section>
-<?php 
+	   echo '<br> Submission ID: <input type="text" name="submissionID" required><br>';
+	   echo '<br> Score: <input type="number" name="score" required min="1" max="5"> <br>';
+	   echo '<br> Review:<br>';
+       echo '<textarea name="review" placeholder="Write your review here"
+					rows="10" cols="80" required></textarea><br> <br>';
+	   echo '<input type="submit" value="Submit">';
+	   echo '</form></section>'; 
 	}
 }
 ?>

@@ -7,18 +7,20 @@ require_once dirname(__FILE__).'\..\..\WebContent\views\MasterView.class.php';
 class HomeViewTest extends PHPUnit_Framework_TestCase {
 	
   public function testShowHomeViewWithUser() {
-  	$validTest = array("userName" => "krobbins", "password" => "123");
+  	$validTest = array('userName' => 'krobbins', 'password' => '123');
   	$s1 = new User($validTest);
+  	$session_info = array('user' => $s1, 'base' => 'mvcdbcrud');
   	ob_start();
-  	HomeView::show($s1);
+  	HomeView::show($session_info);
   	$output = ob_get_clean();
   	$this->assertFalse(empty($output),
   			"It should show a Home view when passed a valid user");
   }
   
   public function testShowHomeViewWithNullUser() {
+  	$session_info = array('user' => null, 'base' => 'mvcdbcrud');
   	ob_start();
-  	$return = HomeView::show(null);
+  	$return = HomeView::show($session_info);
   	$output = ob_get_clean();
   	$this->assertFalse(empty($output),
   			"It should show a Home view when passed a null user");

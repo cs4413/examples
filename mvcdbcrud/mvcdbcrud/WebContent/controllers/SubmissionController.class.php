@@ -3,7 +3,6 @@ class SubmissionController {
 
 	public static function run($session_info) {
        // Perform actions related to a submission
-		echo "<br>In submission controller action: ";
 		$action = $session_info['action'];
 		$arguments = $session_info['arguments'];
         switch ($action) {

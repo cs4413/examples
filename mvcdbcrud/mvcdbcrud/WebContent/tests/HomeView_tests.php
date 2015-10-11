@@ -16,14 +16,16 @@ include_once("../views/MasterView.class.php");
 
 <h2>It should call show without crashing</h2>
 <?php 
+$session_info = array("user" => $s1, "base" => "mvcdbcrud");
 HomeView::show(null);
 ?>
 
 <h2>It should say hello x if user exists</h2>
 <?php 
-$validTest = array("userName" => "krobbins");
+$validTest = array("userName" => "krobbins", "password" => "123");
 $s1 = new User($validTest);
-HomeView::show($s1);
+$session_info = array("user" => $s1, "base" => "mvcdbcrud");
+HomeView::show($session_info);
 ?>
 </body>
 </html>

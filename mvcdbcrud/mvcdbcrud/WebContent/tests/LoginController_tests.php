@@ -24,7 +24,8 @@ include_once("./makeDB.php");
 $myDb = makeDB('ptest');
 $_SERVER ["REQUEST_METHOD"] = "POST";
 $_POST = array("userName" => "Kay", "password" => "xyz");
-LoginController::run();
+$sessionInfo = array('base' => 'mvcdbcrud');
+LoginController::run($sessionInfo);
 ?>
 
 <h2>It should have an error when user doesn't provide a password</h2>
@@ -32,7 +33,8 @@ LoginController::run();
 $myDb = makeDB('ptest');
 $_SERVER ["REQUEST_METHOD"] = "POST";
 $_POST = array("userName" => "Kay");
-LoginController::run();
+$sessionInfo = array('base' =>'mvcdbcrud');
+LoginController::run($sessionInfo);
 ?>
 
 <h2>It should have an error when the user isn't in the database</h2>
@@ -40,13 +42,15 @@ LoginController::run();
 $myDb = makeDB('ptest');
 $_SERVER ["REQUEST_METHOD"] = "POST";
 $_POST = array("userName" => "krobbins", "password" => "xyz");
-LoginController::run();
+$sessionInfo = array('base' => 'mvcdbcrud');
+LoginController::run($sessionInfo);
 ?>
 
 <h2>It should call show the login page for a $GET request</h2>
 <?php 
 $_SERVER ["REQUEST_METHOD"] = "GET";
-LoginController::run();
+$sessionInfo = array('base'=> 'mvcdbcrud');
+LoginController::run($sessionInfo);
 ?>
 </body>
 </html>

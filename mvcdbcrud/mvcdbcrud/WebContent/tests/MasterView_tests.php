@@ -9,39 +9,40 @@
 
 <?php
 include_once("../models/Messages.class.php");
+include_once("../models/User.class.php");
 include_once("../views/MasterView.class.php");
 ?>
 
-<h2>It should call showHeader with a null title</h2>
+<h2>It should call showHeader with an empty array</h2>
 <?php 
-MasterView::showHeader(null);
+MasterView::showHeader(array());
 ?>
 
 <h2>It should call showHeader with an actual title</h2>
 <?php 
-MasterView::showHeader("This is my title");
+MasterView::showHeader(array('headertitle' =>"This is my title"));
 ?>
 
-<h2>It should call showFooter with a null footer</h2>
+<h2>It should call showFooter with an empty array</h2>
 <?php 
-MasterView::showFooter(null);
+MasterView::showFooter(array());
 ?>
 
 <h2>It should call showFooter with an actual footer</h2>
 <?php 
-MasterView::showFooter(	"<h3>The footer goes here</h3>"	);
+MasterView::showFooter(array('footertitle' =>"<h3>The footer goes here</h3>"));
 ?>
 
-<h2>It should call showNavBar with a null user</h2>
+<h2>It should call showNavBar with an empty array</h2>
 <?php 
-MasterView::showNavBar(null);
+MasterView::showNavBar(array());
 ?>
 
 <h2>It should call showNavbar with an actual user</h2>
 <?php 
 $validTest = array("userName" => "krobbins");
 $s1 = new User($validTest);
-MasterView::showNavbar($s1);
+MasterView::showNavbar(array('user' => $s1));
 ?>
 </body>
 </html>

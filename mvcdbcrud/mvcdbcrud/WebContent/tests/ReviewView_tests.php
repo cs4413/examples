@@ -25,8 +25,10 @@ ReviewView::show(null);
 $input = array("firstName" => "Kay");
 $theReview = new Review($input);
 echo "The review $theReview";
-echo "The first name is ". $theReview->getFirstName() ."<br>";
-ReviewView::show($theReview);
+echo "The user name is ". $theReview->getUserName() ."<br>";
+$sessionInfo = array('review' => $theReview,
+		'base' => "mvcdbcrud");
+ReviewView::show($sessionInfo);
 ?>
 
 <h2>It should show display the review form with errors at the top if invalid entry</h2>
@@ -34,8 +36,10 @@ ReviewView::show($theReview);
 $input = array("firstName" => "Kay#");
 $theReview = new Review($input);
 echo "The review $theReview";
-echo "The first name is ". $theReview->getFirstName() ."<br>";
-ReviewView::show($theReview);
+echo "The user name is ". $theReview->getUserName() ."<br>";
+$sessionInfo = array('review' => $theReview,
+		'base' => "mvcdbcrud");
+ReviewView::show($sessionInfo);
 ?>
 </body>
 </html>
