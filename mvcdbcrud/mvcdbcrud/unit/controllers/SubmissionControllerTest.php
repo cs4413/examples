@@ -20,7 +20,7 @@ class SubmissionControllerTest extends PHPUnit_Framework_TestCase {
 		           "submissionFile" => array("name" => "myText.apl", 
 		           		                     "tmp_name" => "temp.1"));
 		ob_start ();
-		SubmissionController::run ();
+		SubmissionController::run ("new", null);
 		$output = ob_get_clean ();
 		$this->assertFalse ( empty ( $output ), "It should show something from a POST" );
 	}
@@ -31,7 +31,7 @@ class SubmissionControllerTest extends PHPUnit_Framework_TestCase {
 		$db = Database::getDB ( $dbName = 'ptest1', $configPath = "C:" . DIRECTORY_SEPARATOR . "xampp" . DIRECTORY_SEPARATOR . "myConfig.ini" );
 		$_SERVER ["REQUEST_METHOD"] = "GET";
 		ob_start ();
-		SubmissionController::run ();
+		SubmissionController::run ("new", null);
 		$output = ob_get_clean ();
 		$this->assertFalse ( empty ( $output ), "It should show something from a GET" );
 	}

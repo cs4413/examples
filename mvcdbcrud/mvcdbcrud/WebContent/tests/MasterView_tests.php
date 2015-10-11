@@ -31,5 +31,17 @@ MasterView::showFooter(null);
 <?php 
 MasterView::showFooter(	"<h3>The footer goes here</h3>"	);
 ?>
+
+<h2>It should call showNavBar with a null user</h2>
+<?php 
+MasterView::showNavBar(null);
+?>
+
+<h2>It should call showNavbar with an actual user</h2>
+<?php 
+$validTest = array("userName" => "krobbins");
+$s1 = new User($validTest);
+MasterView::showNavbar($s1);
+?>
 </body>
 </html>

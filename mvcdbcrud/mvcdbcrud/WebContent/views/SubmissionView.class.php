@@ -1,22 +1,23 @@
 <?php
 class SubmissionView {
 
-	public static function show($submission, $header = null, $footer = null) {
+	public static function show($session_info) {
 		// Show a single Submission object
-		if (!is_null($header))
-			MasterView::showHeader($header);
-		echo '<h1>ClassBash submission</h1>';
+		$session_info['headertitle'] = "ClassBash Submission Report";
+		MasterView::showHeader($session_info);
+
+	    $submission = $session_info['submission'];
 		if (!is_null($submission)) {
 			echo '<p>Submission Id: '.$submission->getSubmissionId().'<p>';
 			echo '<p>User name: '.$submission->getUserName().'<p>';
 			echo '<p> Assignment number: '. $submission->getAssignmentNumber() .'</p>';
 			echo '<p> File name: '. $submission->getSubmissionFile() .'</p>';
 		}
-		if (!is_null($footer))
-			MasterView::showHeader($footer);
+		$session_info['footertitle'] ="<h3>The footer goes here</h3>";
+        MasterView::showFooter($session_info);
 	}
 	
-	public static function showAll($submissions = null, $header = null, $footer = null) {
+	public static function showAll($session_info) {
 		// SHow a table of submission objects with links
 		if (!is_null($header))
 		   MasterView::showHeader($header);
@@ -39,11 +40,14 @@ class SubmissionView {
 			MasterView::showFooter($footer);
 	}
 	
-	public static function showNew($submission = null, $header = null, $footer = null) {
-		if (!is_null($header))
-			MasterView::showHeader($header);
+	public static function showNew($session_info) {
+		$session_info['headertitle'] = "ClassBash Submission Report";
+		MasterView::showHeader($session_info);
+
+	    $submission = $session_info['submission'];
+		
 	   echo '<h1>ClassBash submission</h1>';
-	   echo '<form enctype="multipart/form-data" action ="submission/new" method="Post">';
+	   echo '<form enctype="multipart/form-data" action ="new" method="Post">';
 	   echo '<p>User name: <input type="text" required name ="userName"'; 
 	   if (!is_null($submission))  
 		  echo 'value = "'. $submission->getUserName() .'"';
@@ -68,7 +72,7 @@ class SubmissionView {
  
        echo '<input type="submit" value="Submit" />';
        echo '</form>';
-       if (!is_null($footer))
-       	MasterView::showFooter($footer);
+       $session_info['footertitle'] = "The footer";
+	   MasterView::showFooter($session_info);
   }
 }

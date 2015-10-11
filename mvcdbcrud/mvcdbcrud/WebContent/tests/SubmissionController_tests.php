@@ -20,18 +20,22 @@ include_once("../views/SubmissionView.class.php");
 include_once("./makeDB.php");
 ?>
 
-<h2>It should call the run method for valid input during $POST</h2>
+<h2>It should should a new submission form input during $POST with incomplete information</h2>
 <?php 
 $myDb = makeDB('ptest');
 $_SERVER ["REQUEST_METHOD"] = "POST";
+$session_info = array('base' => 'mvcdbcrud', 'control' => 'submission', 
+	                      'action' =>'new', 'arguments' => null);
 $_POST = array("userName" => "Kay");
-SubmissionController::run();
+SubmissionController::run($session_info);
 ?>
 
-<h2>It should call show the submission page for a $GET request</h2>
+<h2>It should call show a new submission form for a $GET request</h2>
 <?php 
 $_SERVER ["REQUEST_METHOD"] = "GET";
-SubmissionController::run();
+$session_info = array('base' => 'mvcdbcrud', 'control' => 'submission',
+		             'action' =>'new', 'arguments' => null);
+SubmissionController::run($session_info);
 ?>
 </body>
 </html>
