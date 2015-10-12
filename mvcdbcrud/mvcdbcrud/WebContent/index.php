@@ -10,8 +10,6 @@
 	 $_SESSION['action'] = $action;
 	 $_SESSION['arguments'] = $arguments;
 	     
-// 	$session_info = array('base' => $base, 'control' => $control, 
-// 	                      'action' =>$action, 'arguments' => $arguments);
 	switch ($control) {
 		case "login" :
 			LoginController::run ();

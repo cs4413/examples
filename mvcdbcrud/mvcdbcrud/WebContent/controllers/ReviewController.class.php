@@ -30,12 +30,10 @@ class ReviewController {
 	
 	
 	public static function newReview() {
-		// Process a new submission
+		// Process a new review
 		$review = null;
 		if ($_SERVER["REQUEST_METHOD"] == "POST")  
 			$review = new Review($_POST);  
-		echo "in new review: $review";
-
 		if (is_null($review) || $review->getErrorCount() != 0) {
 			$_SESSION['review'] = $review;
 			ReviewView::showNew();	

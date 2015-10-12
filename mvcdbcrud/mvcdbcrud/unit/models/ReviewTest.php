@@ -7,7 +7,7 @@ class ReviewTest extends PHPUnit_Framework_TestCase {
   public function testValidReviewCreate() {
   	ob_start();
   	$validTest = array("userName" => "Kay",
-             	       "submissionID" => "R3023",
+             	       "submissionId" => "R3023",
 	           	       "score" => "5",
 		               "review" => "This was a great presentation"
 		              );
@@ -20,7 +20,7 @@ class ReviewTest extends PHPUnit_Framework_TestCase {
   public function testInvalidReviewCreate() {
   	ob_start();
   	$invalidTest = array("userName" => "Kay$",
-  		                "submissionID" => "R3023",
+  		                "submissionId" => "R3023",
   			            "score" => "5",
   		            	"review" => "This was a great presentation"
   	                    );

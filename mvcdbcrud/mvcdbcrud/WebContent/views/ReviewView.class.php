@@ -25,7 +25,7 @@ class ReviewView {
 			 <th>Reviewer name</th> <th>Review score</th></tr>";
 		echo "</thead>";
 		echo "<tbody>";
-		print_r($reviews);
+	
 		foreach($reviews as $review) {
 			echo '<tr>';
 			echo '<td><a href="/'.$base.'/review/show/'.$review->getReviewId().'">Review '. $review->getReviewId().'</a></td>';

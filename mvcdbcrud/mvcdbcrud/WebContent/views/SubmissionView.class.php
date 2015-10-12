@@ -5,14 +5,8 @@ class SubmissionView {
 		// Show a single Submission object
 		$_SESSION['headertitle'] = "ClassBash Submission Report";
 		MasterView::showHeader();
-
-	    $submission = $_SESSION['submission'];
-		if (!is_null($submission)) {
-			echo '<p>Submission Id: '.$submission->getSubmissionId().'<p>';
-			echo '<p>User name: '.$submission->getUserName().'<p>';
-			echo '<p> Assignment number: '. $submission->getAssignmentNumber() .'</p>';
-			echo '<p> File name: '. $submission->getSubmissionFile() .'</p>';
-		}
+		MasterView::showNavbar();
+        SubmissionView::showDetails();
 		$_SESSION['footertitle'] ="<h3>The footer goes here</h3>";
         MasterView::showFooter();
 	}
@@ -86,7 +80,7 @@ class SubmissionView {
      $submission = $_SESSION['submission'];
 	  if (!is_null($submission)) {
 	  	echo '<p>Submission Id: '.$submission->getSubmissionId().'<p>';
-	  	echo '<p>User name: '.$submission->getUserName().'<p>';
+	  	echo '<p>Submitter: '.$submission->getUserName().'<p>';
 	  	echo '<p> Assignment number: '. $submission->getAssignmentNumber() .'</p>';
 	  	echo '<p> File name: '. $submission->getSubmissionFile() .'</p>';
 	  }

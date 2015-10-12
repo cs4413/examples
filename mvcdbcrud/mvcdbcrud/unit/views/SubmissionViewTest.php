@@ -6,7 +6,7 @@ require_once dirname(__FILE__).'\..\..\WebContent\views\SubmissionView.class.php
 
 class SubmissionViewTest extends PHPUnit_Framework_TestCase {
 	
-  public function testShowSUbmissionViewWithSubmission() {
+  public function testShowSubmissionViewWithSubmission() {
   	ob_start();
   	$validTest = array("userName" => "krobbins", "assignmentNumber" => "1",
 		               "submissionFile" => array("name" => "myText.apl", 
