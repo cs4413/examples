@@ -18,7 +18,8 @@ include_once("../views/MasterView.class.php");
 <?php 
 $validTest = array("userName" => "krobbins");
 $s1 = new User($validTest);
-UserView::show($s1);
+$_SESSION = array('user' => $s1);
+UserView::show();
 ?>
 </body>
 </html>

@@ -1,23 +1,23 @@
 <?php  
 class ReviewView {
 	
-	public static function show($sessionInfo) {
-		$sessionInfo['headertitle'] = "Review for ClassBash";
-		MasterView::showHeader($sessionInfo);
-		MasterView::showNavbar($sessionInfo);
-		ReviewView::showDetails($sessionInfo);
-		$sessionInfo['footertitle'] ="<h3>The footer goes here</h3>";
-        MasterView::showFooter($sessionInfo);
+	public static function show() {
+		$_SESSION['headertitle'] = "Review for ClassBash";
+		MasterView::showHeader();
+		MasterView::showNavbar();
+		ReviewView::showDetails();
+		$_SESSION['footertitle'] ="<h3>The footer goes here</h3>";
+        MasterView::showFooter();
 	}
 	
-	public static function showAll($sessionInfo) {
+	public static function showAll() {
 		// SHow a table of submission objects with links
-		if (array_key_exists('headertitle', $sessionInfo)) {
-			MasterView::showHeader($sessionInfo);
-			MasterView::showNavbar($sessionInfo);
+		if (array_key_exists('headertitle', $_SESSION)) {
+			MasterView::showHeader();
+			MasterView::showNavbar();
 		}
-		$reviews = (array_key_exists('reviews', $sessionInfo))?$sessionInfo['reviews']:array();
-		$base = (array_key_exists('base', $sessionInfo))?$sessionInfo['base']:"";
+		$reviews = (array_key_exists('reviews', $_SESSION))?$_SESSION['reviews']:array();
+		$base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
 		echo "<h1>ClassBash review list</h1>";
 		echo "<table>";
 		echo "<thead>";
@@ -36,13 +36,12 @@ class ReviewView {
 		}
 		echo "</tbody>";
 		echo "</table>";
-		if (array_key_exists('footertitle', $sessionInfo))
-			MasterView::showFooter($sessionInfo);
+		if (array_key_exists('footertitle', $_SESSION))
+			MasterView::showFooter();
 	}
 	
-	public static function showDetails($sessionInfo) {
-		$review = (array_key_exists('review', $sessionInfo))?$sessionInfo['review']:null;
-		$review = $sessionInfo['review'];
+	public static function showDetails() {
+		$review = (array_key_exists('review', $_SESSION))?$_SESSION['review']:null;
 		if (!is_null($review)) {
 			echo '<p>Review Id: '.$review->getReviewId().'<p>';
 			echo '<p>Submission Id: '.$review->getSubmissionId().'<p>';
@@ -52,9 +51,9 @@ class ReviewView {
 		}
 	}
 	
-	public static function showNew($sessionInfo) {
-	   $review = (array_key_exists('review', $sessionInfo))?$sessionInfo['review']:null;
-	   $base = (array_key_exists('base', $sessionInfo))?$sessionInfo['base']:"";
+	public static function showNew() {
+	   $review = (array_key_exists('review', $_SESSION))?$_SESSION['review']:null;
+	   $base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
 	   echo '<h1>ClassBash review form</h1>';
        echo '<section>';
 	   if (!is_null($review) && $review->getErrors() > 0) {

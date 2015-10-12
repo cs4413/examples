@@ -1,26 +1,26 @@
 <?php
 class ReviewController {
 
-	public static function run($sessionInfo) {
+	public static function run() {
 		// Perform actions related to a review
-		$action = $sessionInfo['action'];
-		$arguments = $sessionInfo['arguments'];
+		$action = $_SESSION['action'];
+		$arguments = $_SESSION['arguments'];
 		switch ($action) {
 			case "new":
-				self::newReview($sessionInfo);
+				self::newReview();
 				break;
 			case "show":
 				if (!is_null($arguments) && $arguments > 0) {
 				   $reviews = ReviewsDB::getReviewsBy('reviewId', $arguments);
-				   $sessionInfo['review'] = (!empty($reviews))?$reviews[0]:null;
-				   ReviewView::show($sessionInfo);
+				   $_SESSION['review'] = (!empty($reviews))?$reviews[0]:null;
+				   ReviewView::show();
 				}
 				break;
 			case  "showall":
-				$sessionInfo['reviews'] = reviewsDB::getAllReviews();
-				$sessionInfo['headertitle'] = "ClassBash Reviews";
-				$sessionInfo['footertitle'] = "<h3>The footer goes here</h3>";
-				ReviewView::showall($sessionInfo);
+				$_SESSION['reviews'] = reviewsDB::getAllReviews();
+				$_SESSION['headertitle'] = "ClassBash Reviews";
+				$_SESSION['footertitle'] = "<h3>The footer goes here</h3>";
+				ReviewView::showall();
 				break;
 			case "update":
 				break;
@@ -29,7 +29,7 @@ class ReviewController {
 	}
 	
 	
-	public static function newReview($sessionInfo) {
+	public static function newReview() {
 		// Process a new submission
 		$review = null;
 		if ($_SERVER["REQUEST_METHOD"] == "POST")  
@@ -37,11 +37,11 @@ class ReviewController {
 		echo "in new review: $review";
 
 		if (is_null($review) || $review->getErrorCount() != 0) {
-			$sessionInfo['review'] = $review;
-			ReviewView::showNew($sessionInfo);	
+			$_SESSION['review'] = $review;
+			ReviewView::showNew();	
 		} else {
-			HomeView::show($sessionInfo);
-			header('Location: http://'.$_SERVER["HTTP_HOST"].'/'.$sessionInfo['base']);
+			HomeView::show();
+			header('Location: http://'.$_SERVER["HTTP_HOST"].'/'.$_SESSION['base']);
 		}
 	}
 }

@@ -1,3 +1,4 @@
+<?php ob_start(); echo "hello"; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,12 +21,15 @@ include_once("./makeDB.php");
 ?>
 
 <h2>It should call the run method for valid input during $POST</h2>
+
 <?php 
 $myDb = makeDB('ptest');
 $_SERVER ["REQUEST_METHOD"] = "POST";
+$_SERVER["REQUEST_URI"] = "/mvcdbcrud/login";
 $_POST = array("userName" => "Kay", "password" => "xyz");
-$sessionInfo = array('base' => 'mvcdbcrud');
-LoginController::run($sessionInfo);
+$_SESSION = array('base' => 'mvcdbcrud', 'login' => '', 
+		          'action' => '', 'arguments' => null);
+LoginController::run();
 ?>
 
 <h2>It should have an error when user doesn't provide a password</h2>
@@ -33,8 +37,8 @@ LoginController::run($sessionInfo);
 $myDb = makeDB('ptest');
 $_SERVER ["REQUEST_METHOD"] = "POST";
 $_POST = array("userName" => "Kay");
-$sessionInfo = array('base' =>'mvcdbcrud');
-LoginController::run($sessionInfo);
+$_SESSION = array('base' =>'mvcdbcrud');
+LoginController::run();
 ?>
 
 <h2>It should have an error when the user isn't in the database</h2>
@@ -42,15 +46,16 @@ LoginController::run($sessionInfo);
 $myDb = makeDB('ptest');
 $_SERVER ["REQUEST_METHOD"] = "POST";
 $_POST = array("userName" => "krobbins", "password" => "xyz");
-$sessionInfo = array('base' => 'mvcdbcrud');
-LoginController::run($sessionInfo);
+$_SESSION = array('base' => 'mvcdbcrud');
+LoginController::run();
 ?>
 
 <h2>It should call show the login page for a $GET request</h2>
 <?php 
 $_SERVER ["REQUEST_METHOD"] = "GET";
-$sessionInfo = array('base'=> 'mvcdbcrud');
-LoginController::run($sessionInfo);
+$_SESSION = array('base'=> 'mvcdbcrud');
+LoginController::run();
 ?>
 </body>
 </html>
+<?php ob_end_flush(); ?>

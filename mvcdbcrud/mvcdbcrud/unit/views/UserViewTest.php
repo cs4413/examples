@@ -10,17 +10,17 @@ class UserViewTest extends PHPUnit_Framework_TestCase {
   	ob_start();
   	$validTest = array("userName" => "krobbins", "password" => "123");
   	$s1 = new User($validTest);
-  	$sessionInfo = array('user' => $s1, 'base' => 'mvcdbcrud');
-    UserView::show($sessionInfo);
+  	$_SESSION = array('user' => $s1, 'base' => 'mvcdbcrud');
+    UserView::show();
     $output = ob_get_clean();
     $this->assertFalse(empty($output), 
     		"It should show a User view when passed a valid user");
   }
   
   public function testShowUserViewWithNullUser() {
-  	ob_start();
-   	$sessionInfo = array('user' => null, 'base' => 'mvcdbcrud');
-     $return = UserView::show($sessionInfo);
+  	 ob_start();
+     $_SESSION = array('user' => null, 'base' => 'mvcdbcrud');
+     $return = UserView::show();
      $output = ob_get_clean();
      $this->assertFalse(empty($output),
     		"It should show a User view when passed a null user");

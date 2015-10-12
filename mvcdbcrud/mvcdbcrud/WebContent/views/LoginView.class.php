@@ -1,17 +1,17 @@
 <?php  
 class LoginView {
-	public static function show($sessionInfo) {
-		$sessionInfo['headertitle'] = "ClassBash Login Form";
-		MasterView::showHeader($sessionInfo);
-		LoginView::showDetails($sessionInfo);
-		$sessionInfo['footertitle'] = "<h3>The footer goes here</h3>";
-		MasterView::showFooter($sessionInfo);
+	public static function show() {
+		$_SESSION['headertitle'] = "ClassBash Login Form";
+		MasterView::showHeader();
+		LoginView::showDetails();
+		$_SESSION['footertitle'] = "<h3>The footer goes here</h3>";
+		MasterView::showFooter();
 	}
 	
-	public static function showDetails($sessionInfo) {
+	public static function showDetails() {
 	 // Show the details of the form
-	   $user = (array_key_exists('user', $sessionInfo))?$sessionInfo['user']:null;
-	   $base = (array_key_exists('base', $sessionInfo))?$sessionInfo['base']:"";
+	   $user = (array_key_exists('user', $_SESSION))?$_SESSION['user']:null;
+	   $base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
 	   echo '<h1>ClassBash login</h1>';
 	   echo '<form action ="login" method="Post">';
 	   echo '<p>User name: <input type="text" name ="userName"';

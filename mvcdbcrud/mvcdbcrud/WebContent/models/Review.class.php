@@ -134,7 +134,7 @@ class Review {
 	
 	private function validateSubmissionId() {
 		// Submission ID should contain ..... TODO
-		$this->submissionID = $this->extractForm('submissionId');
+		$this->submissionId = $this->extractForm('submissionId');
 		if (empty($this->submissionId))
 			$this->setError('submissionId', 'SUBMISSION_ID_EMPTY');
 		// todo

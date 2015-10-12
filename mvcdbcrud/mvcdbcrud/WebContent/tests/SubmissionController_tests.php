@@ -24,18 +24,18 @@ include_once("./makeDB.php");
 <?php 
 $myDb = makeDB('ptest');
 $_SERVER ["REQUEST_METHOD"] = "POST";
-$sessionInfo = array('base' => 'mvcdbcrud', 'control' => 'submission', 
+$_SESSION = array('base' => 'mvcdbcrud', 'control' => 'submission', 
 	                      'action' =>'new', 'arguments' => null);
 $_POST = array("userName" => "Kay");
-SubmissionController::run($sessionInfo);
+SubmissionController::run();
 ?>
 
 <h2>It should call show a new submission form for a $GET request</h2>
 <?php 
 $_SERVER ["REQUEST_METHOD"] = "GET";
-$sessionInfo = array('base' => 'mvcdbcrud', 'control' => 'submission',
+$_SESSION = array('base' => 'mvcdbcrud', 'control' => 'submission',
 		             'action' =>'new', 'arguments' => null);
-SubmissionController::run($sessionInfo);
+SubmissionController::run();
 ?>
 </body>
 </html>

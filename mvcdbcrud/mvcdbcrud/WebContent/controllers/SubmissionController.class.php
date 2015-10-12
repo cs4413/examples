@@ -1,27 +1,27 @@
 <?php
 class SubmissionController {
 
-	public static function run($sessionInfo) {
+	public static function run() {
        // Perform actions related to a submission
-		$action = $sessionInfo['action'];
-		$arguments = $sessionInfo['arguments'];
+		$action = $_SESSION['action'];
+		$arguments = $_SESSION['arguments'];
         switch ($action) {
         	case "new":
-        		self::newSubmission($sessionInfo);
+        		self::newSubmission();
         		break;
         	case "show":
         		break;
         	case  "showall":
-        		$sessionInfo['submissions'] = SubmissionsDB::getAllSubmissions();
-        		$sessionInfo['headertitle'] = "ClassBash Submissions";
-        		$sessionInfo['footertitle'] = "<h3>The footer goes here</h3>";
-        		SubmissionView::showall($sessionInfo);
+        		$_SESSION['submissions'] = SubmissionsDB::getAllSubmissions();
+        		$_SESSION['headertitle'] = "ClassBash Submissions";
+        		$_SESSION['footertitle'] = "<h3>The footer goes here</h3>";
+        		SubmissionView::showall();
         		break;
         	default:
         }
 	}
 	
-	public static function newSubmission($sessionInfo) {
+	public static function newSubmission() {
 		// Process a new submission
 		$user = null;
 		$submission = null;
@@ -39,11 +39,11 @@ class SubmissionController {
 			}
 		}
 		if (is_null($submission) || $submission->getErrorCount() != 0) {
-			$sessionInfo['submission'] = $submission;
-			SubmissionView::showNew($sessionInfo);
+			$_SESSION['submission'] = $submission;
+			SubmissionView::showNew();
 		} else {
-			HomeView::show($sessionInfo);	
-			header('Location: http://'.$_SERVER["HTTP_HOST"].'/'.$sessionInfo['base']);
+			HomeView::show();	
+			header('Location: http://'.$_SERVER["HTTP_HOST"].'/'.$_SESSION['base']);
 		}
 
 	}

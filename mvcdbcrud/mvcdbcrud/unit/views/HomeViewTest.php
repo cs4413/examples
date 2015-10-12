@@ -10,8 +10,8 @@ class HomeViewTest extends PHPUnit_Framework_TestCase {
   	ob_start();
   	$validTest = array('userName' => 'krobbins', 'password' => '123');
   	$s1 = new User($validTest);
-  	$sessionInfo = array('user' => $s1, 'base' => 'mvcdbcrud');
-  	HomeView::show($sessionInfo);
+  	$_SESSION = array('user' => $s1, 'base' => 'mvcdbcrud');
+  	HomeView::show();
   	$output = ob_get_clean();
   	$this->assertFalse(empty($output),
   			"It should show a Home view when passed a valid user");
@@ -19,8 +19,8 @@ class HomeViewTest extends PHPUnit_Framework_TestCase {
   
   public function testShowHomeViewWithNullUser() {
   	ob_start();
-  	$sessionInfo = array('user' => null, 'base' => 'mvcdbcrud');
-  	$return = HomeView::show($sessionInfo);
+  	$_SESSION = array('user' => null, 'base' => 'mvcdbcrud');
+  	$return = HomeView::show();
   	$output = ob_get_clean();
   	$this->assertFalse(empty($output),
   			"It should show a Home view when passed a null user");

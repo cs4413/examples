@@ -23,12 +23,12 @@ class ReviewControllerTest extends PHPUnit_Framework_TestCase {
 		$_SERVER ["REQUEST_METHOD"] = "POST";
 		$_POST =  array("firstName" => "Kay",
                    "lastName" => "Robbins",
-             	   "submissionID" => "R3023",
+             	   "submissionId" => "R3023",
 	           	   "score" => "5",
 		           "review" => "This was a great presentation"
 		          );
-		$sessionInfo = array('base' => 'mvcdbcrud', 'action' => 'new', 'arguments' => null);
-		ReviewController::run ($sessionInfo);
+		$_SESSION = array('base' => 'mvcdbcrud', 'action' => 'new', 'arguments' => null);
+		ReviewController::run ();
 		$output = ob_get_clean();
 		$this->assertFalse ( empty ( $output ), "It should show something from a POST" );
 	}
@@ -42,9 +42,9 @@ class ReviewControllerTest extends PHPUnit_Framework_TestCase {
 		Database::clearDB ();
 		$db = Database::getDB ( $dbName = 'ptest1', $configPath = "C:" . DIRECTORY_SEPARATOR . "xampp" . DIRECTORY_SEPARATOR . "myConfig.ini" );
 		$_SERVER ["REQUEST_METHOD"] = "GET";
-		$sessionInfo = array('base' => 'mvcdbcrud', 'action' => 'new', 'arguments' => null);
+		$_SESSION = array('base' => 'mvcdbcrud', 'action' => 'new', 'arguments' => null);
 
-		ReviewController::run ($sessionInfo);
+		ReviewController::run();
 		$output = ob_get_clean();
 		$this->assertFalse ( empty ( $output ), "It should show something from a GET" );
 	}

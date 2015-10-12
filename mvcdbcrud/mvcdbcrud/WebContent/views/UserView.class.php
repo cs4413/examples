@@ -1,12 +1,12 @@
 <?php  
 class UserView {
-	public static function show($sessionInfo) {
-		MasterView::showHeader($sessionInfo);
-		UserView::showDetails($sessionInfo);
-		MasterView::showFooter($sessionInfo);
+	public static function show() {
+		MasterView::showHeader();
+		UserView::showDetails();
+		MasterView::showFooter();
 	}
 	
-	public static function showDetails($sessionInfo) {
+	public static function showDetails() {
 	   echo "I am the user";
 	}
 }

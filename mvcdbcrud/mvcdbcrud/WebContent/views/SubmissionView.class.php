@@ -1,30 +1,30 @@
 <?php
 class SubmissionView {
 
-	public static function show($sessionInfo) {
+	public static function show() {
 		// Show a single Submission object
-		$sessionInfo['headertitle'] = "ClassBash Submission Report";
-		MasterView::showHeader($sessionInfo);
+		$_SESSION['headertitle'] = "ClassBash Submission Report";
+		MasterView::showHeader();
 
-	    $submission = $sessionInfo['submission'];
+	    $submission = $_SESSION['submission'];
 		if (!is_null($submission)) {
 			echo '<p>Submission Id: '.$submission->getSubmissionId().'<p>';
 			echo '<p>User name: '.$submission->getUserName().'<p>';
 			echo '<p> Assignment number: '. $submission->getAssignmentNumber() .'</p>';
 			echo '<p> File name: '. $submission->getSubmissionFile() .'</p>';
 		}
-		$sessionInfo['footertitle'] ="<h3>The footer goes here</h3>";
-        MasterView::showFooter($sessionInfo);
+		$_SESSION['footertitle'] ="<h3>The footer goes here</h3>";
+        MasterView::showFooter();
 	}
 	
-	public static function showAll($sessionInfo) {
+	public static function showAll() {
 		// SHow a table of submission objects with links
-		if (array_key_exists('headertitle', $sessionInfo)) {
-			MasterView::showHeader($sessionInfo);
-			MasterView::showNavbar($sessionInfo);
+		if (array_key_exists('headertitle', $_SESSION)) {
+			MasterView::showHeader();
+			MasterView::showNavbar();
 		}
-		$submissions = (array_key_exists('submissions', $sessionInfo))?$sessionInfo['submissions']:array();
-		$base = (array_key_exists('base', $sessionInfo))?$sessionInfo['base']:"";
+		$submissions = (array_key_exists('submissions', $_SESSION))?$_SESSION['submissions']:array();
+		$base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
 
 		echo "<h1>ClassBash submission list</h1>";
 		echo "<table>";
@@ -41,15 +41,15 @@ class SubmissionView {
 		}
 		echo "</tbody>";
 		echo "</table>";
-		if (array_key_exists('footertitle', $sessionInfo))
-			MasterView::showFooter($sessionInfo);
+		if (array_key_exists('footertitle', $_SESSION))
+			MasterView::showFooter();
 	}
 	
-	public static function showNew($sessionInfo) {
-		$sessionInfo['headertitle'] = "ClassBash Submission Report";
-		MasterView::showHeader($sessionInfo);
+	public static function showNew() {
+		$_SESSION['headertitle'] = "ClassBash Submission Report";
+		MasterView::showHeader();
 
-	    $submission = $sessionInfo['submission'];
+	    $submission = $_SESSION['submission'];
 		
 	   echo '<h1>ClassBash submission</h1>';
 	   echo '<form enctype="multipart/form-data" action ="new" method="Post">';
@@ -77,13 +77,13 @@ class SubmissionView {
  
        echo '<input type="submit" value="Submit" />';
        echo '</form>';
-       $sessionInfo['footertitle'] = "The footer";
-	   MasterView::showFooter($sessionInfo);
+       $_SESSION['footertitle'] = "The footer";
+	   MasterView::showFooter();
   }
   
-  public static function showDetails($sessionInfo) {
-  	 $submission = (array_key_exists('submission', $sessionInfo))?$sessionInfo['submission']:null;
-     $submission = $sessionInfo['submission'];
+  public static function showDetails() {
+  	 $submission = (array_key_exists('submission', $_SESSION))?$_SESSION['submission']:null;
+     $submission = $_SESSION['submission'];
 	  if (!is_null($submission)) {
 	  	echo '<p>Submission Id: '.$submission->getSubmissionId().'<p>';
 	  	echo '<p>User name: '.$submission->getUserName().'<p>';
