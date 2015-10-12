@@ -32,7 +32,7 @@ class ReviewsDB {
 			$db = Database::getDB();
 			if (!is_null($value)) {
 				$query = "$query WHERE ($type = :$type)";
-			     $statement = $db->prepare($query);
+			    $statement = $db->prepare($query);
 			    $statement->bindParam(":$type", $value);
 	     	} else 
 			    $statement = $db->prepare($query);

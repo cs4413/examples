@@ -56,7 +56,7 @@ class Review {
 		// Return data fields as an associative array
 		$paramArray = array("userName" => $this->userName,
 			            	"reviewId" => $this->reviewId,
-				            "submissionID" => $this->submissionId,
+				            "submissionId" => $this->submissionId,
 				            "score" => $this->score,
 				            "review" => $this->review
 		); 
@@ -78,10 +78,10 @@ class Review {
 	
 	public function __toString() {
 		$str = "User name: ".$this->userName.
-		       " Submission ID: ".$this->submissionId.
+		       " Submission Id: ".$this->submissionId.
 		       " Score: ".$this->score.
 		       " Review: ".$this->review.
-		       " Review id: ".$this->reviewId;
+		       " Review Id: ".$this->reviewId;
 		return $str;
 	}
 	

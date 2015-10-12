@@ -25,6 +25,7 @@ class ReviewView {
 			 <th>Reviewer name</th> <th>Review score</th></tr>";
 		echo "</thead>";
 		echo "<tbody>";
+		print_r($reviews);
 		foreach($reviews as $review) {
 			echo '<tr>';
 			echo '<td><a href="/'.$base.'/review/show/'.$review->getReviewId().'">Review '. $review->getReviewId().'</a></td>';
@@ -67,8 +68,14 @@ class ReviewView {
 		   echo 'value = "'. $review->getUserName() .'"';
 	   echo 'required> <br>';
 			
-	   echo '<br> Submission Id: <input type="text" name="submissionId" required><br>';
-	   echo '<br> Score: <input type="number" name="score" required min="1" max="5"> <br>';
+	   echo '<br> Submission Id: <input type="text" name="submissionId"';
+	   if (!is_null($review)) 
+		   echo 'value = "'. $review->getSubmissionId() .'"';
+	   echo 'required> <br>';
+	   echo '<br> Score: <input type="number" name="score"';
+	   if (!is_null($review))
+	   	  echo 'value = "'. $review->getScore() .'"';
+	   echo 'required min="1" max="5"> <br>';
 	   echo '<br> Review:<br>';
        echo '<textarea name="review" placeholder="Write your review here"
 					rows="10" cols="80" required></textarea><br> <br>';
