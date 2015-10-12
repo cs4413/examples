@@ -6,7 +6,6 @@ class makeDBTest extends PHPUnit_Framework_TestCase {
 	
   public function testValidUserCreate() {
     $myDb = DBMaker::create ('ptest');
- 
   }
 }
 ?>

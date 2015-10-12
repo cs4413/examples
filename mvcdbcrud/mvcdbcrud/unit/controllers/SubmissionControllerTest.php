@@ -11,7 +11,11 @@ require_once dirname ( __FILE__ ) . '\..\..\WebContent\tests\makeDB.php';
 
 class SubmissionControllerTest extends PHPUnit_Framework_TestCase {
 	
+	/**
+	 * @runInSeparateProcess
+	 */
 	public function testCallRunFromPost() {
+		ob_start ();
 		DBMaker::create ( 'ptest1' );
 		Database::clearDB ();
 		$db = Database::getDB ( $dbName = 'ptest1', $configPath = "C:" . DIRECTORY_SEPARATOR . "xampp" . DIRECTORY_SEPARATOR . "myConfig.ini" );
@@ -21,22 +25,26 @@ class SubmissionControllerTest extends PHPUnit_Framework_TestCase {
 		           		                     "tmp_name" => "temp.1"));
 		$sessionInfo = array('base' => 'mvcdbcrud', 'control' => 'submission',
 				'action' =>'new', 'arguments' => null);
-	    ob_start ();
+
 		SubmissionController::run ($sessionInfo);
-		$output = ob_get_clean ();
+		$output = ob_get_clean();
 		$this->assertFalse ( empty ( $output ), "It should show something from a POST" );
 	}
 	
+	/**
+	 * @runInSeparateProcess
+	 */
 	public function testCallRunFromGet() {
+		ob_start ();
 		DBMaker::create ( 'ptest1' );
 		Database::clearDB ();
 		$db = Database::getDB ( $dbName = 'ptest1', $configPath = "C:" . DIRECTORY_SEPARATOR . "xampp" . DIRECTORY_SEPARATOR . "myConfig.ini" );
 		$_SERVER ["REQUEST_METHOD"] = "GET";
 		$sessionInfo = array('base' => 'mvcdbcrud', 'control' => 'submission',
 				'action' =>'new', 'arguments' => null);
-		ob_start ();
+
 		SubmissionController::run ($sessionInfo);
-		$output = ob_get_clean ();
+		$output = ob_get_clean();
 		$this->assertFalse ( empty ( $output ), "It should show something from a GET" );
 	}
 }

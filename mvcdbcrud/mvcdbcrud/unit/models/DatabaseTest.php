@@ -14,9 +14,10 @@ class DatabaseTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testOpenConnectionToInvalidDatabase() {
+		ob_start();
 		DBMaker::delete( 'ptest1' );
 		Database::clearDB();
-		ob_start();
+
 		$db = Database::getDB($dbName = 'ptest1',
 				$configPath ="C:".DIRECTORY_SEPARATOR."xampp".DIRECTORY_SEPARATOR."myConfig.ini");
 		$output = ob_get_clean();

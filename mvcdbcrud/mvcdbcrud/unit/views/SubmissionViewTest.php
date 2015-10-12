@@ -7,12 +7,12 @@ require_once dirname(__FILE__).'\..\..\WebContent\views\SubmissionView.class.php
 class SubmissionViewTest extends PHPUnit_Framework_TestCase {
 	
   public function testShowSUbmissionViewWithSubmission() {
+  	ob_start();
   	$validTest = array("userName" => "krobbins", "assignmentNumber" => "1",
 		               "submissionFile" => array("name" => "myText.apl", 
 		           		                     "tmp_name" => "temp.1"));
   	$s1 = new Submission($validTest);
   	$sessionInfo = array('submission' => $s1, 'base' => 'mbcdbcrud');
-  	ob_start();
     SubmissionView::show($sessionInfo);
     $output = ob_get_clean();
     $this->assertFalse(empty($output), 
@@ -20,12 +20,13 @@ class SubmissionViewTest extends PHPUnit_Framework_TestCase {
   }
   
   public function testShowSubmissionViewWithoutHeaderAndFooter() {
+  	ob_start();
   	$validTest = array("userName" => "krobbins", "assignmentNumber" => "1",
   			"submissionFile" => array("name" => "myText.apl",
   					"tmp_name" => "temp.1"));
   	$s1 = new Submission($validTest);
   	$sessionInfo = array('submission' => $s1, 'base' => 'mbcdbcrud');
-  	ob_start();
+
   	SubmissionView::show($sessionInfo);
   	$output = ob_get_clean();
   	$this->assertFalse(empty($output),
@@ -33,6 +34,7 @@ class SubmissionViewTest extends PHPUnit_Framework_TestCase {
   }
   
   public function testShowAllSubmissions() {
+  	ob_start();
   	$validTest = array("userName" => "krobbins", "assignmentNumber" => "1",
   			"submissionFile" => array("name" => "myText.apl",
   					"tmp_name" => "temp.1"));
@@ -40,7 +42,6 @@ class SubmissionViewTest extends PHPUnit_Framework_TestCase {
   	$s1 -> setSubmissionId(1);
   	$submissions = array($s1, $s1);
   	$sessionInfo = array('submissions' => $submissions, 'base' => 'mbcdbcrud');
-  	ob_start();
   	SubmissionView::showall($sessionInfo);
   	$output = ob_get_clean();
   	$this->assertFalse(empty($output),
@@ -48,6 +49,7 @@ class SubmissionViewTest extends PHPUnit_Framework_TestCase {
   }
   
   public function testShowAllSubmissionsWithNoHeaderAndFooter() {
+  	ob_start();
   	$validTest = array("userName" => "krobbins", "assignmentNumber" => "1",
   			"submissionFile" => array("name" => "myText.apl",
   					"tmp_name" => "temp.1"));
@@ -55,7 +57,7 @@ class SubmissionViewTest extends PHPUnit_Framework_TestCase {
   	$s1 -> setSubmissionId(1);
   	$submissions = array($s1, $s1);
   	$sessionInfo = array('submissions' => $submissions, 'base' => 'mvcdbcrud');
-  	ob_start();
+
   	SubmissionView::showall($sessionInfo);
   	$output = ob_get_clean();
   	$this->assertFalse(empty($output),

@@ -24,7 +24,6 @@ class LoginViewTest extends PHPUnit_Framework_TestCase {
   	$output = ob_get_clean();
   	$this->assertFalse(empty($output),
   			"It should show a Login view when passed a null user");
-  
   }
 
 }
