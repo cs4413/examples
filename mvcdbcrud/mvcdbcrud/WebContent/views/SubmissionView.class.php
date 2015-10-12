@@ -82,6 +82,7 @@ class SubmissionView {
   }
   
   public static function showDetails($sessionInfo) {
+  	 $submission = (array_key_exists('submission', $sessionInfo))?$sessionInfo['submission']:null;
      $submission = $sessionInfo['submission'];
 	  if (!is_null($submission)) {
 	  	echo '<p>Submission Id: '.$submission->getSubmissionId().'<p>';

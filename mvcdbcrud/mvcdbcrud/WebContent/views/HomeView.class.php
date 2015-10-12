@@ -17,6 +17,7 @@ class HomeView {
 	  echo '<h3><a href="/'.$base.'/login">Would you like to login?</a></h3>';  
 	  echo '<h3><a href="/'.$base.'/submission/new">Would you like to make a submission</a></h3>'; 
 	  echo '<h3><a href="/'.$base.'/submission/showall">Would you like to show all submissions</a></h3>';
+	  echo '<h3><a href="/'.$base.'/review/showall">Would you like to show all reviews</a></h3>';
 	  echo '<h3><a href="/'.$base.'/review/new">Would you like to review?</a></h3>'; 
 	  echo '<h3><a href="/'.$base.'/tests.html">Would you like to run the tests?</a></h3>';  
    }

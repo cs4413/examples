@@ -6,7 +6,7 @@ class Review {
 	private $review;
 	private $reviewId;
 	private $score;
-	private $submissionID;
+	private $submissionId;
 	private $userName;
 
 	
@@ -31,7 +31,23 @@ class Review {
 	public function getErrors() {
 		return $this->errors;
 	}
-
+	
+	public function getReview() {
+		return $this->review;
+	}
+	
+	public function getReviewId() {
+		return $this->reviewId;
+	}
+	
+	public function getScore() {
+		return $this->score;
+	}
+	
+	public function getSubmissionId() {
+		return $this->submissionId;
+	}
+	
 	public function getUserName() {
 		return $this->userName;
 	}
@@ -39,7 +55,8 @@ class Review {
 	public function getParameters() {
 		// Return data fields as an associative array
 		$paramArray = array("userName" => $this->userName,
-				            "submissionID" => $this->submissionID,
+			            	"reviewId" => $this->reviewId,
+				            "submissionID" => $this->submissionId,
 				            "score" => $this->score,
 				            "review" => $this->review
 		); 
@@ -61,7 +78,7 @@ class Review {
 	
 	public function __toString() {
 		$str = "User name: ".$this->userName.
-		       " Submission ID: ".$this->submissionID.
+		       " Submission ID: ".$this->submissionId.
 		       " Score: ".$this->score.
 		       " Review: ".$this->review.
 		       " Review id: ".$this->reviewId;
@@ -86,7 +103,7 @@ class Review {
 			$this->initializeEmpty();
 		else {
 			$this->validateUserName();
-			$this->validateSubmissionID();
+			$this->validateSubmissionId();
 			$this->validateScore();
 			$this->validateReview();
 		}
@@ -98,7 +115,7 @@ class Review {
 		$this->review = "";
 		$this->score = "";
 	 	$this->userName = "";
-	 	$this->submissionID = "";	
+	 	$this->submissionId = "";	
 	}
 
 	private function validateScore() {
@@ -115,11 +132,11 @@ class Review {
 			$this->setError('review', 'REVIEW_EMPTY');
 	}
 	
-	private function validateSubmissionID() {
+	private function validateSubmissionId() {
 		// Submission ID should contain ..... TODO
-		$this->submissionID = $this->extractForm('submissionID');
-		if (empty($this->submissionID))
-			$this->setError('submissionID', 'SUBMISSION_ID_EMPTY');
+		$this->submissionID = $this->extractForm('submissionId');
+		if (empty($this->submissionId))
+			$this->setError('submissionId', 'SUBMISSION_ID_EMPTY');
 		// todo
 	}
 	
