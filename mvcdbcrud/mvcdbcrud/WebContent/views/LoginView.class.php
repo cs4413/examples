@@ -11,6 +11,7 @@ class LoginView {
 	public static function showDetails($sessionInfo) {
 	 // Show the details of the form
 	   $user = (array_key_exists('user', $sessionInfo))?$sessionInfo['user']:null;
+	   $base = (array_key_exists('base', $sessionInfo))?$sessionInfo['base']:"";
 	   echo '<h1>ClassBash login</h1>';
 	   echo '<form action ="login" method="Post">';
 	   echo '<p>User name: <input type="text" name ="userName"';

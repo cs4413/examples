@@ -19,7 +19,13 @@ class SubmissionView {
 	
 	public static function showAll($sessionInfo) {
 		// SHow a table of submission objects with links
-		$submissions = $sessionInfo['submissions'];
+		if (array_key_exists('headertitle', $sessionInfo)) {
+			MasterView::showHeader($sessionInfo);
+			MasterView::showNavbar($sessionInfo);
+		}
+		$submissions = (array_key_exists('submissions', $sessionInfo))?$sessionInfo['submissions']:array();
+		$base = (array_key_exists('base', $sessionInfo))?$sessionInfo['base']:"";
+
 		echo "<h1>ClassBash submission list</h1>";
 		echo "<table>";
 		echo "<thead>";
@@ -30,11 +36,13 @@ class SubmissionView {
 		foreach($submissions as $submission) {
 			echo '<tr><td>'.$submission->getUserName().'</td>';
 			echo '<td>'.$submission->getAssignmentNumber().'</td>';
-			echo '<td><a href="submission/download/'.$submission->getSubmissionId().'">Download</a></td>';
-			echo '<td><a href="review/'.$submission->getSubmissionId().'">Submit review</a></td></tr>';
+			echo '<td><a href="/'.$base.'/submission/download/'.$submission->getSubmissionId().'">Download</a></td>';
+			echo '<td><a href="/'.$base.'/review/new/'.$submission->getSubmissionId().'">Submit review</a></td></tr>';
 		}
 		echo "</tbody>";
 		echo "</table>";
+		if (array_key_exists('footertitle', $sessionInfo))
+			MasterView::showFooter($sessionInfo);
 	}
 	
 	public static function showNew($sessionInfo) {
@@ -72,4 +80,14 @@ class SubmissionView {
        $sessionInfo['footertitle'] = "The footer";
 	   MasterView::showFooter($sessionInfo);
   }
+  
+  public static function showDetails($sessionInfo) {
+     $submission = $sessionInfo['submission'];
+	  if (!is_null($submission)) {
+	  	echo '<p>Submission Id: '.$submission->getSubmissionId().'<p>';
+	  	echo '<p>User name: '.$submission->getUserName().'<p>';
+	  	echo '<p> Assignment number: '. $submission->getAssignmentNumber() .'</p>';
+	  	echo '<p> File name: '. $submission->getSubmissionFile() .'</p>';
+	  }
+   }
 }

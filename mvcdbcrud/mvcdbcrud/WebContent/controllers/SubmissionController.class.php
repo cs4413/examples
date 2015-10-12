@@ -6,17 +6,16 @@ class SubmissionController {
 		$action = $sessionInfo['action'];
 		$arguments = $sessionInfo['arguments'];
         switch ($action) {
-        	case null:
-        		break;
         	case "new":
         		self::newSubmission($sessionInfo);
         		break;
-        	case "showdetails":
+        	case "show":
         		break;
         	case  "showall":
-//         		$submissions = SubmissionDB::getAllSubmissions();
-//         		SubmissionView::showall($submissions, "ClassBash Submissions", 
-//         				                "<h3>The footer goes here</h3>");
+        		$sessionInfo['submissions'] = SubmissionsDB::getAllSubmissions();
+        		$sessionInfo['headertitle'] = "ClassBash Submissions";
+        		$sessionInfo['footertitle'] = "<h3>The footer goes here</h3>";
+        		SubmissionView::showall($sessionInfo);
         		break;
         	default:
         }
@@ -42,8 +41,10 @@ class SubmissionController {
 		if (is_null($submission) || $submission->getErrorCount() != 0) {
 			$sessionInfo['submission'] = $submission;
 			SubmissionView::showNew($sessionInfo);
-		} else 
-			HomeView::show($sessionInfo);		
+		} else {
+			HomeView::show($sessionInfo);	
+			header('Location: http://'.$_SERVER["HTTP_HOST"].'/'.$sessionInfo['base']);
+		}
 
 	}
 }
