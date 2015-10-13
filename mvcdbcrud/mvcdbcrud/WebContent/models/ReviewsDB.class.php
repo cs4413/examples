@@ -1,6 +1,32 @@
 <?php
 class ReviewsDB {
-
+	
+	public static function addReview($review) {
+		// Inserts the Review object $user into the Users table and returns userId
+		$query = "INSERT INTO Reviews (review, score, submissionId, userId)
+		                      VALUES(:review, :score, :submissionId, :userId)";
+		$returnId = 0;
+		try {
+			$db = Database::getDB ();
+			if (is_null($review) || $review->getErrorCount() > 0)
+				throw new PDOException("Invalid Review object can't be inserted");
+			$users = UsersDB::getUsersBy('userName', $review->getUserName());
+			if (is_null($users) || empty($users))
+				throw new PDOException("Review user name doesn't correspond to a real user");
+			$statement = $db->prepare ($query);
+			$statement->bindValue(":review", $review->getReview());
+			$statement->bindValue(":score", $review->getScore());
+			$statement->bindValue(":submissionId", $review->getSubmissionId());
+			$statement->bindValue(":userId", $users[0]->getUserId());
+			$statement->execute ();
+			$statement->closeCursor();
+			$returnId = $db->lastInsertId("reviewId");
+		} catch (Exception $e) { // Not permanent error handling
+			echo "<p>Error adding review to Reviews ".$e->getMessage()."</p>";
+		}
+		return $returnId;
+	}
+	
 	public static function getReviewRowSetsBy($type = null, $value = null) {
 		// Returns the rows of Reviews whose $type field has value $value
 		$allowedTypes = ["reviewId", "userName", "submissionId", "score", "userId"];
@@ -20,7 +46,7 @@ class ReviewsDB {
 			$statement->execute ();
 			$reviewRowSets = $statement->fetchAll(PDO::FETCH_ASSOC);
 			$statement->closeCursor ();
-		} catch ( PDOException $e ) { // Not permanent error handling
+		} catch (Exception $e) { // Not permanent error handling
 			echo "<p>Error getting review rows by $type: " . $e->getMessage () . "</p>";
 		}
 		return $reviewRowSets;

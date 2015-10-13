@@ -31,8 +31,45 @@ $reviewCount = count($reviews);
 echo "Number of reviews in db is: $reviewCount <br>";
 foreach ($reviews as $review) 
 	echo "$review <br>";
-?>	
+?>
 
+<h2>It should insert a valid review in the database</h2>
+<?php 
+makeDB('ptest'); 
+Database::clearDB();
+$db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
+$beforeCount = count(ReviewsDB::getReviewsBy());
+$validTest = array("userName" => "Kay",
+  			"submissionId" => "1",
+  			"score" => "5",
+  			"review" => "This was a great presentation"
+  	);
+$s1 = new Review($validTest);
+$reviewId = ReviewsDB::addReview($s1);
+$afterCount = count(ReviewsDB::getReviewsBy());
+echo "The inserted review Id is: $reviewId";
+echo "Before the database has $beforeCount";
+echo "Now the database has $afterCount";
+?>
+
+<h2>It should not allow insertion of a duplicate review</h2>
+<?php 
+makeDB('ptest'); 
+Database::clearDB();
+$db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
+$beforeCount = count(ReviewsDB::getReviewsBy());
+$duplicateTest =  	$validTest = array("userName" => "Alice",
+		"submissionId" => "1",
+		"score" => "5",
+		"review" => "This was a great presentation"
+);
+$s1 = new Review($duplicateTest);
+$reviewId = ReviewsDB::addReview($s1);
+$afterCount = count(ReviewsDB::getReviewsBy());
+echo "The inserted review Id is: $reviewId";
+echo "Before the database has $beforeCount";
+echo "Now the database has $afterCount";
+?>
 
 </body>
 </html>

@@ -48,6 +48,15 @@ echo "Number of users in db after added is: ". count(UsersDB::getUsersBy()) ."<b
 echo "User ID of new user is: $userId<br>";
 ?>
 
+<h2>It should not add a duplicate user</h2>
+<?php 
+echo "Number of users in db before added is: ". count(UsersDB::getUsersBy()) ."<br>";
+$duplicateUser = new User(array("userName" => "Kay", "password" => "XXX"));
+$userId = UsersDB::addUser($duplicateUser);
+echo "Number of users in db after added is: ". count(UsersDB::getUsersBy()) ."<br>";
+echo "User ID of new user is: $userId<br>";
+?>
+
 <h2>It should get a User by userName</h2>
 <?php 
 $users = UsersDB::getUsersBy('userName', 'George');

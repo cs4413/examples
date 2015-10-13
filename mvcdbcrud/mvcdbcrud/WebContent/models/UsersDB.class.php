@@ -16,7 +16,7 @@ class UsersDB {
 			$statement->execute ();
 			$statement->closeCursor();
 			$returnId = $db->lastInsertId("userId");
-		} catch ( PDOException $e ) { // Not permanent error handling
+		} catch (Exception $e) { // Not permanent error handling
 			echo "<p>Error adding user to Users ".$e->getMessage()."</p>";
 		}
 		return $returnId;
@@ -40,7 +40,7 @@ class UsersDB {
 			$statement->execute ();
 			$userRowSets = $statement->fetchAll(PDO::FETCH_ASSOC);
 			$statement->closeCursor ();
-		} catch ( PDOException $e ) { // Not permanent error handling
+		} catch (Exception $e) { // Not permanent error handling
 			echo "<p>Error getting user rows by $type: " . $e->getMessage () . "</p>";
 		}
 		return $userRowSets;
@@ -52,6 +52,7 @@ class UsersDB {
 	 	if (!empty($rowSets)) {
 			foreach ($rowSets as $userRow ) {
 				$user = new User($userRow);
+				$user->setUserId($userRow['userId']);
 				array_push ($users, $user );
 			}
 	 	}

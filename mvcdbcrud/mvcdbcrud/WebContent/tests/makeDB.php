@@ -50,7 +50,8 @@ function makeDB($dbName) {
 					             dateCreated    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 					             PRIMARY KEY (reviewId),
 					             FOREIGN KEY (submissionId) REFERENCES Submissions(submissionId),
-					             FOREIGN KEY (userId) REFERENCES Users(userId)
+					             FOREIGN KEY (userId) REFERENCES Users(userId),
+                                 CONSTRAINT uid_subid UNIQUE (userId, submissionId)
 			                 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;"
 		);
 		$st->execute ();
@@ -78,16 +79,16 @@ function makeDB($dbName) {
 		$st = $db->prepare ( $sql );
 		$st->execute (array (':reviewId' => 1, ':submissionId' => 1, ':userId' => 2, ':score' => 4,
 				':review' => 'This is a review by John of Kay1.txt'));
-		$st->execute (array (':reviewId' => 2, ':submissionId' => 1, ':userId' => 4, ':score' => 3,
+		$st->execute (array (':reviewId' => 2, ':submissionId' => 1, ':userId' => 3, ':score' => 3,
 				':review' => 'This is a review by Alice of Kay1.txt'));
 		$st->execute (array (':reviewId' => 3, ':submissionId' => 1, ':userId' => 4, ':score' => 4,
 				':review' => 'This is a review by George of Kay1.txt'));
-		$st->execute (array (':reviewId' => 4, ':submissionId' => 2, ':userId' => 3, ':score' => 4,
+		$st->execute (array (':reviewId' => 4, ':submissionId' => 2, ':userId' => 2, ':score' => 4,
 				':review' => 'This is a review of John of Kay2.txt'));
-		$st->execute (array (':reviewId' => 5, ':submissionId' => 1,':userId' => 2, ':score' => 4,
-				':review' => 'This is my review of Kay1.txt'));
-		$st->execute (array (':reviewId' => 6, ':submissionId' => 1, ':userId' => 2, ':score' => 4,
-				':review' => 'This is my review of Kay1.txt'));
+		$st->execute (array (':reviewId' => 5, ':submissionId' => 2,':userId' => 3, ':score' => 4,
+				':review' => 'This is a review by Alice of Kay2.txt'));
+		$st->execute (array (':reviewId' => 6, ':submissionId' => 3, ':userId' => 3, ':score' => 4,
+				':review' => 'This is a review by Alice of John1.txt'));
 		$st->execute (array (':reviewId' => 7, ':submissionId' => 2,':userId' => 1, ':score' => 4,
 				':review' => 'This is my review of Kay2.txt'));
 		$st->execute (array (':reviewId' => 8, ':submissionId' => 3, ':userId' => 1, ':score' => 4,

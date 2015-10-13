@@ -32,7 +32,8 @@ CREATE TABLE Reviews (
   dateCreated    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (reviewId),
   FOREIGN KEY (submissionId) REFERENCES Submissions(submissionId),
-  FOREIGN KEY (userId) REFERENCES Users(userId)
+  FOREIGN KEY (userId) REFERENCES Users(userId),
+  CONSTRAINT uid_subid UNIQUE (userId, submissionId)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -61,9 +62,9 @@ INSERT INTO Reviews (reviewId, submissionId, userId, score, review) VALUES
 INSERT INTO Reviews (reviewId, submissionId, userId, score, review) VALUES 
 	   (4, 2, 2, 4, 'This is a review of John of Kay2.txt');
 INSERT INTO Reviews (reviewId, submissionId, userId, score, review) VALUES 
-	   (5, 1, 2, 4, 'This is my review of Kay1.txt');
+	   (5, 2, 3, 4, 'This is a review by Alice of Kay2.txt');
 INSERT INTO Reviews (reviewId, submissionId, userId, score, review) VALUES 
-	   (6, 1, 2, 4, 'This is my review of Kay1.txt'); 
+	   (6, 3, 3, 4, 'This is a review by Alice of John1.txt'); 
 INSERT INTO Reviews (reviewId, submissionId, userId, score, review) VALUES 
 	   (7, 2, 1, 4, 'This is a review of Kay of Kay2.txt');
 INSERT INTO Reviews (reviewId, submissionId, userId, score, review) VALUES 

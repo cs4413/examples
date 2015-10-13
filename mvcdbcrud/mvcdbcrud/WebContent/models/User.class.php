@@ -47,7 +47,8 @@ class User {
 	public function getParameters() {
 		// Return data fields as an associative array
 		$paramArray = array("userName" => $this->userName,
-				            "password" => $this->password
+				            "password" => $this->password,
+				            "userId" => $this->userId
 		); 
 		return $paramArray;
 	}
@@ -64,7 +65,8 @@ class User {
 	}
 
 	public function __toString() {
-		$str = "User name: ".$this->userName."<br>Password: ".$this->password;
+		$str = "User name: ".$this->userName."<br>Password: ".$this->password . 
+		       "<br>User id: ". $this->userId;
 		return $str;
 	}
 	
