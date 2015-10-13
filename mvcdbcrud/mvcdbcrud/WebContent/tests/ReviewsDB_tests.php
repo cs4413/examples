@@ -26,7 +26,7 @@ include_once("./makeDB.php");
 makeDB('ptest'); 
 Database::clearDB();
 $db = Database::getDB('ptest');
-$reviews = ReviewsDB::getAllReviews();
+$reviews = ReviewsDB::getReviewsBy();
 $reviewCount = count($reviews);
 echo "Number of reviews in db is: $reviewCount <br>";
 foreach ($reviews as $review) 

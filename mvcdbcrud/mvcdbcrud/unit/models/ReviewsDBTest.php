@@ -16,8 +16,8 @@ class ReviewsDBTest extends PHPUnit_Framework_TestCase {
   	  $myDb = DBMaker::create ('ptest');
   	  Database::clearDB();
   	  $db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
-  	  $reviews = ReviewsDB::getAllReviews();
-  	  $this->assertEquals(6, count($reviews), 
+  	  $reviews = ReviewsDB::getReviewsBy();
+  	  $this->assertEquals(8, count($reviews), 
   	  		'It should fetch all of the reviews in the test database');
 
   	  foreach ($reviews as $review) 

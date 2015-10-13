@@ -20,6 +20,9 @@
 		case "submission" :
 			SubmissionController::run ();
 			break;
+		case "user" :
+			UserController::run ();
+			break;
 		default:
 			HomeView::show();
 	};

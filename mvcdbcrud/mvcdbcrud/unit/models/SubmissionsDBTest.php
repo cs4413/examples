@@ -14,7 +14,7 @@ class SubmissionsDBTest extends PHPUnit_Framework_TestCase {
   	  $myDb = DBMaker::create ('ptest');
   	  Database::clearDB();
   	  $db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
-  	  $submissions = SubmissionsDB::getAllSubmissions();
+  	  $submissions = SubmissionsDB::getSubmissionsBy();
   	  $this->assertEquals(3, count($submissions), 
   	  		'It should fetch all of the submissions in the test database');
 

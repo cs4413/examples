@@ -90,6 +90,11 @@ class DBMaker {
 					             ':review' => 'This is my review of Kay1.txt'));
 			$st->execute (array (':reviewId' => 6, ':submissionId' => 1, ':userId' => 2, ':score' => 4,
 					             ':review' => 'This is my review of Kay1.txt'));
+			$st->execute (array (':reviewId' => 7, ':submissionId' => 2,':userId' => 1, ':score' => 4,
+					':review' => 'This is my review of Kay2.txt'));
+			$st->execute (array (':reviewId' => 8, ':submissionId' => 3, ':userId' => 1, ':score' => 4,
+					':review' => 'This is my review of John1.txt'));
+				
 		} catch ( PDOException $e ) {
 			echo $e->getMessage (); // not final error handling
 		}

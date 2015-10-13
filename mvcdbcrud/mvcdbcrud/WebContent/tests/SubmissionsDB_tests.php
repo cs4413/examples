@@ -24,7 +24,7 @@ include_once("./makeDB.php");
 makeDB('ptest'); 
 Database::clearDB();
 $db = Database::getDB('ptest');
-$submissions = SubmissionsDB::getAllSubmissions();
+$submissions = SubmissionsDB::getSubmissionsBy();
 $submissionCount = count($submissions);
 echo "Number of submissions in db is: $submissionCount <br>";
 foreach ($submissions as $submission) 

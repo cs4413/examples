@@ -1,77 +1,23 @@
 <?php
 class ReviewsDB {
 
-	public static function getAllReviews() {
-       // Return all of the reviews as an array of Review objects
-	   $query = "SELECT Reviews.reviewId, Reviews.submissionId, Users.userName,
-	   		            Reviews.score, Reviews.review 
-	   		             FROM Reviews LEFT JOIN Users ON Reviews.userId = Users.userId ";
-	   $reviews = array();
-	   try {
-	      $db = Database::getDB();
-	      $statement = $db->prepare($query);
-	      $statement->execute();
-	      $reviews = ReviewsDB::getReviewsArray ($statement->fetchAll(PDO::FETCH_ASSOC));
-	      $statement->closeCursor();
-		} catch (PDOException $e) { // Not permanent error handling
-			echo "<p>Error getting all reviews " . $e->getMessage () . "</p>";
-		}
-		return $reviews;
-	}
-	
-	public static function getReviewsBy($type, $value) {
-		// Return all of the reviews as an array of Review objects
-		$query = "SELECT Reviews.reviewId, Reviews.submissionId, Users.userName,
-	   		            Reviews.score, Reviews.review
-	   		             FROM Reviews LEFT JOIN Users ON Reviews.userId = Users.userId ";
-		$allowedTypes = ["reviewId", "userName", "submissionId", "score"];
-		$reviews = array();
-		try {
-			if (!in_array($type, $allowedTypes))
-				throw new PDOException("$type not an allowed search criterion for Review");
-			$db = Database::getDB();
-			if (!is_null($value)) {
-				$query = "$query WHERE ($type = :$type)";
-			    $statement = $db->prepare($query);
-			    $statement->bindParam(":$type", $value);
-	     	} else 
-			    $statement = $db->prepare($query);
-		
-			$statement->execute();
-			$reviews = ReviewsDB::getReviewsArray ($statement->fetchAll(PDO::FETCH_ASSOC));
-			$statement->closeCursor();
-		} catch (PDOException $e) { // Not permanent error handling
-			echo "<p>Error getting all reviews " . $e->getMessage () . "</p>";
-		}
-		return $reviews;
-	}
-	
-// 	public static function getReviewsBy($type, $value) {
-// 		// Returns Review objects whose $type field has value $value
-// 		$reviewRows = ReviewsDB::getReviewRowSetsBy($type, $value, '*');
-// 		return ReviewsDB::getReviewsArray($reviewRows);
-// 	}
-	
-	public static function getReviewValuesBy($type, $value, $column) {
-		// Returns the $column of Reviews whose $type field has value $value
-		$reviewRows = ReviewsDB::getReviewRowSetsBy($type, $value, $column);
-		return ReviewsDB::getReviewValues($reviewRows, $column);
-	}
-	
-	public static function getReviewRowSetsBy($type, $value, $column) {
+	public static function getReviewRowSetsBy($type = null, $value = null) {
 		// Returns the rows of Reviews whose $type field has value $value
-		$allowedTypes = ["reviewId", "userName", "submissionId", "score"];
-		$allowedColumns = ["reviewId", "userName", "submissionId", "score", "*"];
+		$allowedTypes = ["reviewId", "userName", "submissionId", "score", "userId"];
+
 		$reviewRowSets = NULL;
 		try {
-			if (!in_array($type, $allowedTypes))
-				throw new PDOException("$type not an allowed search criterion for User");
-			elseif (!in_array($column, $allowedColumns))
-			throw new PDOException("$column not a column of Reviews");
-			$query = "SELECT $column FROM Reviews WHERE ($type = :$type)";
 			$db = Database::getDB ();
-			$statement = $db->prepare($query);
-			$statement->bindParam(":$type", $value);
+			$query = "SELECT Reviews.reviewId, Reviews.submissionId, Reviews.score, Reviews.userId, Users.userName
+	   		          FROM Reviews LEFT JOIN Users ON Reviews.userId = Users.userId";
+			if (!is_null($type)) {
+			    if (!in_array($type, $allowedTypes))
+					throw new PDOException("$type not an allowed search criterion for Reviews");
+			    $query = $query. " WHERE ($type = :$type)";
+			    $statement = $db->prepare($query);
+			    $statement->bindParam(":$type", $value);
+			} else 
+				$statement = $db->prepare($query);
 			$statement->execute ();
 			$reviewRowSets = $statement->fetchAll(PDO::FETCH_ASSOC);
 			$statement->closeCursor ();
@@ -80,8 +26,7 @@ class ReviewsDB {
 		}
 		return $reviewRowSets;
 	}
-	
-	
+
 	public static function getReviewsArray($rowSets) {
 		// Return an array of Review objects extracted from $rowSets
 		$reviews = array();
@@ -91,6 +36,12 @@ class ReviewsDB {
 			array_push ($reviews, $review);
 		}
 		return $reviews;
+	}
+	
+	public static function getReviewsBy($type=null, $value=null) {
+		// Returns Review objects whose $type field has value $value
+		$reviewRows = ReviewsDB::getReviewRowSetsBy($type, $value);
+		return ReviewsDB::getReviewsArray($reviewRows);
 	}
 	
 	public static function getReviewValues($rowSets, $column) {
@@ -103,6 +54,11 @@ class ReviewsDB {
 		}
 		return $reviewValues;
 	}
-
+	
+	public static function getReviewValuesBy($column, $type=null, $value=null) {
+		// Returns the $column of Reviews whose $type field has value $value
+		$reviewRows = ReviewsDB::getReviewRowSetsBy($type, $value);
+		return ReviewsDB::getReviewValues($reviewRows, $column);
+	}
 }
 ?>

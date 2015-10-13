@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Basic tests for Submission Controller</title>
+<title>Basic tests for User Controller</title>
 </head>
 <body>
-<h1>Submission controller tests</h1>
+<h1>User controller tests</h1>
 
 <?php
-include_once("../controllers/SubmissionController.class.php");
+include_once("../controllers/UserController.class.php");
 include_once("../models/Database.class.php");
 include_once("../models/Messages.class.php");
 include_once("../models/Review.class.php");
@@ -24,22 +24,21 @@ include_once("../views/UserView.class.php");
 include_once("./makeDB.php");
 ?>
 
-<h2>It should should a new submission form input during $POST with incomplete information</h2>
+<h2>It should should show a user that exists</h2>
 <?php 
 $myDb = makeDB('ptest');
 $_SERVER ["REQUEST_METHOD"] = "POST";
-$_SESSION = array('base' => 'mvcdbcrud', 'control' => 'submission', 
-	                      'action' =>'new', 'arguments' => null);
-$_POST = array("userName" => "Kay");
-SubmissionController::run();
+$_SESSION = array('base' => 'mvcdbcrud', 'control' => 'user', 
+	                      'action' =>'show', 'arguments' => 1);
+UserController::run();
 ?>
 
-<h2>It should call show a new submission form for a $GET request</h2>
+<h2>It should go to home when no user exists</h2>
 <?php 
 $_SERVER ["REQUEST_METHOD"] = "GET";
-$_SESSION = array('base' => 'mvcdbcrud', 'control' => 'submission',
-		             'action' =>'new', 'arguments' => null);
-SubmissionController::run();
+$_SESSION = array('base' => 'mvcdbcrud', 'control' => 'user',
+		             'action' =>'show', 'arguments' => 0);
+UserController::run();
 ?>
 </body>
 </html>

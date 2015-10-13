@@ -63,4 +63,8 @@ INSERT INTO Reviews (reviewId, submissionId, userId, score, review) VALUES
 INSERT INTO Reviews (reviewId, submissionId, userId, score, review) VALUES 
 	   (5, 1, 2, 4, 'This is my review of Kay1.txt');
 INSERT INTO Reviews (reviewId, submissionId, userId, score, review) VALUES 
-	   (6, 1, 2, 4, 'This is my review of Kay1.txt'); 	   	   
+	   (6, 1, 2, 4, 'This is my review of Kay1.txt'); 
+INSERT INTO Reviews (reviewId, submissionId, userId, score, review) VALUES 
+	   (7, 2, 1, 4, 'This is a review of Kay of Kay2.txt');
+INSERT INTO Reviews (reviewId, submissionId, userId, score, review) VALUES 
+	   (8, 3, 1, 4, 'This is a review of Kay of John1.txt');
