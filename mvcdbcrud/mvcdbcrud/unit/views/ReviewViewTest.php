@@ -60,5 +60,21 @@ class ReviewViewTest extends PHPUnit_Framework_TestCase {
   	$this->assertFalse(empty($output),
   			"It should show a table of Reviews when nothing is passed");
   }
+  
+  public function testUpdateReview() {
+  	ob_start();
+  	$validTest = array("userName" => "Kay",
+  			"submissionId" => 2,
+  			"score" => "5",
+  			"review" => "This was a great presentation"
+  	);
+  	$review = new Review($validTest);
+  	$review->setReviewId(1);
+  	$_SESSION = array('review' => $review, 'base' => "mvcdbcrud");
+  	ReviewView::showUpdate();
+  	$output = ob_get_clean();
+  	$this->assertFalse(empty($output),
+  			"It should show an update form");
+  }
 }
 ?>
