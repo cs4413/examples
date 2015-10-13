@@ -12,7 +12,7 @@ class UsersDBTest extends PHPUnit_Framework_TestCase {
   	  $myDb = DBMaker::create ('ptest');
   	  Database::clearDB();
   	  $db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
-  	  $users = UsersDB::getAllUsers();
+  	  $users = UsersDB::getUsersBy();
   	  $this->assertEquals(4, count($users), 
   	  		'It should fetch all of the users in the test database');
 

@@ -4,7 +4,6 @@ class ReviewsDB {
 	public static function getReviewRowSetsBy($type = null, $value = null) {
 		// Returns the rows of Reviews whose $type field has value $value
 		$allowedTypes = ["reviewId", "userName", "submissionId", "score", "userId"];
-
 		$reviewRowSets = NULL;
 		try {
 			$db = Database::getDB ();
@@ -47,7 +46,6 @@ class ReviewsDB {
 	public static function getReviewValues($rowSets, $column) {
 		// Returns an array of values from $column extracted from $rowSets
 		$reviewValues = array();
-		print_r($rowSets);
 		foreach ($rowSets as $reviewRow )  {
 			$reviewValue = $reviewRow[$column];
 			array_push ($reviewValues, $reviewValue);
