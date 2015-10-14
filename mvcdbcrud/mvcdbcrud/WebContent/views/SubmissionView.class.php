@@ -39,41 +39,7 @@ class SubmissionView {
 			MasterView::showFooter();
 	}
 	
-	public static function showNew() {
-		$_SESSION['headertitle'] = "ClassBash Submission Report";
-		MasterView::showHeader();
 
-	    $submission = $_SESSION['submission'];
-		
-	   echo '<h1>ClassBash submission</h1>';
-	   echo '<form enctype="multipart/form-data" action ="new" method="Post">';
-	   echo '<p>User name: <input type="text" required name ="userName"'; 
-	   if (!is_null($submission))  
-		  echo 'value = "'. $submission->getUserName() .'"';
-	   echo '>'; 
-	   echo '<span class="error">';
-	   if (!is_null($submission))  
-	   	  echo $submission->getError('userName');
-	      
-	   echo '</span></p>';
-	   echo '<p> Assignment number: <input type = "number" min="1" 
-	   		 required name ="assignmentNumber"'; 
-	   if (!is_null($submission)) 
-		   echo 'value = "'. $submission->getAssignmentNumber() .'"';
-	   echo '>'; 
-	   echo '<span class="error">';
-	   if (!is_null($submission))  
-	   	  echo $submission->getError('assignmentNumber');
-	   echo '</span></p>';
-	
-       echo '<input type="hidden" name="MAX_FILE_SIZE" value="500000" />';
-       echo 'Upload submission: <input name="submissionFile" type="file" required /><br><br>';
- 
-       echo '<input type="submit" value="Submit" />';
-       echo '</form>';
-       $_SESSION['footertitle'] = "The footer";
-	   MasterView::showFooter();
-  }
   
   public static function showDetails() {
   	 $submission = (array_key_exists('submission', $_SESSION))?$_SESSION['submission']:null;
@@ -84,5 +50,67 @@ class SubmissionView {
 	  	echo '<p> Assignment number: '. $submission->getAssignmentNumber() .'</p>';
 	  	echo '<p> File name: '. $submission->getSubmissionFile() .'</p>';
 	  }
+   }
+   
+   public static function showNew() {
+   	$submission = (array_key_exists('submission', $_SESSION))?$_SESSION['submission']:null;
+   	$base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
+   	$_SESSION['headertitle'] = "ClassBash Submission Report";
+   	MasterView::showHeader();
+   
+   	echo '<h1>ClassBash submission</h1>';
+   	echo '<form enctype="multipart/form-data" action ="new" method="Post">';
+   	echo '<p>User name: <input type="text" required name ="userName"';
+   	if (!is_null($submission))
+   		echo 'value = "'. $submission->getUserName() .'"';
+   	echo '>';
+   	echo '<span class="error">';
+   	if (!is_null($submission))
+   		echo $submission->getError('userName');
+   	 
+   	echo '</span></p>';
+   	echo '<p> Assignment number: <input type = "number" min="1"
+	   		 required name ="assignmentNumber"';
+   	if (!is_null($submission))
+   		echo 'value = "'. $submission->getAssignmentNumber() .'"';
+   	echo '>';
+   	echo '<span class="error">';
+   	if (!is_null($submission))
+   		echo $submission->getError('assignmentNumber');
+   	echo '</span></p>';
+   
+   	echo '<input type="hidden" name="MAX_FILE_SIZE" value="500000" />';
+   	echo 'Upload submission: <input name="submissionFile" type="file" required /><br><br>';
+   
+   	echo '<input type="submit" value="Submit" />';
+   	echo '</form>';
+   	$_SESSION['footertitle'] = "The footer";
+   	MasterView::showFooter();
+   }
+   
+   public static function showUpdate() {
+   	$submission = (array_key_exists('submission', $_SESSION))?$_SESSION['submission']:null;
+   	$base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
+   	$_SESSION['headertitle'] = "ClassBash Submission Update";
+   	MasterView::showHeader();
+
+   	echo '<h1>ClassBash submission update</h1>';
+    if (is_null($submission)) {
+	    echo '<section>Review does not exist</section>';
+		return;
+	}
+	echo '<section>';
+	echo '<h3>Submssion information:</h3>';
+	echo 'Submitter name: '.$submission->getUserName().'<br>';
+	echo 'Submission Id: '.$submission->getSubmissionId().'<br>';
+	echo 'Assignment number: '.$submission->getAssignmentNumber().'<br>'; 		 
+   	echo '<form enctype="multipart/form-data" action ="new" method="Post">';  
+   	echo '<input type="hidden" name="MAX_FILE_SIZE" value="500000" />';
+   	echo 'Upload submission: <input name="submissionFile" type="file" required /><br><br>';
+   
+   	echo '<input type="submit" value="Submit" />';
+   	echo '</form>';
+   	$_SESSION['footertitle'] = "The footer";
+   	MasterView::showFooter();
    }
 }

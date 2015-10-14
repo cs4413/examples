@@ -60,5 +60,16 @@ $_SESSION = array('submissions' => $submissions,
 		            'base' => "mvcdbcrud");
 SubmissionView::showall();
 ?>  
+
+<h2>It should allow updating when a valid submission is passed</h2>
+<?php 
+$validSubmission = array("userName" => "krobbins", "assignmentNumber" => "1",
+		           "submissionFile" => array("name" => "myText.apl", "tmp_name" => "temp.1"));
+$s1 = new Submission($validSubmission);
+$s1->setSubmissionId(1);
+$_SESSION = array('submission' => $s1, 'base' => "mvcdbcrud");
+echo $s1;
+SubmissionView::showUpdate();
+?>
 </body>
 </html>

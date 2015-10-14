@@ -63,5 +63,17 @@ class SubmissionViewTest extends PHPUnit_Framework_TestCase {
   	$this->assertFalse(empty($output),
   			"It should show a table of Submissions when passed valid input and a header and footer");
   }
+  
+  public function testUpdateSubmission() {
+  	  ob_start();
+      $validSubmission = array("userName" => "krobbins", "assignmentNumber" => "1",
+  		     "submissionFile" => array("name" => "myText.apl", "tmp_name" => "temp.1"));
+      $s1 = new Submission($validSubmission);
+      $s1->setSubmissionId(1);
+      $_SESSION = array('submission' => $s1, 'base' => "mvcdbcrud");
+      SubmissionView::showUpdate();
+  	  $output = ob_get_clean();
+      $this->assertFalse(empty($output), "It should show an update form");
+  }
 }
 ?>
