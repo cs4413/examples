@@ -62,6 +62,25 @@ class ReviewsDBTest extends PHPUnit_Framework_TestCase {
   			'The database should have the same number of reviews after trying to insert duplicate');
   	ob_get_clean();
   }
-
+  
+  public function testUpdateReview() {
+  	 ob_start();
+  	 $myDb = DBMaker::create ('ptest');
+   	 Database::clearDB();
+  	 $db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
+  	 $beforeCount = count(ReviewsDB::getReviewsBy());
+	 $reviews = ReviewsDB::getReviewsBy('reviewId', 1);
+	 $currentReview = $reviews[0];
+	 $parms = $currentReview->getParameters();
+	 $parms['review'] = 'new review text';
+	 $newReview = new Review($parms);
+	 $newReview->setReviewId($currentReview->getReviewId());
+	 $newId = ReviewsDB::updateReview($newReview);
+	 $afterCount = count(ReviewsDB::getReviewsBy());
+	 $this->assertEquals($beforeCount, $afterCount, 
+	 		'The number of reviews in the database should not change after update');
+	 $this->assertEquals($newId, $newReview->getReviewId(),
+	 		'The id of the updated review should remain the same'); 
+  }
 }
 ?>

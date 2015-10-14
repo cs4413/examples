@@ -58,7 +58,7 @@ makeDB('ptest');
 Database::clearDB();
 $db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
 $beforeCount = count(ReviewsDB::getReviewsBy());
-$duplicateTest =  	$validTest = array("userName" => "Alice",
+$duplicateTest = array("userName" => "Alice",
 		"submissionId" => "1",
 		"score" => "5",
 		"review" => "This was a great presentation"
@@ -70,6 +70,27 @@ echo "The inserted review Id is: $reviewId";
 echo "Before the database has $beforeCount";
 echo "Now the database has $afterCount";
 ?>
+
+<h2>It should all update of a valid review</h2>
+<?php 
+makeDB('ptest'); 
+Database::clearDB();
+$db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
+$beforeCount = count(ReviewsDB::getReviewsBy());
+$reviews = ReviewsDB::getReviewsBy('reviewId', 1);
+$currentReview = $reviews[0];
+echo "Current review: $currentReview<br>";
+$parms = $currentReview->getParameters();
+$parms['review'] = 'new review text';
+$newReview = new Review($parms);
+$newReview->setReviewId($currentReview->getReviewId());
+echo "new review: $newReview<br>";
+$newId = ReviewsDB::updateReview($newReview);
+echo "New id: $newId<br>";
+$afterCount = count(ReviewsDB::getReviewsBy());
+echo "Count before update = $beforeCount, count after = $afterCount<br>";
+?>
+
 
 </body>
 </html>

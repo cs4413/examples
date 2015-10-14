@@ -84,5 +84,35 @@ class ReviewsDB {
 		$reviewRows = ReviewsDB::getReviewRowSetsBy($type, $value);
 		return ReviewsDB::getReviewValues($reviewRows, $column);
 	}
+	
+	public static function updateReview($review) {
+		$returnId = 0;
+		try {
+			$db = Database::getDB ();
+			if (is_null($review) || $review->getErrorCount() > 0)
+				throw new PDOException("Invalid Review object can't be inserted");
+	  	    $checkReview = ReviewsDB::getReviewsBy('reviewId', $review->getReviewId());
+		    if (empty($checkReview))
+		    	throw new PDOException("Review with Id ".$review->getReviewId().
+		    			        " does not exist and cannot be updated");
+		    elseif ($checkReview[0]->getSubmissionId() != $review->getSubmissionId())
+		        throw new PDOException("Review submission Id does not match database");
+		    elseif ($checkReview[0]->getUserName() != $review->getUserName())
+		    throw new PDOException("Review user name does not match database");
+	    	$query = "UPDATE Reviews SET review = :review, score = :score
+	    			                 WHERE reviewId = :reviewId";
+		
+			$statement = $db->prepare ($query);
+			$statement->bindValue(":review", $review->getReview());
+			$statement->bindValue(":score", $review->getScore());
+			$statement->bindValue(":reviewId", $review->getReviewId());
+			$statement->execute ();
+			$statement->closeCursor();
+			$returnId = $checkReview[0]->getReviewId();
+		} catch (Exception $e) { // Not permanent error handling
+			echo "<p>Error updating review to Reviews ".$e->getMessage()."</p>";
+		}
+		return $returnId;
+	}
 }
 ?>
