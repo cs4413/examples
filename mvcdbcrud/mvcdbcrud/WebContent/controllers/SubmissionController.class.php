@@ -12,7 +12,7 @@ class SubmissionController {
         	case "show":
         		break;
         	case  "showall":
-        		$_SESSION['submissions'] = SubmissionsDB::getAllSubmissions();
+        		$_SESSION['submissions'] = SubmissionsDB::getSubmissionsBy();
         		$_SESSION['headertitle'] = "ClassBash Submissions";
         		$_SESSION['footertitle'] = "<h3>The footer goes here</h3>";
         		SubmissionView::showall();

@@ -33,7 +33,8 @@ class ReviewsDB {
 		$reviewRowSets = NULL;
 		try {
 			$db = Database::getDB ();
-			$query = "SELECT Reviews.reviewId, Reviews.submissionId, Reviews.score, Reviews.userId, Users.userName
+			$query = "SELECT Reviews.reviewId, Reviews.submissionId, 
+					  Reviews.score, Reviews.userId, Users.userName, Reviews.review
 	   		          FROM Reviews LEFT JOIN Users ON Reviews.userId = Users.userId";
 			if (!is_null($type)) {
 			    if (!in_array($type, $allowedTypes))

@@ -10,6 +10,7 @@ PASSWORD_EMPTY You must provide a password
 REVIEW_EMPTY You must provide an actual review
 SCORE_EMPTY You must provide a score between 1 and 5
 SUBMISSION_ID_EMPTY You indicate the ID of the item you are reviewing
+REVIEW_IDENTITY_INVALID Either the submission Id or user name invalid
 SUBMISSION_EMPTY You must include a non-empty submission
 SUBMISSION_UPLOAD_ERROR Your file could not be uploaded
 USER_NAME_EMPTY Your user name can not be empty or only contain white space
