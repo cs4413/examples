@@ -23,14 +23,16 @@ class SubmissionView {
 		echo "<h1>ClassBash submission list</h1>";
 		echo "<table>";
 		echo "<thead>";
-		echo "<tr><th>User name</th><th>Assignment number</th>
-	         <th>Submission</th><th>Review link</th></tr>";
+		echo "<tr><th>Submitter</th><th>Assignment number</th>
+	         <th>Download</th><th>Show summary</th><th>Update</th><th>Review link</th></tr>";
 		echo "</thead>";
 		echo "<tbody>";
 		foreach($submissions as $submission) {
 			echo '<tr><td>'.$submission->getUserName().'</td>';
 			echo '<td>'.$submission->getAssignmentNumber().'</td>';
 			echo '<td><a href="/'.$base.'/submission/download/'.$submission->getSubmissionId().'">Download</a></td>';
+			echo '<td><a href="/'.$base.'/submission/show/'.$submission->getSubmissionId().'">Show</a></td>';
+			echo '<td><a href="/'.$base.'/submission/update/'.$submission->getSubmissionId().'">Update</a></td>';
 			echo '<td><a href="/'.$base.'/review/new/'.$submission->getSubmissionId().'">Submit review</a></td></tr>';
 		}
 		echo "</tbody>";

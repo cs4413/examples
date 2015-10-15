@@ -12,7 +12,7 @@ class UserController {
 				self::show();
 				break;
 			case  "showall":
-				$_SESSION['users'] = usersDB::getAllUserProfiles();
+				$_SESSION['users'] = usersDB::getUsersBy();
 				$_SESSION['headertitle'] = "ClassBash Reviews";
 				$_SESSION['footertitle'] = "<h3>The footer goes here</h3>";
 				UserView::showall();

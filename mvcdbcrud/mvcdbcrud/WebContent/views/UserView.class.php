@@ -22,18 +22,18 @@ class UserView {
 		echo "<h1>ClassBash user list</h1>";
 		echo "<table>";
 		echo "<thead>";
-		echo "<tr><th>User Id</th><th>User Id</th></tr>";
+		echo "<tr><th>User Id</th><th>User name</th> <th>Show</th><th>Update</th></tr>";
 		echo "</thead>";
 		echo "<tbody>";
 	
-// 		foreach($users as $user) {
-// 			echo '<tr>';
-// 			echo '<td><a href="/'.$base.'/user/show/'.$review->getReviewId().'">Review '. $review->getReviewId().'</a></td>';
-// 			echo '<td><a href="/'.$base.'/submission/show/'.$review->getSubmissionId().'">Submission '. $review->getSubmissionId().'</a></td>';
-// 			echo '<td>'.$review->getUserName().'</td>';
-// 			echo '<td>'.$review->getScore().'</td>';
-// 			echo '</tr>';
-// 		}
+		foreach($users as $user) {
+			echo '<tr>';
+			echo '<td>'.$user->getUserId().'</td>';
+			echo '<td>'.$user->getUserName().'</td>';
+			echo '<td><a href="/'.$base.'/user/show/'.$user->getUserId().'">Show</a></td>';
+			echo '<td><a href="/'.$base.'/user/update/'.$user->getUserId().'">Update</a></td>';
+			echo '</tr>';
+		}
 		echo "</tbody>";
 		echo "</table>";
 		if (array_key_exists('footertitle', $_SESSION))

@@ -22,16 +22,19 @@ class ReviewView {
 		echo "<table>";
 		echo "<thead>";
 		echo "<tr><th>Review Id</th><th>Submission Id</th>
-			 <th>Reviewer name</th> <th>Review score</th></tr>";
+			 <th>Reviewer name</th> <th>Review score</th>
+			 <th>Show review</td> <th> Update review</th></tr>";
 		echo "</thead>";
 		echo "<tbody>";
 	
 		foreach($reviews as $review) {
 			echo '<tr>';
-			echo '<td><a href="/'.$base.'/review/show/'.$review->getReviewId().'">Review '. $review->getReviewId().'</a></td>';
+			echo '<td>'. $review->getReviewId().'</td>';
 			echo '<td><a href="/'.$base.'/submission/show/'.$review->getSubmissionId().'">Submission '. $review->getSubmissionId().'</a></td>';
 			echo '<td>'.$review->getUserName().'</td>';
 			echo '<td>'.$review->getScore().'</td>';
+			echo '<td><a href="/'.$base.'/review/show/'.$review->getReviewId().'">Show</a></td>';
+			echo '<td><a href="/'.$base.'/review/update/'.$review->getReviewId().'">Update</a></td>';
 	        echo '</tr>';
 		}
 		echo "</tbody>";
