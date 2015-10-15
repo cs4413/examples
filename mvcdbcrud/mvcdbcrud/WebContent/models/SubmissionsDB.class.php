@@ -1,6 +1,31 @@
 <?php
 class SubmissionsDB {
 	
+	public static function addSubmission($submission) {
+		// Inserts $submission into the Submissions table and returns submissionId
+		$query = "INSERT INTO Submissions (submissionFile, assignmentNumber, userId)
+		                      VALUES(:submissionFile, :assignmentNumber, :userId)";
+		$returnId = 0;
+		try {
+			$db = Database::getDB ();
+			if (is_null($submission) || $submission->getErrorCount() > 0)
+				throw new PDOException("Invalid Submission object can't be inserted");
+			$users = UsersDB::getUsersBy('userName', $submission->getUserName());
+			if (is_null($users) || empty($users))
+				throw new PDOException("Submission user name doesn't correspond to a real user");
+			$statement = $db->prepare ($query);
+			$statement->bindValue(":submissionFile", $submission->getSubmission());
+			$statement->bindValue(":assignmentNumber", $submission->getAssignmentNumber());
+			$statement->bindValue(":userId", $users[0]->getUserId());
+			$statement->execute ();
+			$statement->closeCursor();
+			$returnId = $db->lastInsertId("submissionId");
+		} catch (Exception $e) { // Not permanent error handling
+			echo "<p>Error adding submission ".$e->getMessage()."</p>";
+		}
+		return $returnId;
+	}
+	
 	public static function getSubmissionRowSetsBy($type = null, $value = null) {
 		// Returns the rows of Submissions whose $type field has value $value
 		$allowedTypes = ["submissionId", "userName", "assignmentNumber"];

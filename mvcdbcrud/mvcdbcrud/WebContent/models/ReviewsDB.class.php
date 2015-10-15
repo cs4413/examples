@@ -2,7 +2,7 @@
 class ReviewsDB {
 	
 	public static function addReview($review) {
-		// Inserts the Review object $user into the Users table and returns userId
+		// Inserts $review into the Reviews table and returns reviewId
 		$query = "INSERT INTO Reviews (review, score, submissionId, userId)
 		                      VALUES(:review, :score, :submissionId, :userId)";
 		$returnId = 0;

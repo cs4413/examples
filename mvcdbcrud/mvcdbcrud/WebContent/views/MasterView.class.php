@@ -9,19 +9,11 @@ class MasterView {
     }
     
     public static function showNavBar() {
+    	// Show the navbar
     	echo "<nav>";
-    	//print_r($_SESSION);
     	$user = (array_key_exists('user', $_SESSION))?$_SESSION['user']:null;
-    	//if (array_key_exists('user', $_SESSION) && !is_null($_SESSION['user']))
-    	//	echo "Hello " . $_SESSION['user']->getUserName();
-    	if (is_null($user))
-    	   echo "USER: $user <br>";
-    	elseif (is_a($user, 'user'))
-    		echo $user;
-    	else {
-    		echo "not a user";
-    		print_r($user);
-    	}
+    	if (!is_null($user))
+    	   echo "Hello ". $user->getUserName()." <br>";
     	echo "</nav>";
     }
 

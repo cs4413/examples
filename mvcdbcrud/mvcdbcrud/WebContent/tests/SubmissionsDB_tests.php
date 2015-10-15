@@ -31,6 +31,42 @@ foreach ($submissions as $submission)
 	echo "$submission <br>";
 ?>	
 
+<h2>It should insert a valid submission in the database</h2>
+<?php 
+makeDB('ptest'); 
+Database::clearDB();
+$db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
+$beforeCount = count(SubmissionsDB::getSubmissionsBy());
+$validTest = array("userName" => "Kay", "assignmentNumber" => "5",
+		           "submissionFile" => array("name" => "V:\test.txt", 
+		           		                     "tmp_name" => "temp.1"));
+$s1 = new Submission($validTest);
+echo $s1;
+print_r($s1->getErrors());
+$submissionId = SubmissionsDB::addSubmission($s1);
+$afterCount = count(SubmissionsDB::getSubmissionsBy());
+echo "The inserted submission Id is: $submissionId";
+echo "Before the database has $beforeCount";
+echo "Now the database has $afterCount";
+?>
+
+<h2>It should not allow insertion of a duplicate submission</h2>
+<?php 
+makeDB('ptest'); 
+Database::clearDB();
+$db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
+$beforeCount = count(SubmissionsDB::getSubmissionsBy());
+$duplicateTest =  array("userName" => "Kay", "assignmentNumber" => "1",
+		           "submissionFile" => array("name" => "V:\test.txt", 
+		           		                     "tmp_name" => "temp.1"));
+$s1 = new Submission($duplicateTest);
+$submissionId = SubmissionsDB::addSubmission($s1);
+$afterCount = count(SubmissionsDB::getSubmissionsBy());
+echo "The inserted submission Id is: $submissionId";
+echo "Before the database has $beforeCount";
+echo "Now the database has $afterCount";
+?>
+
 
 </body>
 </html>
