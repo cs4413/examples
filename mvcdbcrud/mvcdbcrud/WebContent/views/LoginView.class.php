@@ -13,7 +13,7 @@ class LoginView {
 	   $user = (array_key_exists('user', $_SESSION))?$_SESSION['user']:null;
 	   $base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
 	   echo '<h1>ClassBash login</h1>';
-	   echo '<form action ="login" method="Post">';
+	   echo '<form action ="/'.$base.'/login" method="Post">';
 	   echo '<p>User name: <input type="text" name ="userName"';
 	   if (!is_null($user)) 
 	   	  echo 'value = "'. $user->getUserName() .'"';

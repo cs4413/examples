@@ -59,7 +59,8 @@ class SubmissionView {
    	MasterView::showHeader();
    
    	echo '<h1>ClassBash submission</h1>';
-   	echo '<form enctype="multipart/form-data" action ="new" method="Post">';
+   	echo '<form enctype="multipart/form-data" 
+   		   action ="/'.$base.'/login" method="Post">';
    	echo '<p>User name: <input type="text" required name ="userName"';
    	if (!is_null($submission))
    		echo 'value = "'. $submission->getUserName() .'"';
