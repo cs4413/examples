@@ -14,26 +14,27 @@ CREATE TABLE Users (
 DROP TABLE if EXISTS Submissions;
 CREATE TABLE Submissions (
   submissionId       int(11) NOT NULL AUTO_INCREMENT,
-  userId             int(11) NOT NULL COLLATE utf8_unicode_ci,
+  submitterId             int(11) NOT NULL COLLATE utf8_unicode_ci,
   assignmentNumber   int COLLATE utf8_unicode_ci,
   submissionFile     varchar (255) UNIQUE NOT NULL COLLATE utf8_unicode_ci,
-  dateCreated    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  dateCreated        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (submissionId),
-  FOREIGN KEY (userId) REFERENCES Users(userId)
+  FOREIGN KEY (submitterId) REFERENCES Users(userId),
+  CONSTRAINT sid_anum UNIQUE (submitterId, assignmentNumber)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE if EXISTS Reviews;
 CREATE TABLE Reviews (
   reviewId           int(11) NOT NULL AUTO_INCREMENT,
   submissionId       int(11) NOT NULL,
-  userId             int(11) NOT NULL COLLATE utf8_unicode_ci,
+  reviewerId         int(11) NOT NULL COLLATE utf8_unicode_ci,
   score              int NOT NULL COLLATE utf8_unicode_ci,
   review             varchar (4096) NOT NULL COLLATE utf8_unicode_ci,
-  dateCreated    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  dateCreated        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (reviewId),
   FOREIGN KEY (submissionId) REFERENCES Submissions(submissionId),
-  FOREIGN KEY (userId) REFERENCES Users(userId),
-  CONSTRAINT uid_subid UNIQUE (userId, submissionId)
+  FOREIGN KEY (reviewerId) REFERENCES Users(userId),
+  CONSTRAINT rid_subid UNIQUE (reviewerId, submissionId)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -46,26 +47,26 @@ INSERT INTO Users (userId, userName, password) VALUES
 INSERT INTO Users (userId, userName,  password) VALUES 
 	   (4, 'George', 'yyy');
 	  
-INSERT INTO Submissions (submissionId, userId, assignmentNumber, submissionFile) VALUES 
+INSERT INTO Submissions (submissionId, submitterId, assignmentNumber, submissionFile) VALUES 
 	   (1, 1, '1', 'Kay1.txt');  
-INSERT INTO Submissions (submissionId, userId, assignmentNumber, submissionFile) VALUES 
+INSERT INTO Submissions (submissionId, submitterId, assignmentNumber, submissionFile) VALUES 
 	   (2, 1, '2', 'Kay2.txt');
-INSERT INTO Submissions (submissionId, userId, assignmentNumber, submissionFile) VALUES 
+INSERT INTO Submissions (submissionId, submitterId, assignmentNumber, submissionFile) VALUES 
 	   (3, 2, '1', 'John1.txt');
 	   
-INSERT INTO Reviews (reviewId, submissionId, userId, score, review) VALUES 
+INSERT INTO Reviews (reviewId, submissionId, reviewerId, score, review) VALUES 
 	   (1, 1, 2, 4, 'This is a review by John of Kay1.txt');
-INSERT INTO Reviews (reviewId, submissionId, userId, score, review) VALUES 
+INSERT INTO Reviews (reviewId, submissionId, reviewerId, score, review) VALUES 
 	   (2, 1, 3, 2, 'This is a review by Alice of Kay1.txt'); 
-INSERT INTO Reviews (reviewId, submissionId, userId, score, review) VALUES 
+INSERT INTO Reviews (reviewId, submissionId, reviewerId, score, review) VALUES 
 	   (3, 1, 4, 4, 'This is a review by George of Kay1.txt');
-INSERT INTO Reviews (reviewId, submissionId, userId, score, review) VALUES 
+INSERT INTO Reviews (reviewId, submissionId, reviewerId, score, review) VALUES 
 	   (4, 2, 2, 4, 'This is a review of John of Kay2.txt');
-INSERT INTO Reviews (reviewId, submissionId, userId, score, review) VALUES 
+INSERT INTO Reviews (reviewId, submissionId, reviewerId, score, review) VALUES 
 	   (5, 2, 3, 4, 'This is a review by Alice of Kay2.txt');
-INSERT INTO Reviews (reviewId, submissionId, userId, score, review) VALUES 
+INSERT INTO Reviews (reviewId, submissionId, reviewerId, score, review) VALUES 
 	   (6, 3, 3, 4, 'This is a review by Alice of John1.txt'); 
-INSERT INTO Reviews (reviewId, submissionId, userId, score, review) VALUES 
+INSERT INTO Reviews (reviewId, submissionId, reviewerId, score, review) VALUES 
 	   (7, 2, 1, 4, 'This is a review of Kay of Kay2.txt');
-INSERT INTO Reviews (reviewId, submissionId, userId, score, review) VALUES 
+INSERT INTO Reviews (reviewId, submissionId, reviewerId, score, review) VALUES 
 	   (8, 3, 1, 4, 'This is a review of Kay of John1.txt');

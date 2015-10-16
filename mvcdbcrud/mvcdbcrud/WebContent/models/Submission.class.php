@@ -7,7 +7,7 @@ class Submission {
 	private $assignmentNumber;
 	private $submissionFile;
 	private $submissionId;
-	private $userName;
+	private $submitterName;
 	
 	public function __construct($formInput = null) {
 		$this->formInput = $formInput;
@@ -42,14 +42,18 @@ class Submission {
 	public function getSubmissionId() {
 		return $this->submissionId;
 	}
+	
+	public function getSubmission() {
+		return "Placeholder for upload";
+	}
 
-	public function getUserName() {
-		return $this->userName;
+	public function getSubmitterName() {
+		return $this->submitterName;
 	}
 	
 	public function getParameters() {
 		// Return data fields as an associative array
-		$paramArray = array("userName" => $this->userName,
+		$paramArray = array("submitterName" => $this->submitterName,
 				"assignmentNumber" => $this->assignmentNumber,
 				"submissionFile" => $this->submissionFile,
 				"submissionId" => $this->submissionId
@@ -69,10 +73,16 @@ class Submission {
 	}
 	
 	public function __toString() {
-		$str = "User name: ".$this->userName."<br>".
+		$errorStr = "";
+		print_r($this->errors);
+		foreach($this->errors as $error)
+			$errorStr = $errorStr . " ". $error;
+			
+		$str = "Submitter name: ".$this->submitterName."<br>".
 			    "Assignment number: ".$this->assignmentNumber."<br>".
 				"Submission file: ".$this->submissionFile."<br>".
-		        "Submission id: ". $this->submissionId;
+		        "Submission id: ". $this->submissionId."<br>".
+		        "Errors: " . $errorStr;
 		return $str;
 	}
 	
@@ -90,11 +100,11 @@ class Submission {
 	private function initialize() {
 		$this->errorCount = 0;
 		$this->submissionId = 0;
-		$errors = array();
+		$this->errors = array();
 		if (is_null($this->formInput))
 			$this->initializeEmpty();
 		else  {	 
-		   $this->validateUserName();
+		   $this->validateSubmitterName();
 		   $this->validateAssignmentNumber();
 		   $this->validateSubmissionFile();
 		}
@@ -103,7 +113,7 @@ class Submission {
 	private function initializeEmpty() {
 		$this->errorCount = 0;
 		$errors = array();
-	 	$this->userName = "";
+	 	$this->submitterName = "";
 	 	$this->submissionFile = "";
 	}
 	
@@ -124,14 +134,14 @@ class Submission {
 		}
 	}
 
-	private function validateUserName() {
-		// Username should only contain letters, numbers, dashes and underscore
-		$this->userName = $this->extractForm('userName');
-		if (empty($this->userName)) 
-			$this->setError('userName', 'USER_NAME_EMPTY');
-		elseif (!filter_var($this->userName, FILTER_VALIDATE_REGEXP,
+	private function validateSubmitterName() {
+		// Submitter name should only contain letters, numbers, dashes and underscore
+		$this->submitterName = $this->extractForm('submitterName');
+		if (empty($this->submitterName)) 
+			$this->setError('submitterName', 'SUBMITTER_NAME_EMPTY');
+		elseif (!filter_var($this->submitterName, FILTER_VALIDATE_REGEXP,
 			array("options"=>array("regexp" =>"/^([a-zA-Z0-9\-\_])+$/i")) )) {
-			$this->setError('userName', 'USER_NAME_HAS_INVALID_CHARS');
+			$this->setError('submitterName', 'SUBMITTER_NAME_HAS_INVALID_CHARS');
 		}
 	}
 	
@@ -144,21 +154,23 @@ class Submission {
 		}
 		$file = $this->formInput['submissionFile'];
 		if (is_null($file) || !isset($file["name"]) || !isset($file["tmp_name"])) {
+// 		   echo "<br>Submission file $file<br>";
+// 		   print_r($file);
 		   $this->setError('submissionFile', 'SUBMISSION_EMPTY');
 		   return;
 		}
 		$info = new SplFileInfo(basename($file['name']));
-		$this->submissionFile = $this->userName . $this->assignmentNumber. "." .
+		$this->submissionFile = $this->submitterName . $this->assignmentNumber. "." .
 				                $info->getExtension();
 
-		$targetFile = dirname(__FILE__).DIRECTORY_SEPARATOR."..".
-		              DIRECTORY_SEPARATOR.$this->uploadDir.
-		              DIRECTORY_SEPARATOR.$this->submissionFile;
+// 		$targetFile = dirname(__FILE__).DIRECTORY_SEPARATOR."..".
+// 		              DIRECTORY_SEPARATOR.$this->uploadDir.
+// 		              DIRECTORY_SEPARATOR.$this->submissionFile;
 		
-		if (!move_uploaded_file($file["tmp_name"], $targetFile)) {
-			$this->setError('submissionFile', 'SUBMISSION_UPLOAD_ERROR');
-		    return;
-		}
+// 		if (!move_uploaded_file($file["tmp_name"], $targetFile)) {
+// 			$this->setError('submissionFile', 'SUBMISSION_UPLOAD_ERROR');
+// 		    return;
+// 		}
 	}
 }
 ?>

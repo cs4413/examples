@@ -30,14 +30,15 @@ class ReviewsDBTest extends PHPUnit_Framework_TestCase {
   	Database::clearDB();
   	$db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
   	$beforeCount = count(ReviewsDB::getReviewsBy());
-  	$validTest = array("userName" => "Kay",
+  	$validTest = array("reviewerName" => "Kay",
   			"submissionId" => "1",
   			"score" => "5",
   			"review" => "This was a great presentation"
   	);
   	$s1 = new Review($validTest);
-  	$reviewId = ReviewsDB::addReview($s1);
-  	$this->assertGreaterThan(0, $reviewId, 'The inserted review id should be positive');
+  	$review = ReviewsDB::addReview($s1);
+  	$this->assertTrue(!is_null($review), 'The inserted review should not be null');
+  	$this->assertTrue(empty($review->getErrors()), 'The returned review should not have errors');
   	$afterCount = count(ReviewsDB::getReviewsBy());
   	$this->assertEquals($afterCount, $beforeCount + 1,
   			'The database should have one more review after insertion');
@@ -49,14 +50,16 @@ class ReviewsDBTest extends PHPUnit_Framework_TestCase {
   	Database::clearDB();
   	$db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
   	$beforeCount = count(ReviewsDB::getReviewsBy());
-  	$duplicateTest =  	$validTest = array("userName" => "John",
+  	$duplicateTest =  	$validTest = array("reviewerName" => "John",
   		                           	       "submissionId" => "1",
   			                               "score" => "5",
   			                               "review" => "This was a great presentation"
   	);
   	$s1 = new Review($duplicateTest);
-  	$reviewId = ReviewsDB::addReview($s1);
-  	$this->assertEquals(0, $reviewId, 'Duplicate attempt should return 0 reviewId');
+  	$review = ReviewsDB::addReview($s1);
+  	$this->assertTrue(!is_null($review), 'The returned review should not be null');
+  	$this->assertTrue(!empty($review->getErrors()), 'The returned review should have errors');
+  	print_r($review->getErrors());
   	$afterCount = count(ReviewsDB::getReviewsBy());
   	$this->assertEquals($afterCount, $beforeCount,
   			'The database should have the same number of reviews after trying to insert duplicate');

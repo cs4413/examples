@@ -10,7 +10,8 @@ class ReviewController {
 				self::newReview();
 				break;
 			case "show":
-	
+				$_SESSION['reviews'] = ReviewsDB::getReviewsBy('reviewId', $arguments);
+	            ReviewView::show();
 				break;
 			case  "showall":
 				$_SESSION['reviews'] = reviewsDB::getReviewsBy();
@@ -31,31 +32,29 @@ class ReviewController {
 		$review = null;
 		if ($_SERVER["REQUEST_METHOD"] == "POST")  {
 			$review = new Review($_POST);
-			$reviewId = ReviewsDB::addReview($review);
-		    if ($reviewId == 0)
-		    	$review->setError('reviewId', 'REVIEW_IDENTITY_INVALID');
+			$review = ReviewsDB::addReview($review);
 		}
 		if (is_null($review) || $review->getErrorCount() != 0) {
 			$_SESSION['review'] = $review;
 			ReviewView::showNew();
 		} else {
 			HomeView::show();	
-			header('Location: http://'.$_SERVER["HTTP_HOST"].'/'.$_SESSION['base']);
+			header('Location: /'.$_SESSION['base']);
 		}		
 	}
 	
-	public static function showReview() {
-		// Display the review indicated by the argument
-		$reviews = ReviewsDB::getReviewsBy('reviewId', $_SESSION['arguments']);
-		if (!empty($reviews)) {
-			$_SESSION['review'] = null;
-			HomeView::show();
-			header('Location: http://'.$_SERVER["HTTP_HOST"].'/'.$_SESSION['base']);
-	    } else {
-			$_SESSION['review'] = $reviews[0];
-		    ReviewView::show();
-		}
-	}
+// 	public static function showReview() {
+// 		// Display the review indicated by the argument
+// 		$reviews = ReviewsDB::getReviewsBy('reviewId', $_SESSION['arguments']);
+// 		if (!empty($reviews)) {
+// 			$_SESSION['reviews'] = null;
+// 			HomeView::show();
+// 			header('Location: http://'.$_SERVER["HTTP_HOST"].'/'.$_SESSION['base']);
+// 	    } else {
+// 			$_SESSION['reviews'] = $reviews[0];
+// 		    ReviewView::show();
+// 		}
+// 	}
 	
 	public static function updateReview() {
 		// Process updating review

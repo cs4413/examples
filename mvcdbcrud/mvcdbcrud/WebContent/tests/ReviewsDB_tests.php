@@ -39,15 +39,15 @@ makeDB('ptest');
 Database::clearDB();
 $db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
 $beforeCount = count(ReviewsDB::getReviewsBy());
-$validTest = array("userName" => "Kay",
+$validTest = array("reviewerName" => "Kay",
   			"submissionId" => "1",
   			"score" => "5",
   			"review" => "This was a great presentation"
   	);
 $s1 = new Review($validTest);
-$reviewId = ReviewsDB::addReview($s1);
+$s1New = ReviewsDB::addReview($s1);
 $afterCount = count(ReviewsDB::getReviewsBy());
-echo "The inserted review Id is: $reviewId";
+echo "The new review is: $s1New";
 echo "Before the database has $beforeCount";
 echo "Now the database has $afterCount";
 ?>
@@ -58,15 +58,16 @@ makeDB('ptest');
 Database::clearDB();
 $db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
 $beforeCount = count(ReviewsDB::getReviewsBy());
-$duplicateTest = array("userName" => "Alice",
+$duplicateTest = array("reviewerName" => "Alice",
 		"submissionId" => "1",
 		"score" => "5",
 		"review" => "This was a great presentation"
 );
 $s1 = new Review($duplicateTest);
-$reviewId = ReviewsDB::addReview($s1);
+$s1New = ReviewsDB::addReview($s1);
 $afterCount = count(ReviewsDB::getReviewsBy());
-echo "The inserted review Id is: $reviewId";
+echo "The errors are: ";
+print_r($s1New->getErrors());
 echo "Before the database has $beforeCount";
 echo "Now the database has $afterCount";
 ?>

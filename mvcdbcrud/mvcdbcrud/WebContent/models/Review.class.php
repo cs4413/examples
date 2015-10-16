@@ -7,7 +7,7 @@ class Review {
 	private $reviewId;
 	private $score;
 	private $submissionId;
-	private $userName;
+	private $reviewerName;
 
 	
 	public function __construct($formInput = null) {
@@ -40,6 +40,10 @@ class Review {
 		return $this->reviewId;
 	}
 	
+	public function getReviewerName() {
+		return $this->reviewerName;
+	}
+	
 	public function getScore() {
 		return $this->score;
 	}
@@ -48,13 +52,9 @@ class Review {
 		return $this->submissionId;
 	}
 	
-	public function getUserName() {
-		return $this->userName;
-	}
-	
 	public function getParameters() {
 		// Return data fields as an associative array
-		$paramArray = array("userName" => $this->userName,
+		$paramArray = array("reviewerName" => $this->reviewerName,
 			            	"reviewId" => $this->reviewId,
 				            "submissionId" => $this->submissionId,
 				            "score" => $this->score,
@@ -77,7 +77,7 @@ class Review {
 	}
 	
 	public function __toString() {
-		$str = "User name: ".$this->userName.
+		$str = "Reviewer name: ".$this->reviewerName.
 		       " Submission Id: ".$this->submissionId.
 		       " Score: ".$this->score.
 		       " Review: ".$this->review.
@@ -98,11 +98,11 @@ class Review {
 	private function initialize() {
 		$this->errorCount = 0;
 		$this->reviewId = 0;
-		$errors = array ();
+		$this->errors = array ();
 		if (is_null ( $this->formInput ))
 			$this->initializeEmpty();
 		else {
-			$this->validateUserName();
+			$this->validateReviewerName();
 			$this->validateSubmissionId();
 			$this->validateScore();
 			$this->validateReview();
@@ -114,7 +114,7 @@ class Review {
 		$errors = array();
 		$this->review = "";
 		$this->score = "";
-	 	$this->userName = "";
+	 	$this->reviewerName = "";
 	 	$this->submissionId = "";	
 	}
 
@@ -132,23 +132,23 @@ class Review {
 			$this->setError('review', 'REVIEW_EMPTY');
 	}
 	
+	private function validateReviewerName() {
+		// The reviwerName should only contain letters, numbers, dashes and underscore
+		$this->reviewerName = $this->extractForm('reviewerName');
+		if (empty($this->reviewerName))
+			$this->setError('reviewerName', 'REVIEWER_NAME_EMPTY');
+		elseif (!filter_var($this->reviewerName, FILTER_VALIDATE_REGEXP,
+				array("options"=>array("regexp" =>"/^([a-zA-Z0-9\-\_])+$/i")) )) {
+			$this->setError('reviewerName', 'REVIEWER_NAME_HAS_INVALID_CHARS');
+		}
+	}
+	
 	private function validateSubmissionId() {
 		// Submission ID should contain ..... TODO
 		$this->submissionId = $this->extractForm('submissionId');
 		if (empty($this->submissionId))
 			$this->setError('submissionId', 'SUBMISSION_ID_EMPTY');
 		// todo
-	}
-	
-	private function validateUserName() {
-		// Username should only contain letters, numbers, dashes and underscore
-		$this->userName = $this->extractForm('userName');
-		if (empty($this->userName))
-			$this->setError('userName', 'USER_NAME_EMPTY');
-		elseif (!filter_var($this->userName, FILTER_VALIDATE_REGEXP,
-				array("options"=>array("regexp" =>"/^([a-zA-Z0-9\-\_])+$/i")) )) {
-			$this->setError('userName', 'USER_NAME_HAS_INVALID_CHARS');
-		}
 	}
 }
 ?>

@@ -30,7 +30,7 @@ $myDb = makeDB('ptest');
 $_SERVER ["REQUEST_METHOD"] = "POST";
 $_SESSION = array('base' => 'mvcdbcrud', 'control' => 'submission', 
 	                      'action' =>'new', 'arguments' => null);
-$_POST = array("userName" => "Kay");
+$_POST = array("submitterName" => "Kay");
 SubmissionController::run();
 ?>
 

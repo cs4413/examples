@@ -9,7 +9,7 @@ class ReviewViewTest extends PHPUnit_Framework_TestCase {
 	
   public function testShowReviewViewWithReview() {
   	ob_start();
-  	$validTest = array("userName" => "Kay",
+  	$validTest = array("reviewerName" => "Kay",
              	       "submissionId" => "1",
 	           	       "score" => "5",
 		               "review" => "This was a great presentation"
@@ -33,7 +33,7 @@ class ReviewViewTest extends PHPUnit_Framework_TestCase {
   
   public function testShowAllSubmissions() {
   	ob_start();
-  	$validTest = array("userName" => "Kay",
+  	$validTest = array("reviewerName" => "Kay",
              	       "submissionId" => "2",
 	           	       "score" => "5",
 		               "review" => "This was a great presentation"
@@ -63,10 +63,10 @@ class ReviewViewTest extends PHPUnit_Framework_TestCase {
   
   public function testUpdateReview() {
   	ob_start();
-  	$validTest = array("userName" => "Kay",
-  			"submissionId" => 2,
-  			"score" => "5",
-  			"review" => "This was a great presentation"
+  	$validTest = array("reviewerName" => "Kay",
+  		 	           "submissionId" => 2,
+  			           "score" => "5",
+  			           "review" => "This was a great presentation"
   	);
   	$review = new Review($validTest);
   	$review->setReviewId(1);

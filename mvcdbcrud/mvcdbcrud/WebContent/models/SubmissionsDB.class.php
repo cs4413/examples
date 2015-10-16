@@ -3,38 +3,40 @@ class SubmissionsDB {
 	
 	public static function addSubmission($submission) {
 		// Inserts $submission into the Submissions table and returns submissionId
-		$query = "INSERT INTO Submissions (submissionFile, assignmentNumber, userId)
-		                      VALUES(:submissionFile, :assignmentNumber, :userId)";
-		$returnId = 0;
+		$query = "INSERT INTO Submissions (submissionFile, assignmentNumber, submitterId)
+		                      VALUES(:submissionFile, :assignmentNumber, :submitterId)";
 		try {
 			$db = Database::getDB ();
 			if (is_null($submission) || $submission->getErrorCount() > 0)
-				throw new PDOException("Invalid Submission object can't be inserted");
-			$users = UsersDB::getUsersBy('userName', $submission->getUserName());
-			if (is_null($users) || empty($users))
-				throw new PDOException("Submission user name doesn't correspond to a real user");
+				return $submission;
+			$users = UsersDB::getUsersBy('userName', $submission->getSubmitterName());
+			if (is_null($users) || empty($users)){
+				$submission->setError('submitterName', 'SUBMITTER_NAME_DOES_NOT_EXIST');
+				return $submission;
+			}
 			$statement = $db->prepare ($query);
 			$statement->bindValue(":submissionFile", $submission->getSubmission());
 			$statement->bindValue(":assignmentNumber", $submission->getAssignmentNumber());
-			$statement->bindValue(":userId", $users[0]->getUserId());
+			$statement->bindValue(":submitterId", $users[0]->getUserId());
 			$statement->execute ();
 			$statement->closeCursor();
 			$returnId = $db->lastInsertId("submissionId");
+			$submission->setSubmissionId($returnId);
 		} catch (Exception $e) { // Not permanent error handling
-			echo "<p>Error adding submission ".$e->getMessage()."</p>";
+			$submission->setError('submissionId', 'SUBMISSION_IDENTITY_INVALID');
 		}
-		return $returnId;
+		return $submission;
 	}
 	
 	public static function getSubmissionRowSetsBy($type = null, $value = null) {
 		// Returns the rows of Submissions whose $type field has value $value
-		$allowedTypes = ["submissionId", "userName", "assignmentNumber"];
+		$allowedTypes = ["submissionId", "submitterName", "assignmentNumber"];
 		$submissionRowSets = NULL;
 		try {
 			$db = Database::getDB ();
 			$query = "SELECT Submissions.assignmentNumber, Submissions.submissionFile, 
-	   		          Submissions.submissionId, Users.userName 
-	   		          FROM Submissions LEFT JOIN Users ON Submissions.userId = Users.userId";
+	   		          Submissions.submissionId, Users.userName as submitterName
+	   		          FROM Submissions LEFT JOIN Users ON Submissions.submitterId = Users.userId";
 			if (!is_null($type)) {
 				if (!in_array($type, $allowedTypes))
 					throw new PDOException("$type not an allowed search criterion for Submissions");
@@ -45,6 +47,7 @@ class SubmissionsDB {
 				$statement = $db->prepare($query);
 			$statement->execute ();
 			$submissionRowSets = $statement->fetchAll(PDO::FETCH_ASSOC);
+			print_r($submissionRowSets);
 			$statement->closeCursor ();
 		} catch ( PDOException $e ) { // Not permanent error handling
 			echo "<p>Error getting Submission rows by $type: " . $e->getMessage () . "</p>";

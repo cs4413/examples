@@ -37,15 +37,15 @@ makeDB('ptest');
 Database::clearDB();
 $db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
 $beforeCount = count(SubmissionsDB::getSubmissionsBy());
-$validTest = array("userName" => "Kay", "assignmentNumber" => "5",
+$validTest = array("submitterName" => "Kay", "assignmentNumber" => "8",
 		           "submissionFile" => array("name" => "V:\test.txt", 
 		           		                     "tmp_name" => "temp.1"));
 $s1 = new Submission($validTest);
-echo $s1;
+echo "<br>In insertion should not have errors $s1<br>";
 print_r($s1->getErrors());
-$submissionId = SubmissionsDB::addSubmission($s1);
+$newS1 = SubmissionsDB::addSubmission($s1);
 $afterCount = count(SubmissionsDB::getSubmissionsBy());
-echo "The inserted submission Id is: $submissionId";
+echo 'The inserted submission Id is:'. $newS1->getSubmissionId().'<br>';
 echo "Before the database has $beforeCount";
 echo "Now the database has $afterCount";
 ?>
@@ -56,17 +56,16 @@ makeDB('ptest');
 Database::clearDB();
 $db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
 $beforeCount = count(SubmissionsDB::getSubmissionsBy());
-$duplicateTest =  array("userName" => "Kay", "assignmentNumber" => "1",
+$duplicateTest =  array("submitterName" => "Kay", "assignmentNumber" => "1",
 		           "submissionFile" => array("name" => "V:\test.txt", 
 		           		                     "tmp_name" => "temp.1"));
 $s1 = new Submission($duplicateTest);
-$submissionId = SubmissionsDB::addSubmission($s1);
+$newS1 = SubmissionsDB::addSubmission($s1);
 $afterCount = count(SubmissionsDB::getSubmissionsBy());
-echo "The inserted submission Id is: $submissionId";
+echo "The inserted submission errors:";
+print_r($newS1->getErrors());
 echo "Before the database has $beforeCount";
 echo "Now the database has $afterCount";
 ?>
-
-
 </body>
 </html>

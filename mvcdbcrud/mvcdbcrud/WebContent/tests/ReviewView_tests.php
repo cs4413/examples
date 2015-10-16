@@ -22,31 +22,31 @@ ReviewView::show();
 
 <h2>It should show successfully when review is passed to show</h2>
 <?php 
-$input = array("userName" => "Kay",
+$input = array("reviewerName" => "Kay",
 		"submissionID" => 2,
 		"score" => "5",
 		"review" => "This was a great presentation"
 );
 $theReview = new Review($input);
 echo "The review $theReview";
-echo "The user name is ". $theReview->getUserName() ."<br>";
+echo "The reviewer name is ". $theReview->getReviewerName() ."<br>";
 $_SESSION = array('review' => $theReview, 'base' => "mvcdbcrud");
 ReviewView::show();
 ?>
 
 <h2>It should show display the review form with errors at the top if invalid entry</h2>
 <?php 
-$input = array("firstName" => "Kay#");
+$input = array("reviewerName" => "Kay#");
 $theReview = new Review($input);
 echo "The review $theReview";
-echo "The user name is ". $theReview->getUserName() ."<br>";
+echo "The reviewer name is ". $theReview->getReviewerName() ."<br>";
 $_SESSION = array('review' => $theReview, 'base' => "mvcdbcrud");
 ReviewView::show();
 ?>
 
 <h2>It should allow updating when a valid review is passed</h2>
 <?php 
-$validTest = array("userName" => "Kay",
+$validTest = array("reviewerName" => "Kay",
 		"submissionId" => 2,
 		"score" => "5",
 		"review" => "This was a great presentation"

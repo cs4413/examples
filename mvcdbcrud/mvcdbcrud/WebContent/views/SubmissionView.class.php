@@ -3,6 +3,7 @@ class SubmissionView {
 
 	public static function show() {
 		// Show a single Submission object
+		print_r($_SESSION);
 		$_SESSION['headertitle'] = "ClassBash Submission Report";
 		MasterView::showHeader();
 		MasterView::showNavbar();
@@ -28,7 +29,7 @@ class SubmissionView {
 		echo "</thead>";
 		echo "<tbody>";
 		foreach($submissions as $submission) {
-			echo '<tr><td>'.$submission->getUserName().'</td>';
+			echo '<tr><td>'.$submission->getSubmitterName().'</td>';
 			echo '<td>'.$submission->getAssignmentNumber().'</td>';
 			echo '<td><a href="/'.$base.'/submission/download/'.$submission->getSubmissionId().'">Download</a></td>';
 			echo '<td><a href="/'.$base.'/submission/show/'.$submission->getSubmissionId().'">Show</a></td>';
@@ -44,11 +45,11 @@ class SubmissionView {
 
   
   public static function showDetails() {
-  	 $submission = (array_key_exists('submission', $_SESSION))?$_SESSION['submission']:null;
-     $submission = $_SESSION['submission'];
-	  if (!is_null($submission)) {
+  	 $submissions = (array_key_exists('submissions', $_SESSION))?$_SESSION['submissions']:null;
+	  if (!is_null($submissions) && !empty($submissions) && !is_null($submissions[0])) {
+	  	$submission = $submissions[0];
 	  	echo '<p>Submission Id: '.$submission->getSubmissionId().'<p>';
-	  	echo '<p>Submitter: '.$submission->getUserName().'<p>';
+	  	echo '<p>Submitter name: '.$submission->getSubmitterName().'<p>';
 	  	echo '<p> Assignment number: '. $submission->getAssignmentNumber() .'</p>';
 	  	echo '<p> File name: '. $submission->getSubmissionFile() .'</p>';
 	  }
@@ -63,13 +64,13 @@ class SubmissionView {
    	echo '<h1>ClassBash submission</h1>';
    	echo '<form enctype="multipart/form-data" 
    		   action ="/'.$base.'/login" method="Post">';
-   	echo '<p>User name: <input type="text" required name ="userName"';
+   	echo '<p>Submitter name: <input type="text" required name ="submitterName"';
    	if (!is_null($submission))
-   		echo 'value = "'. $submission->getUserName() .'"';
+   		echo 'value = "'. $submission->getSubmitterName() .'"';
    	echo '>';
    	echo '<span class="error">';
    	if (!is_null($submission))
-   		echo $submission->getError('userName');
+   		echo $submission->getError('submitterName');
    	 
    	echo '</span></p>';
    	echo '<p> Assignment number: <input type = "number" min="1"
@@ -104,7 +105,7 @@ class SubmissionView {
 	}
 	echo '<section>';
 	echo '<h3>Submssion information:</h3>';
-	echo 'Submitter name: '.$submission->getUserName().'<br>';
+	echo 'Submitter name: '.$submission->getSubmitterName().'<br>';
 	echo 'Submission Id: '.$submission->getSubmissionId().'<br>';
 	echo 'Assignment number: '.$submission->getAssignmentNumber().'<br>'; 		 
    	echo '<form enctype="multipart/form-data" action ="new" method="Post">';  

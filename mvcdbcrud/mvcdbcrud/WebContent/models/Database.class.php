@@ -1,6 +1,6 @@
 <?php
-// Responsibility: maintains open DB connection (singleton)
 class Database {
+	// Responsibility: maintains open DB connection (singleton)
     private static $db;
 	private static $dsn = 'mysql:host=localhost;dbname=';
 	private static $dbName;

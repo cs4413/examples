@@ -3,39 +3,41 @@ class ReviewsDB {
 	
 	public static function addReview($review) {
 		// Inserts $review into the Reviews table and returns reviewId
-		$query = "INSERT INTO Reviews (review, score, submissionId, userId)
-		                      VALUES(:review, :score, :submissionId, :userId)";
-		$returnId = 0;
+		$query = "INSERT INTO Reviews (review, score, submissionId, reviewerId)
+		                      VALUES(:review, :score, :submissionId, :reviewerId)";
 		try {
 			$db = Database::getDB ();
 			if (is_null($review) || $review->getErrorCount() > 0)
-				throw new PDOException("Invalid Review object can't be inserted");
-			$users = UsersDB::getUsersBy('userName', $review->getUserName());
-			if (is_null($users) || empty($users))
-				throw new PDOException("Review user name doesn't correspond to a real user");
+				return $review;
+			$users = UsersDB::getUsersBy('userName', $review->getReviewerName());
+			if (is_null($users) || empty($users)) {
+				$review->setError('reviewerName', 'REVIEWER_NAME_DOES_NOT_EXIST');
+				return $review;
+			}
 			$statement = $db->prepare ($query);
 			$statement->bindValue(":review", $review->getReview());
 			$statement->bindValue(":score", $review->getScore());
 			$statement->bindValue(":submissionId", $review->getSubmissionId());
-			$statement->bindValue(":userId", $users[0]->getUserId());
+			$statement->bindValue(":reviewerId", $users[0]->getUserId());
 			$statement->execute ();
 			$statement->closeCursor();
 			$returnId = $db->lastInsertId("reviewId");
+			$review->setReviewId($returnId);
 		} catch (Exception $e) { // Not permanent error handling
-			echo "<p>Error adding review to Reviews ".$e->getMessage()."</p>";
+			$review->setError('reviewId', 'REVIEW_IDENTITY_INVALID');
 		}
-		return $returnId;
+		return $review;
 	}
 	
 	public static function getReviewRowSetsBy($type = null, $value = null) {
 		// Returns the rows of Reviews whose $type field has value $value
-		$allowedTypes = ["reviewId", "userName", "submissionId", "score", "userId"];
+		$allowedTypes = ["reviewId", "reviewerName", "submissionId", "score", "userId"];
 		$reviewRowSets = NULL;
 		try {
 			$db = Database::getDB ();
 			$query = "SELECT Reviews.reviewId, Reviews.submissionId, 
-					  Reviews.score, Reviews.userId, Users.userName, Reviews.review
-	   		          FROM Reviews LEFT JOIN Users ON Reviews.userId = Users.userId";
+					  Reviews.score, Reviews.reviewerId, Users.userName as reviewerName, Reviews.review
+	   		          FROM Reviews LEFT JOIN Users ON Reviews.reviewerId = Users.userId";
 			if (!is_null($type)) {
 			    if (!in_array($type, $allowedTypes))
 					throw new PDOException("$type not an allowed search criterion for Reviews");
@@ -98,8 +100,8 @@ class ReviewsDB {
 		    			        " does not exist and cannot be updated");
 		    elseif ($checkReview[0]->getSubmissionId() != $review->getSubmissionId())
 		        throw new PDOException("Review submission Id does not match database");
-		    elseif ($checkReview[0]->getUserName() != $review->getUserName())
-		    throw new PDOException("Review user name does not match database");
+		    elseif ($checkReview[0]->getreviewerName() != $review->getReviewerName())
+		    throw new PDOException("Reviewer name does not match database");
 	    	$query = "UPDATE Reviews SET review = :review, score = :score
 	    			                 WHERE reviewId = :reviewId";
 		

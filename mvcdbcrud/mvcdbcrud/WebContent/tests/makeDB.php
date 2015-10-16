@@ -31,12 +31,13 @@ function makeDB($dbName) {
 		$st = $db->prepare( 
 		             "CREATE TABLE Submissions (
 			  	             submissionId       int(11) NOT NULL AUTO_INCREMENT,
-				             userId             int(11) NOT NULL COLLATE utf8_unicode_ci,
+				             submitterId        int(11) NOT NULL COLLATE utf8_unicode_ci,
 				             assignmentNumber   int COLLATE utf8_unicode_ci,
 				             submissionFile     varchar (255) UNIQUE NOT NULL COLLATE utf8_unicode_ci,
 				             dateCreated    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 				             PRIMARY KEY (submissionId),
-				             FOREIGN KEY (userId) REFERENCES Users(userId)
+				             FOREIGN KEY (submitterId) REFERENCES Users(userId),
+				             CONSTRAINT sid_anum UNIQUE (submitterId, assignmentNumber)
 		              )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;"
 		 );
 		$st->execute();
@@ -44,14 +45,14 @@ function makeDB($dbName) {
 		$st = $db->prepare ("CREATE TABLE Reviews (
 		  			             reviewId           int(11) NOT NULL AUTO_INCREMENT,
 					             submissionId       int(11) NOT NULL,
-					             userId             int(11) NOT NULL COLLATE utf8_unicode_ci,
+					             reviewerId         int(11) NOT NULL COLLATE utf8_unicode_ci,
 					             score              int NOT NULL COLLATE utf8_unicode_ci,
 					             review             varchar (4096) NOT NULL COLLATE utf8_unicode_ci,
 					             dateCreated    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 					             PRIMARY KEY (reviewId),
 					             FOREIGN KEY (submissionId) REFERENCES Submissions(submissionId),
-					             FOREIGN KEY (userId) REFERENCES Users(userId),
-                                 CONSTRAINT uid_subid UNIQUE (userId, submissionId)
+					             FOREIGN KEY (reviewerId) REFERENCES Users(userId),
+                                 CONSTRAINT rid_subid UNIQUE (reviewerId, submissionId)
 			                 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;"
 		);
 		$st->execute ();
@@ -64,40 +65,38 @@ function makeDB($dbName) {
 	    $st->execute(array(':userId' => 3, ':userName' => 'Alice', ':password' => 'zzz'));
 	    $st->execute(array(':userId' => 4, ':userName' => 'George', ':password' => 'www'));
 		
-	    $sql = "INSERT INTO Submissions (submissionId, userId, assignmentNumber, submissionFile) 
-	                             VALUES (:submissionId, :userId, :assignmentNumber, :submissionFile)";
+	    $sql = "INSERT INTO Submissions (submissionId, submitterId, assignmentNumber, submissionFile) 
+	                             VALUES (:submissionId, :submitterId, :assignmentNumber, :submissionFile)";
 		$st = $db->prepare($sql);
-		$st->execute(array(':submissionId' => 1, ':userId' => 1, 
+		$st->execute(array(':submissionId' => 1, ':submitterId' => 1, 
 		                   ':assignmentNumber' => '1', ':submissionFile' =>'Kay1.txt'));
-		$st->execute(array(':submissionId' => 2, ':userId' => 1, 
+		$st->execute(array(':submissionId' => 2, ':submitterId' => 1, 
 		                   ':assignmentNumber' => '2', ':submissionFile' =>'Kay2.txt'));
-		$st->execute(array(':submissionId' => 3, ':userId' => 2, 
+		$st->execute(array(':submissionId' => 3, ':submitterId' => 2, 
 		                   ':assignmentNumber' => '1', ':submissionFile' =>'John1.txt'));
 		
-		$sql = "INSERT INTO Reviews (reviewId, submissionId, userId, score, review)
-	                             VALUES (:reviewId, :submissionId, :userId, :score, :review)";
+		$sql = "INSERT INTO Reviews (reviewId, submissionId, reviewerId, score, review)
+	                             VALUES (:reviewId, :submissionId, :reviewerId, :score, :review)";
 		$st = $db->prepare ( $sql );
-		$st->execute (array (':reviewId' => 1, ':submissionId' => 1, ':userId' => 2, ':score' => 4,
+		$st->execute (array (':reviewId' => 1, ':submissionId' => 1, ':reviewerId' => 2, ':score' => 4,
 				':review' => 'This is a review by John of Kay1.txt'));
-		$st->execute (array (':reviewId' => 2, ':submissionId' => 1, ':userId' => 3, ':score' => 3,
+		$st->execute (array (':reviewId' => 2, ':submissionId' => 1, ':reviewerId' => 3, ':score' => 3,
 				':review' => 'This is a review by Alice of Kay1.txt'));
-		$st->execute (array (':reviewId' => 3, ':submissionId' => 1, ':userId' => 4, ':score' => 4,
+		$st->execute (array (':reviewId' => 3, ':submissionId' => 1, ':reviewerId' => 4, ':score' => 4,
 				':review' => 'This is a review by George of Kay1.txt'));
-		$st->execute (array (':reviewId' => 4, ':submissionId' => 2, ':userId' => 2, ':score' => 4,
+		$st->execute (array (':reviewId' => 4, ':submissionId' => 2, ':reviewerId' => 2, ':score' => 4,
 				':review' => 'This is a review of John of Kay2.txt'));
-		$st->execute (array (':reviewId' => 5, ':submissionId' => 2,':userId' => 3, ':score' => 4,
+		$st->execute (array (':reviewId' => 5, ':submissionId' => 2,':reviewerId' => 3, ':score' => 4,
 				':review' => 'This is a review by Alice of Kay2.txt'));
-		$st->execute (array (':reviewId' => 6, ':submissionId' => 3, ':userId' => 3, ':score' => 4,
+		$st->execute (array (':reviewId' => 6, ':submissionId' => 3, ':reviewerId' => 3, ':score' => 4,
 				':review' => 'This is a review by Alice of John1.txt'));
-		$st->execute (array (':reviewId' => 7, ':submissionId' => 2,':userId' => 1, ':score' => 4,
+		$st->execute (array (':reviewId' => 7, ':submissionId' => 2,':reviewerId' => 1, ':score' => 4,
 				':review' => 'This is my review of Kay2.txt'));
-		$st->execute (array (':reviewId' => 8, ':submissionId' => 3, ':userId' => 1, ':score' => 4,
+		$st->execute (array (':reviewId' => 8, ':submissionId' => 3, ':reviewerId' => 1, ':score' => 4,
 				':review' => 'This is my review of John1.txt'));		
-
 	} catch ( PDOException $e ) {
 		echo $e->getMessage ();  // not final error handling
-	}
-	 
+	} 
 	return $db;
 }
 ?>

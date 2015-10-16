@@ -31,7 +31,7 @@ class ReviewView {
 			echo '<tr>';
 			echo '<td>'. $review->getReviewId().'</td>';
 			echo '<td><a href="/'.$base.'/submission/show/'.$review->getSubmissionId().'">Submission '. $review->getSubmissionId().'</a></td>';
-			echo '<td>'.$review->getUserName().'</td>';
+			echo '<td>'.$review->getReviewerName().'</td>';
 			echo '<td>'.$review->getScore().'</td>';
 			echo '<td><a href="/'.$base.'/review/show/'.$review->getReviewId().'">Show</a></td>';
 			echo '<td><a href="/'.$base.'/review/update/'.$review->getReviewId().'">Update</a></td>';
@@ -44,19 +44,25 @@ class ReviewView {
 	}
 	
 	public static function showDetails() {
-		$review = (array_key_exists('review', $_SESSION))?$_SESSION['review']:null;
-		if (!is_null($review)) {
+		$reviews = (array_key_exists('reviews', $_SESSION))?$_SESSION['reviews']:null;
+	    if (!is_null($reviews) && !empty($reviews) && !is_null($reviews[0])) {
+	  	    $review = $reviews[0];
 			echo '<p>Review Id: '.$review->getReviewId().'<p>';
 			echo '<p>Submission Id: '.$review->getSubmissionId().'<p>';
-			echo '<p>Reviewer name: '.$review->getUserName().'<p>';
+			echo '<p>Reviewer name: '.$review->getReviewerName().'<p>';
 			echo '<p>Score: '. $review->getScore() .'</p>';
 			echo '<p>Review:<br> '. $review->getReview() .'</p>';
 		}
 	}
 	
 	public static function showNew() {
-	   $review = (array_key_exists('review', $_SESSION))?$_SESSION['review']:null;
+	   $reviews = (array_key_exists('reviews', $_SESSION))?$_SESSION['reviews']:null;
 	   $base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
+	   echo '<h1>Create a new ClassBash review</h1>';
+	   if (is_null($reviews) || isempty($reviews) || is_null($reviews[0]))  
+	   	   $review = null;
+	   else
+	       $review = $reviews[0];
 	   echo '<h1>ClassBash review form</h1>';
        echo '<section>';
 	   if (!is_null($review) && $review->getErrors() > 0) {
@@ -65,9 +71,9 @@ class ReviewView {
 	          echo $value . "<br>";
 	   }
 	   echo '</section><form method="post" action="/'.$base.'/review/new">';
-	   echo 'Reviewer user name: <input type="text" name="userName"';
+	   echo 'Reviewer name: <input type="text" name="reviewerName"';
 	   if (!is_null($review)) 
-		   echo 'value = "'. $review->getUserName() .'"';
+		   echo 'value = "'. $review->getReviewerName() .'"';
 	   echo 'required> <br>';
 			
 	   echo '<br> Submission Id: <input type="text" name="submissionId"';
@@ -89,16 +95,17 @@ class ReviewView {
 	}
 	
 	public static function showUpdate() {
-		$review = (array_key_exists('review', $_SESSION))?$_SESSION['review']:null;
+		$reviews = (array_key_exists('reviews', $_SESSION))?$_SESSION['reviews']:null;
 		$base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
 		echo '<h1>ClassBash update review</h1>';
-		if (is_null($review)) {
+		if (is_null($reviews) || isempty($reviews) || is_null($reviews[0])) {
 			echo '<section>Review does not exist</section>';
 			return;
 		}
+		$review = $reviews[0];
 		echo '<section>';
 		echo '<h3>Review information:</h3>';
-		echo 'Reviewer name: '.$review->getUserName().'<br>';
+		echo 'Reviewer name: '.$review->getReviewerName().'<br>';
 		echo 'Submission Id: '.$review->getSubmissionId().'<br>';
 		
 		if ($review->getErrors() > 0) {
