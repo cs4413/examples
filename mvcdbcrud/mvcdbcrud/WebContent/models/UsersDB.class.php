@@ -5,27 +5,26 @@ class UsersDB {
 		// Inserts the User object $user into the Users table and returns userId
 		$query = "INSERT INTO Users (userName, password)
 		                      VALUES(:userName, :password)";
-		$returnId = 0;
 		try {
 			if (is_null($user) || $user->getErrorCount() > 0)
-				throw new PDOException("Invalid User object can't be inserted");
+				return $user;
 			$db = Database::getDB ();
 			$statement = $db->prepare ($query);
 			$statement->bindValue(":userName", $user->getUserName());
 			$statement->bindValue(":password", $user->getPassword());	
 			$statement->execute ();
 			$statement->closeCursor();
-			$returnId = $db->lastInsertId("userId");
+			$user->setUserId($db->lastInsertId("userId"));
 		} catch (Exception $e) { // Not permanent error handling
-			echo "<p>Error adding user to Users ".$e->getMessage()."</p>";
+			$user->setError('userId', 'USER_INVALID');
 		}
-		return $returnId;
+		return $user;
 	}
 
 	public static function getUserRowSetsBy($type = null, $value = null) {
 		// Returns the rows of Users whose $type field has value $value
 		$allowedTypes = ["userId", "userName"];
-		$userRowSets = NULL;
+		$userRowSets = array();
 		try {
 			$db = Database::getDB ();
 			$query = "SELECT userId, userName, password FROM Users";

@@ -43,29 +43,18 @@ class ReviewController {
 		}		
 	}
 	
-// 	public static function showReview() {
-// 		// Display the review indicated by the argument
-// 		$reviews = ReviewsDB::getReviewsBy('reviewId', $_SESSION['arguments']);
-// 		if (!empty($reviews)) {
-// 			$_SESSION['reviews'] = null;
-// 			HomeView::show();
-// 			header('Location: http://'.$_SERVER["HTTP_HOST"].'/'.$_SESSION['base']);
-// 	    } else {
-// 			$_SESSION['reviews'] = $reviews[0];
-// 		    ReviewView::show();
-// 		}
-// 	}
-	
+
 	public static function updateReview() {
 		// Process updating review
 		$reviews = ReviewsDB::getReviewsBy('reviewId', $_SESSION['arguments']);
 		if (empty($reviews)) {
 			HomeView::show();
-			header('Location: http://'.$_SERVER["HTTP_HOST"].'/'.$_SESSION['base']);
+			header('Location: /'.$_SESSION['base']);
 		} elseif ($_SERVER["REQUEST_METHOD"] == "GET") {
-			$_SESSION['review'] = $reviews[0];
+			$_SESSION['reviews'] = $reviews;
 			ReviewView::showUpdate();
 		} else {
+
 			$parms = $reviews[0]->getParameters();
 			$parms['score'] = (array_key_exists('score', $_POST))?
 			                  $_POST['score']:$reviews[0]->getScore();
@@ -73,15 +62,14 @@ class ReviewController {
 		                    	$_POST['review']:$reviews[0]->getReview();
 			$newReview = new Review($parms);
 			$newReview->setReviewId($reviews[0]->getReviewId());
-			$reviewId = ReviewsDB::updateReview($newReview);
-			if ($reviewId == 0)
-				$newReview->setError('reviewId', 'REVIEW_IDENTITY_INVALID');
-		    if ($newReview->getErrorCount() != 0) {
+			$review = ReviewsDB::updateReview($newReview);
+		
+		    if ($review->getErrorCount() != 0) {
 			   $_SESSION['review'] = $newReview;
 		   	   ReviewView::showUpdate();
 		    } else {
 			   HomeView::show();
-			   header('Location: http://'.$_SERVER["HTTP_HOST"].'/'.$_SESSION['base']);
+			   header('Location: /'.$_SESSION['base']);
 		    }
 		}
 	}

@@ -34,18 +34,18 @@ foreach ($users as $user)
 echo "Number of users in db before added is: ". count(UsersDB::getUsersBy()) ."<br>";
 $validTest = array("userName" => "joan", "password" => "123");
 $user = new User($validTest);
-$userId = UsersDB::addUser($user);
+$newUser = UsersDB::addUser($user);
 echo "Number of users in db after added is: ". count(UsersDB::getUsersBy()) ."<br>";
-echo "User ID of new user is: $userId<br>";
+echo "The new user is: $newUser<br>";
 ?>
 
 <h2>It should not add an invalid user</h2>
 <?php 
 echo "Number of users in db before added is: ". count(UsersDB::getUsersBy()) ."<br>";
 $invalidUser = new User(array("userName" => "krobbins$"));
-$userId = UsersDB::addUser($invalidUser);
+$newUser = UsersDB::addUser($invalidUser);
 echo "Number of users in db after added is: ". count(UsersDB::getUsersBy()) ."<br>";
-echo "User ID of new user is: $userId<br>";
+echo "New user is: $newUser<br>";
 ?>
 
 <h2>It should not add a duplicate user</h2>

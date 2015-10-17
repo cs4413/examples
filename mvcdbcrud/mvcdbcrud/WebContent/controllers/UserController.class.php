@@ -26,13 +26,14 @@ class UserController {
 	public static function show() {
 		$arguments = (array_key_exists('arguments', $_SESSION))?$_SESSION['arguments']:0;
 		$users = UsersDB::getUsersBy('userId', $arguments);	
+		print_r($users);
 		$user = (!empty($users))?$users[0]:null;
 		if (!is_null($user)) {
 			$_SESSION['user'] = $user;
 		    $_SESSION['userSubmissions'] =  
-		        SubmissionsDB::getSubmissionsBy('userName', $user->getUserName());
+		        SubmissionsDB::getSubmissionsBy('submitterName', $user->getUserName());
 		    $_SESSION['userReviews'] =
-		        ReviewsDB::getReviewsBy('userName', $user->getUserName());
+		        ReviewsDB::getReviewsBy('reviewerName', $user->getUserName());
 		    UserView::show();
 		} else
 			HomeView::show();
@@ -40,16 +41,16 @@ class UserController {
 	
 	public static function newUser() {
 		// Process a new review
-// 		$review = null;
-// 		if ($_SERVER["REQUEST_METHOD"] == "POST")  
-// 			$review = new Review($_POST);  
-// 		if (is_null($review) || $review->getErrorCount() != 0) {
-// 			$_SESSION['review'] = $review;
-// 			ReviewView::showNew();	
-// 		} else {
-// 			HomeView::show();
-// 			header('Location: http://'.$_SERVER["HTTP_HOST"].'/'.$_SESSION['base']);
-// 		}
+		$user = null;
+		if ($_SERVER["REQUEST_METHOD"] == "POST")  
+			$user = new User($_POST);  
+		if (is_null($user) || $user->getErrorCount() != 0) {
+			$_SESSION['user'] = $user;
+			UserView::show();	
+		} else {
+			HomeView::show();
+			header('Location: /'.$_SESSION['base']);
+		}
 	}
 }
 ?>

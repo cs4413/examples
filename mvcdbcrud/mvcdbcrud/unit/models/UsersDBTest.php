@@ -28,8 +28,9 @@ class UsersDBTest extends PHPUnit_Framework_TestCase {
   	$beforeCount = count(UsersDB::getUsersBy());
   	$validTest = array("userName" => "krobbins", "password" => "123");
   	$s1 = new User($validTest);
-  	$userId = UsersDB::addUser($s1);
-  	$this->assertGreaterThan(0, $userId, 'The inserted user id should be positive');
+  	$newUser = UsersDB::addUser($s1);
+  	$this->assertEquals(0, $newUser->getErrorCount(), 
+  			'The inserted user should not have users');
   	$afterCount = count(UsersDB::getUsersBy());
   	$this->assertEquals($afterCount, $beforeCount + 1,
   			'The database should have one more user after insertion');
@@ -43,8 +44,9 @@ class UsersDBTest extends PHPUnit_Framework_TestCase {
   	$beforeCount = count(UsersDB::getUsersBy());
   	$duplicateTest = array("userName" => "Kay", "password" => "123");
   	$s1 = new User($duplicateTest);
-  	$userId = UsersDB::addUser($s1);
-  	$this->assertEquals(0, $userId, 'Duplicate attempt should return 0 userId');
+  	$newUser = UsersDB::addUser($s1);
+  	$this->assertGreaterThan(0, $newUser->getErrorCount(), 
+  			'Duplicate attempt should return errors');
   	$afterCount = count(UsersDB::getUsersBy());
   	$this->assertEquals($afterCount, $beforeCount,
   			'The database should have the same number of elements after trying to insert duplicate');

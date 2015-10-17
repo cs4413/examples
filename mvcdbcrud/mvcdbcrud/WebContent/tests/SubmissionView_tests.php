@@ -17,7 +17,7 @@ include_once("../views/SubmissionView.class.php");
 <h2>It should show a Submission with a header and footer</h2>
 <?php 
 $validSubmission = array("submitterName" => "krobbins", "assignmentNumber" => "1",
-		           "submissionFile" => array("name" => "myText.apl", "tmp_name" => "temp.1"));
+		           "submissionFile" => "myText.apl");
 $s1 = new Submission($validSubmission);
 $_SESSION = array('submission' => $s1,
 		             'headerTitle' => "ClassBash Submission Form",
@@ -30,7 +30,7 @@ SubmissionView::show();
 <h2>It should show a Submission with no header and footer</h2>
 <?php 
 $validSubmission = array("submitterName" => "krobbins", "assignmentNumber" => "1",
-		           "submissionFile" => array("name" => "myText.apl", "tmp_name" => "temp.1"));
+		           "submissionFile" => "myText.apl");
 $s1 = new Submission($validSubmission);
 $_SESSION = array('submission' => $s1,
 		             'base' => "mvcdbcrud");
@@ -40,7 +40,7 @@ SubmissionView::show();
 <h2>It should show a Submission table with a header and a footer</h2>
 <?php 
 $validSubmission = array("submitterName" => "krobbins", "assignmentNumber" => "1",
-		           "submissionFile" => array("name" => "myText.apl", "tmp_name" => "temp.1"));
+		           "submissionFile" => "myText.apl");
 
 $s1 = new Submission($validSubmission);
 $s1 -> setSubmissionId(1);
@@ -64,7 +64,7 @@ SubmissionView::showall();
 <h2>It should allow updating when a valid submission is passed</h2>
 <?php 
 $validSubmission = array("submitterName" => "krobbins", "assignmentNumber" => "1",
-		           "submissionFile" => array("name" => "myText.apl", "tmp_name" => "temp.1"));
+		           "submissionFile" => "myText.apl");
 $s1 = new Submission($validSubmission);
 $s1->setSubmissionId(1);
 $_SESSION = array('submission' => $s1, 'base' => "mvcdbcrud");

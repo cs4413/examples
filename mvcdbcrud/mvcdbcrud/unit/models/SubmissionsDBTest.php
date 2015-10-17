@@ -23,23 +23,59 @@ class SubmissionsDBTest extends PHPUnit_Framework_TestCase {
         		'It should return valid Submission objects');
   }
   
-//   public function testInsertValidSubmission() {
-//   	$myDb = DBMaker::create ('ptest');
-//   	Database::clearDB();
-//   	$db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
-//   	$beforeCount = count(SubmissionsDB::getSubmissionsBy());
-//   	$validTest = array("userName" => "George", "assignmentNumber" => "1",
-// 		           "submissionFile" => array("name" => "myText.apl", 
-// 		           		                     "tmp_name" => "temp.1"));
-//   	$s1 = new Submission($validTest);
-//   	$submission = SubmissionsDB::addSubmission($s1);
-//   	$this->assertTrue(!is_null($submission), 'The inserted submission should not be null');
-//   	$this->assertTrue(empty($submission->getErrors()), 'The returned submission should not have errors');
-//   	print_r($submission->getErrors());
-//   	$afterCount = count(SubmissionDB::getSubmissionsBy());
-//   	$this->assertEquals($afterCount, $beforeCount + 1,
-//   			'The database should have one more submission after insertion');
-//   }
+  public function testInsertValidSubmission() {
+  	$myDb = DBMaker::create ('ptest');
+  	Database::clearDB();
+  	$db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
+  	$beforeCount = count(SubmissionsDB::getSubmissionsBy());
+    $validTest = array("submitterName" => "George", "assignmentNumber" => "1",
+  		                "submissionFile" => "myText.apl");
+  	$s1 = new Submission($validTest);
+  	$submission = SubmissionsDB::addSubmission($s1);
+  	$this->assertTrue(!is_null($submission), 'The inserted submission should not be null');
+
+  	$this->assertTrue(empty($submission->getErrors()), 'The returned submission should not have errors');
+  	$afterCount = count(SubmissionsDB::getSubmissionsBy());
+  	$this->assertEquals($afterCount, $beforeCount + 1,
+  			'The database should have one more submission after insertion');
+  }
+  
+  public function testInsertDuplicateSubmission() {
+  	$myDb = DBMaker::create ('ptest');
+  	Database::clearDB();
+  	$db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
+  	$beforeCount = count(SubmissionsDB::getSubmissionsBy());
+    $duplicateTest =  array("submitterName" => "Kay", "assignmentNumber" => "1",
+		           "submissionFile" =>  "V:\test.txt");
+  	$s1 = new Submission($duplicateTest);
+  	$submission = SubmissionsDB::addSubmission($s1);
+  	$this->assertTrue(!is_null($submission), 'The returned submission should not be null');
+  	$this->assertTrue(!empty($submission->getErrors()), 'The returned submission should have errors');
+  	$afterCount = count(SubmissionsDB::getSubmissionsBy());
+  	$this->assertEquals($afterCount, $beforeCount,
+  			'The database should have the same number of submissions after trying to insert duplicate');
+  }
+  
+  public function testUpdateSubmission() {
+  	$myDb = DBMaker::create ('ptest');
+  	Database::clearDB();
+  	$db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
+  	$beforeCount = count(SubmissionsDB::getSubmissionsBy());
+  	$submissions = SubmissionsDB::getSubmissionsBy('submissionId', 1);
+  	$currentSubmission = $submissions[0];
+  	$parms = $currentSubmission->getParameters();
+  	$parms['submissionFile'] = 'newFile.txt';
+  	$newSubmission = new Submission($parms);
+  	$newSubmission->setSubmissionId($currentSubmission->getSubmissionId());
+  	$updatedSubmission = SubmissionsDB::updateSubmission($newSubmission);
+  	$afterCount = count(SubmissionsDB::getSubmissionsBy());
+  	$this->assertEquals($beforeCount, $afterCount,
+  			'The number of submission in the database should not change after update');
+  	$this->assertEquals($updatedSubmission->getSubmissionId(), $newSubmission->getSubmissionId(),
+  			'The id of the updated submission should remain the same');
+  }
+  
+
   
 //   public function testInsertDuplicateReview() {
 //   	ob_start();

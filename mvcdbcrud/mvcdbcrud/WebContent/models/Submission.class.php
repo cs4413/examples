@@ -22,7 +22,6 @@ class Submission {
 			return "";
 	}
 
-
 	public function getErrorCount() {
 		return $this->errorCount;
 	}
@@ -63,8 +62,10 @@ class Submission {
 	
 	public function setError($errorName, $errorValue) {
 		// Set a particular error value and increments error count
-		$this->errors[$errorName] =  Messages::getError($errorValue);
-		$this->errorCount ++;
+		if (!array_key_exists($errorName, $this->errors)) {
+			$this->errors[$errorName] =  Messages::getError($errorValue);
+			$this->errorCount ++;
+		}
 	}
 	
 	public function setSubmissionId($id) {
@@ -74,7 +75,6 @@ class Submission {
 	
 	public function __toString() {
 		$errorStr = "";
-		print_r($this->errors);
 		foreach($this->errors as $error)
 			$errorStr = $errorStr . " ". $error;
 			
@@ -101,20 +101,14 @@ class Submission {
 		$this->errorCount = 0;
 		$this->submissionId = 0;
 		$this->errors = array();
-		if (is_null($this->formInput))
-			$this->initializeEmpty();
-		else  {	 
+		if (is_null($this->formInput)) {
+			$this->submitterName = "";
+	 	    $this->submissionFile = "";
+		} else  {	 
 		   $this->validateSubmitterName();
 		   $this->validateAssignmentNumber();
 		   $this->validateSubmissionFile();
 		}
-	}
-
-	private function initializeEmpty() {
-		$this->errorCount = 0;
-		$errors = array();
-	 	$this->submitterName = "";
-	 	$this->submissionFile = "";
 	}
 	
 	private function validateAssignmentNumber() {
@@ -146,31 +140,16 @@ class Submission {
 	}
 	
 	private function validateSubmissionFile() {
-		// Password should not be blank
+		// Submission file upload has not been done yet.
 		$this->submissionFile = '';
 		if (!isset($this->formInput['submissionFile'])) {
   		   $this->setError('submissionFile', 'SUBMISSION_EMPTY');
 		   return;
 		}
-		$file = $this->formInput['submissionFile'];
-		if (is_null($file) || !isset($file["name"]) || !isset($file["tmp_name"])) {
-// 		   echo "<br>Submission file $file<br>";
-// 		   print_r($file);
-		   $this->setError('submissionFile', 'SUBMISSION_EMPTY');
-		   return;
-		}
-		$info = new SplFileInfo(basename($file['name']));
-		$this->submissionFile = $this->submitterName . $this->assignmentNumber. "." .
-				                $info->getExtension();
-
-// 		$targetFile = dirname(__FILE__).DIRECTORY_SEPARATOR."..".
-// 		              DIRECTORY_SEPARATOR.$this->uploadDir.
-// 		              DIRECTORY_SEPARATOR.$this->submissionFile;
-		
-// 		if (!move_uploaded_file($file["tmp_name"], $targetFile)) {
-// 			$this->setError('submissionFile', 'SUBMISSION_UPLOAD_ERROR');
-// 		    return;
-// 		}
+		$this->submissionFile = $this->formInput['submissionFile'];
+		if (empty($this->submissionFile)) 
+			$this->submissionFile = $this->submitterName . $this->assignmentNumber. '.txt';
+			
 	}
 }
 ?>

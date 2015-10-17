@@ -98,7 +98,7 @@ class ReviewView {
 		$reviews = (array_key_exists('reviews', $_SESSION))?$_SESSION['reviews']:null;
 		$base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
 		echo '<h1>ClassBash update review</h1>';
-		if (is_null($reviews) || isempty($reviews) || is_null($reviews[0])) {
+		if (is_null($reviews) || empty($reviews) || is_null($reviews[0])) {
 			echo '<section>Review does not exist</section>';
 			return;
 		}

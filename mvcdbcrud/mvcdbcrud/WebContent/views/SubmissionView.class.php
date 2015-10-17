@@ -3,7 +3,6 @@ class SubmissionView {
 
 	public static function show() {
 		// Show a single Submission object
-		print_r($_SESSION);
 		$_SESSION['headertitle'] = "ClassBash Submission Report";
 		MasterView::showHeader();
 		MasterView::showNavbar();

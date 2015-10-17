@@ -15,7 +15,7 @@ include_once("../models/Review.class.php");
 <h2>It should create a valid Review object when all input is provided</h2>
 <?php 
 $validTest = array("reviewerName" => "Kay",
-             	   "submissionID" => "R3023",
+             	   "submissionId" => "R3023",
 	           	   "score" => "5",
 		           "review" => "This was a great presentation"
 		          );

@@ -40,7 +40,7 @@ class SubmissionController {
 			SubmissionView::showNew();
 		} else {
 			HomeView::show();	
-			header('Location: http://'.$_SERVER["HTTP_HOST"].'/'.$_SESSION['base']);
+			header('Location: /'.$_SESSION['base']);
 		}
 
 	}
@@ -50,27 +50,24 @@ class SubmissionController {
 		$submissions = SubmissionsDB::getSubmissionsBy('submissionId', $_SESSION['arguments']);
 		if (empty($submissions)) {
 			HomeView::show();
-			header('Location: http://'.$_SERVER["HTTP_HOST"].'/'.$_SESSION['base']);
+			header('Location: /'.$_SESSION['base']);
 		} elseif ($_SERVER["REQUEST_METHOD"] == "GET") {
-			$_SESSION['review'] = $reviews[0];
-			ReviewView::showUpdate();
+			$_SESSION['submission'] = $submissions[0];
+			SubmissionView::showUpdate();
 		} else {
-			$parms = $reviews[0]->getParameters();
-			$parms['score'] = (array_key_exists('score', $_POST))?
-			$_POST['score']:$reviews[0]->getScore();
-			$parms['review'] = (array_key_exists('review', $_POST))?
-			$_POST['review']:$reviews[0]->getReview();
-			$newReview = new Review($parms);
-			$newReview->setReviewId($reviews[0]->getReviewId());
-			$reviewId = ReviewsDB::updateReview($newReview);
-			if ($reviewId == 0)
-				$newReview->setError('reviewId', 'REVIEW_IDENTITY_INVALID');
-			if ($newReview->getErrorCount() != 0) {
-				$_SESSION['review'] = $newReview;
-				ReviewView::showUpdate();
+			$parms = $submissions[0]->getParameters();
+			$parms['submissionFile'] = (array_key_exists('submissionFile', $_POST))?
+			                       $_POST['submissionFile']:"";
+			$newSubmission = new Submission($parms);
+			$newSubmission->setSubmissionId($submissions[0]->getSubmissionId());
+			$submission = SubmissionsDB::updateSubmission($newSubmission);
+		
+			if ($submission->getErrorCount() != 0) {
+				$_SESSION['submission'] = $newSubmission;
+				SubmissionView::showUpdate();
 			} else {
 				HomeView::show();
-				header('Location: http://'.$_SERVER["HTTP_HOST"].'/'.$_SESSION['base']);
+				header('Location: /'.$_SESSION['base']);
 			}
 		}
 	}

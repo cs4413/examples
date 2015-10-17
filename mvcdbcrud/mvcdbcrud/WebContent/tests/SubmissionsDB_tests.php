@@ -38,8 +38,7 @@ Database::clearDB();
 $db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
 $beforeCount = count(SubmissionsDB::getSubmissionsBy());
 $validTest = array("submitterName" => "Kay", "assignmentNumber" => "8",
-		           "submissionFile" => array("name" => "V:\test.txt", 
-		           		                     "tmp_name" => "temp.1"));
+		           "submissionFile" => "V:\test.txt");
 $s1 = new Submission($validTest);
 echo "<br>In insertion should not have errors $s1<br>";
 print_r($s1->getErrors());
@@ -57,8 +56,7 @@ Database::clearDB();
 $db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
 $beforeCount = count(SubmissionsDB::getSubmissionsBy());
 $duplicateTest =  array("submitterName" => "Kay", "assignmentNumber" => "1",
-		           "submissionFile" => array("name" => "V:\test.txt", 
-		           		                     "tmp_name" => "temp.1"));
+		           "submissionFile" => "V:\test.txt");
 $s1 = new Submission($duplicateTest);
 $newS1 = SubmissionsDB::addSubmission($s1);
 $afterCount = count(SubmissionsDB::getSubmissionsBy());

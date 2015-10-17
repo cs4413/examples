@@ -55,8 +55,10 @@ class User {
 	
 	public function setError($errorName, $errorValue) {
 		// Set a particular error value and increments error count
-		$this->errors[$errorName] =  Messages::getError($errorValue);
-		$this->errorCount ++;
+		if (!array_key_exists($errorName, $this->errors)) {
+			$this->errors[$errorName] =  Messages::getError($errorValue);
+			$this->errorCount ++;
+		}
 	}
 	
 	public function setUserId($id) {
@@ -65,8 +67,12 @@ class User {
 	}
 
 	public function __toString() {
+		$errorStr = "";
+		foreach($this->errors as $error)
+			$errorStr = $errorStr . " ". $error;
 		$str = "User name: ".$this->userName."<br>Password: ".$this->password . 
-		       "<br>User id: ". $this->userId;
+		       "<br>User id: ". $this->userId.
+		        "Errors: " . $errorStr;
 		return $str;
 	}
 	
@@ -84,19 +90,13 @@ class User {
 	private function initialize() {
 		$this->errorCount = 0;
 		$this->errors = array();
-		if (is_null($this->formInput))
-			$this->initializeEmpty();
-		else  {	 
+		if (is_null($this->formInput)) {
+			$this->userName = "";
+	 	    $this->password = "";
+		} else  {	 
 		   $this->validateUserName();
 		   $this->validatePassword();
 		}
-	}
-
-	private function initializeEmpty() {
-		$this->errorCount = 0;
-		$errors = array();
-	 	$this->userName = "";
-	 	$this->password = "";
 	}
 
 	private function validateUserName() {

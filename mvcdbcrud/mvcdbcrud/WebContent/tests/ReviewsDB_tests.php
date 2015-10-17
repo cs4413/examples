@@ -47,9 +47,9 @@ $validTest = array("reviewerName" => "Kay",
 $s1 = new Review($validTest);
 $s1New = ReviewsDB::addReview($s1);
 $afterCount = count(ReviewsDB::getReviewsBy());
-echo "The new review is: $s1New";
-echo "Before the database has $beforeCount";
-echo "Now the database has $afterCount";
+echo "The new review is: $s1New<br>";
+echo "Before the database has $beforeCount<br>";
+echo "Now the database has $afterCount<br>";
 ?>
 
 <h2>It should not allow insertion of a duplicate review</h2>
@@ -66,10 +66,10 @@ $duplicateTest = array("reviewerName" => "Alice",
 $s1 = new Review($duplicateTest);
 $s1New = ReviewsDB::addReview($s1);
 $afterCount = count(ReviewsDB::getReviewsBy());
-echo "The errors are: ";
+echo "The errors are: <br>";
 print_r($s1New->getErrors());
-echo "Before the database has $beforeCount";
-echo "Now the database has $afterCount";
+echo "<br>Before the database has $beforeCount<br>";
+echo "Now the database has $afterCount<br>";
 ?>
 
 <h2>It should all update of a valid review</h2>
@@ -85,11 +85,11 @@ $parms = $currentReview->getParameters();
 $parms['review'] = 'new review text';
 $newReview = new Review($parms);
 $newReview->setReviewId($currentReview->getReviewId());
-echo "new review: $newReview<br>";
-$newId = ReviewsDB::updateReview($newReview);
-echo "New id: $newId<br>";
+$updatedReview = ReviewsDB::updateReview($newReview);
+echo "Updated review: $updatedReview<br>";
 $afterCount = count(ReviewsDB::getReviewsBy());
-echo "Count before update = $beforeCount, count after = $afterCount<br>";
+echo "<br>Count before update = $beforeCount<br>";
+echo "Count after = $afterCount<br>";
 ?>
 
 

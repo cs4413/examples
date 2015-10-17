@@ -28,7 +28,7 @@ class LoginView {
 	  echo '</span></p>';
 	  echo '<p><input type = "submit" name = "submit" value="Submit"></p></form>';
 	
-	  echo '<p>New user?  <a href="register">Sign up here</a></p>';
+	  echo '<p>New user?  <a href="/'.$base.'/user/new">Sign up here</a></p>';
 	  echo '<p>Forget your password?  Well good luck with that.... </p>';
   }
 }

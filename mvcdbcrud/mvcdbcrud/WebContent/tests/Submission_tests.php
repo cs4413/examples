@@ -16,8 +16,9 @@ include_once("../models/User.class.php");
 <h2>It should create a valid Submission object when all input is provided</h2>
 <?php 
 $validTest = array("submitterName" => "krobbins", "assignmentNumber" => "1",
-		           "submissionFile" => array("name" => "V:\test.txt", 
-		           		                     "tmp_name" => "temp.1"));
+		           "submissionFile" => "",
+		           "submissionName" => "V:\test.txt",
+		            "tmp_name" => "temp.1");
 
 $s1 = new Submission($validTest);
 echo "The object is: $s1<br>";

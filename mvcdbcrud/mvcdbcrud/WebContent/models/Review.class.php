@@ -65,7 +65,7 @@ class Review {
 	
 	public function setError($errorName, $errorValue) {
 		// Set a particular error value and increments error count
-		if (!isset($this->errors, $errorName)) {
+		if (!array_key_exists($errorName, $this->errors)) {
 			$this->errors[$errorName] =  Messages::getError($errorValue);
 			$this->errorCount ++;
 		}
@@ -77,11 +77,15 @@ class Review {
 	}
 	
 	public function __toString() {
+		$errorStr = "";
+		foreach($this->errors as $error)
+			$errorStr = $errorStr . " ". $error;
 		$str = "Reviewer name: ".$this->reviewerName.
 		       " Submission Id: ".$this->submissionId.
 		       " Score: ".$this->score.
 		       " Review: ".$this->review.
-		       " Review Id: ".$this->reviewId;
+		       " Review Id: ".$this->reviewId.
+		       " Errors: [$errorStr.]";
 		return $str;
 	}
 	
@@ -99,23 +103,17 @@ class Review {
 		$this->errorCount = 0;
 		$this->reviewId = 0;
 		$this->errors = array ();
-		if (is_null ( $this->formInput ))
-			$this->initializeEmpty();
-		else {
+		if (is_null ( $this->formInput )) {
+			$this->review = "";
+		    $this->score = "";
+	 	    $this->reviewerName = "";
+	 	   $this->submissionId = "";	
+		} else {
 			$this->validateReviewerName();
 			$this->validateSubmissionId();
 			$this->validateScore();
 			$this->validateReview();
 		}
-	}
-
-	private function initializeEmpty() {
-		$this->errorCount = 0;
-		$errors = array();
-		$this->review = "";
-		$this->score = "";
-	 	$this->reviewerName = "";
-	 	$this->submissionId = "";	
 	}
 
 	private function validateScore() {

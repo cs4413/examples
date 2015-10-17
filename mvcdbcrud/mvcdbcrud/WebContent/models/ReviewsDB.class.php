@@ -32,7 +32,7 @@ class ReviewsDB {
 	public static function getReviewRowSetsBy($type = null, $value = null) {
 		// Returns the rows of Reviews whose $type field has value $value
 		$allowedTypes = ["reviewId", "reviewerName", "submissionId", "score", "userId"];
-		$reviewRowSets = NULL;
+		$reviewRowSets = array();
 		try {
 			$db = Database::getDB ();
 			$query = "SELECT Reviews.reviewId, Reviews.submissionId, 
@@ -50,7 +50,7 @@ class ReviewsDB {
 			$reviewRowSets = $statement->fetchAll(PDO::FETCH_ASSOC);
 			$statement->closeCursor ();
 		} catch (Exception $e) { // Not permanent error handling
-			echo "<p>Error getting review rows by $type: " . $e->getMessage () . "</p>";
+		
 		}
 		return $reviewRowSets;
 	}
@@ -89,19 +89,21 @@ class ReviewsDB {
 	}
 	
 	public static function updateReview($review) {
-		$returnId = 0;
+		// Update a review 
 		try {
 			$db = Database::getDB ();
 			if (is_null($review) || $review->getErrorCount() > 0)
-				throw new PDOException("Invalid Review object can't be inserted");
+				return $review;
 	  	    $checkReview = ReviewsDB::getReviewsBy('reviewId', $review->getReviewId());
 		    if (empty($checkReview))
-		    	throw new PDOException("Review with Id ".$review->getReviewId().
-		    			        " does not exist and cannot be updated");
+		    	$review->setError('reviewId', 'REVIEW_DOES_NOT_EXIST');	
 		    elseif ($checkReview[0]->getSubmissionId() != $review->getSubmissionId())
-		        throw new PDOException("Review submission Id does not match database");
+		        $review->setError('reviewId', 'REVIEW_HAS_WRONG_SUBMISSION_ID');
 		    elseif ($checkReview[0]->getreviewerName() != $review->getReviewerName())
-		    throw new PDOException("Reviewer name does not match database");
+		        $review->setError('reviewId', 'REVIEWER_NAME_DOES_NOT_MATCH');
+		    if ($review->getErrorCount() > 0)
+		    	return $review;
+		    
 	    	$query = "UPDATE Reviews SET review = :review, score = :score
 	    			                 WHERE reviewId = :reviewId";
 		
@@ -111,11 +113,10 @@ class ReviewsDB {
 			$statement->bindValue(":reviewId", $review->getReviewId());
 			$statement->execute ();
 			$statement->closeCursor();
-			$returnId = $checkReview[0]->getReviewId();
 		} catch (Exception $e) { // Not permanent error handling
-			echo "<p>Error updating review to Reviews ".$e->getMessage()."</p>";
+			$review->setError('reviewId', 'REVIEW_COULD_NOT_BE_UPDATED');
 		}
-		return $returnId;
+		return $review;
 	}
 }
 ?>

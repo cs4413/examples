@@ -31,12 +31,13 @@ class SubmissionsDB {
 	public static function getSubmissionRowSetsBy($type = null, $value = null) {
 		// Returns the rows of Submissions whose $type field has value $value
 		$allowedTypes = ["submissionId", "submitterName", "assignmentNumber"];
-		$submissionRowSets = NULL;
+		$submissionRowSets = array();
 		try {
 			$db = Database::getDB ();
 			$query = "SELECT Submissions.assignmentNumber, Submissions.submissionFile, 
 	   		          Submissions.submissionId, Users.userName as submitterName
 	   		          FROM Submissions LEFT JOIN Users ON Submissions.submitterId = Users.userId";
+
 			if (!is_null($type)) {
 				if (!in_array($type, $allowedTypes))
 					throw new PDOException("$type not an allowed search criterion for Submissions");
@@ -47,10 +48,9 @@ class SubmissionsDB {
 				$statement = $db->prepare($query);
 			$statement->execute ();
 			$submissionRowSets = $statement->fetchAll(PDO::FETCH_ASSOC);
-			print_r($submissionRowSets);
 			$statement->closeCursor ();
 		} catch ( PDOException $e ) { // Not permanent error handling
-			echo "<p>Error getting Submission rows by $type: " . $e->getMessage () . "</p>";
+			
 		}
 		return $submissionRowSets;
 	}
@@ -58,10 +58,11 @@ class SubmissionsDB {
 	public static function getSubmissionsArray($rowSets) {
 		// Return an array of Submission objects extracted from $rowSets
 		$submissions = array();
+
 		foreach ($rowSets as $submissionRow ) {
 			$submission = new Submission($submissionRow);
 			$submission->setSubmissionId($submissionRow['submissionId']);
-			array_push ($submissions, $submission );
+			array_push ($submissions, $submission);
 		}
 		return $submissions;
 	}
@@ -85,6 +86,36 @@ class SubmissionsDB {
 		// Returns the column of the Submissions whose $type field has value $value
 		$submissionRows = SubmissionDB::getSubmissionRowSetsBy($type, $value);
 		return SubmissionsDB::getSubmissionValues($submissionRows, $column);
+	}
+	
+	public static function updateSubmission($submission) {
+		// Update a submission
+		try {
+			$db = Database::getDB ();
+			if (is_null($submission) || $submission->getErrorCount() > 0)
+				return $submission;
+			$checkSubmission = SubmissionsDB::getSubmissionsBy('submissionId', $submission->getSubmissionId());
+			if (empty($checkSubmission))
+				$submission->setError('submissionId', 'SUBMISSION_DOES_NOT_EXIST');
+			elseif ($checkSubmission[0]->getSubmitterName() != $submission->getSubmitterName())
+			    $submission->setError('submitterName', 'SUBMITTER_NAME_DOES_NOT_MATCH');
+			elseif ($checkSubmission[0]->getAssignmentNumber() != $submission->getAssignmentNumber())
+			$submission->setError('assignmentNumber', 'SUBMISSION_ASSIGNMENT_NUMBERS_DO_NOT_MATCH');
+			if ($submission->getErrorCount() > 0)
+				return $submission;
+	
+			$query = "UPDATE Submissions SET submissionFile = :submissionFile
+	    			                 WHERE submissionId = :submissionId";
+	
+			$statement = $db->prepare ($query);
+			$statement->bindValue(":submissionFile", $submission->getSubmissionFile());
+			$statement->bindValue(":submissionId", $submission->getSubmissionId());
+			$statement->execute ();
+			$statement->closeCursor();
+		} catch (Exception $e) { // Not permanent error handling
+			$submission->setError('submissionId', 'SUBMISSION_COULD_NOT_BE_UPDATED');
+		}
+		return $submission;
 	}
 	
 }
