@@ -9,6 +9,8 @@
 
 <?php
 include_once("../models/Messages.class.php");
+include_once("../models/Review.class.php");
+include_once("../models/Submission.class.php");
 include_once("../models/User.class.php");
 include_once("../views/UserView.class.php");
 include_once("../views/MasterView.class.php");
@@ -16,9 +18,17 @@ include_once("../views/MasterView.class.php");
 
 <h2>It should show successfully when user is passed to show</h2>
 <?php 
-$validTest = array("userName" => "krobbins");
-$s1 = new User($validTest);
-$_SESSION = array('user' => $s1);
+$validTest = array("userName" => "krobbins", "password" =>"xxx");
+$_SESSION = array('user' => new User($validTest), 'base' => 'mvcdbcrud');
+$validSubmission = array("submitterName" => "krobbins", "assignmentNumber" => "1",
+		"submissionFile" => "myText.apl");
+$_SESSION['userSubmissions'] = array(new Submission($validSubmission));
+$input = array("reviewerName" => "krobbins",
+		"submissionID" => 2,
+		"score" => "5",
+		"review" => "This was a great presentation"
+);
+$_SESSION['userReviews'] = array(new Review($input));
 UserView::show();
 ?>
 
@@ -29,9 +39,7 @@ $s1 -> setUserId(1);
 $s2 = new User(array("userName" => "John", "password" => "yyy"));
 $s2 -> setUserId(2);
 
-$_SESSION['users'] = array($s1, $s2);
-$_SESSION['base'] = 'mvcdbdcrud';
-$_SESSION['arguments'] = null;
+$_SESSION = array('users' => array($s1, $s2), 'base' => 'mvcdbdcrud', 'arguments' =>null);
 UserView::showall();
 ?>
 </body>

@@ -42,6 +42,7 @@ class UserView {
 	
 	public static function showDetails() {
 		$user = (array_key_exists('user', $_SESSION))?$_SESSION['user']:null;
+		$base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
 		$userReviews = (array_key_exists('userReviews', $_SESSION))?
 		                $_SESSION['userReviews']:array();
 		$userSubmissions = (array_key_exists('userSubmissions', $_SESSION))?
@@ -53,14 +54,18 @@ class UserView {
 		    echo '<section><h2>My submissions</h2>';
 		    echo '<ul>';
 		    foreach ($userSubmissions as $submission) {
-			   echo '<li> Assignment: '.$submission->getAssignmentNumber().'</li>';
+			   echo '<li> <a href = "/'.$base.'/show/submission/'. 
+			                      $submission->getAssignmentNumber().'">Submission '.
+			                      $submission->getAssignmentNumber().'</a></li>';
 		    }
 		    echo '</ul></section>';
 		    
 		    echo '<section><h2>My reviews</h2>';
 		    echo '<ul>';
 		    foreach ($userReviews as $review) {
-		    	echo '<li> Submission: '.$review->getSubmissionId().'</li>';
+		    	echo '<li> <a href = "/'.$base.'/show/review/'. 
+			               $review->getReviewId().'">Review of assignment '.
+			               $submission->getAssignmentNumber().'</a></li>';
 		    }
 		    echo '</ul></section>';
 		}

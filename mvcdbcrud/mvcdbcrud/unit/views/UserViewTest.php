@@ -8,9 +8,18 @@ class UserViewTest extends PHPUnit_Framework_TestCase {
 	
   public function testShowUserViewWithUser() {
   	ob_start();
-  	$validTest = array("userName" => "krobbins", "password" => "123");
-  	$s1 = new User($validTest);
-  	$_SESSION = array('user' => $s1, 'base' => 'mvcdbcrud');
+  	$validTest = array("userName" => "krobbins", "password" =>"xxx");
+  	$_SESSION = array('user' => new User($validTest), 'base' => 'mvcdbcrud');
+  	$validSubmission = array("submitterName" => "krobbins", "assignmentNumber" => "1",
+  			"submissionFile" => "myText.apl");
+  	$_SESSION['userSubmissions'] = array(new Submission($validSubmission));
+  	$input = array("reviewerName" => "krobbins",
+  			"submissionID" => 2,
+  			"score" => "5",
+  			"review" => "This was a great presentation"
+  	);
+  	$_SESSION['userReviews'] = array(new Review($input));
+  	UserView::show();
     UserView::show();
     $output = ob_get_clean();
     $this->assertFalse(empty($output), 
