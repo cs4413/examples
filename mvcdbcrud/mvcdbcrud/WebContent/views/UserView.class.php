@@ -70,5 +70,62 @@ class UserView {
 		    echo '</ul></section>';
 		}
 	}
+	public static function showNew() {
+		$user = (array_key_exists ( 'user', $_SESSION )) ? $_SESSION ['user'] : null;
+		$base = (array_key_exists ( 'base', $_SESSION )) ? $_SESSION ['base'] : "";
+		$_SESSION ['headertitle'] = "ClassBash User Update";
+		MasterView::showHeader ();
+		
+		echo '<h1>ClassBash registration</h1>';
+		
+		echo '<form action ="/' . $base . '/user/new" method="Post">';
+		echo '<p>User name: <input type="text" name ="userName"';
+		if (! is_null ( $user ))
+			echo 'value = "' . $user->getUserName () . '"';
+		echo '><span class="error">';
+		if (! is_null ( $user ))
+			echo $user->getError ( 'userName' );
+		echo '</span></p>';
+		
+		echo '<p>Password: <input type="text" name ="password"><span class="error">';
+		if (! is_null ( $user ))
+			echo $user->getError ( 'password' );
+		echo '</span></p>';
+		echo '<p><input type = "submit" name = "submit" value="Submit"></p></form>';
+		$_SESSION['footertitle'] = "The footer";
+		MasterView::showFooter();
+	}	
+	
+	public static function showUpdate() {
+		$user = (array_key_exists('user', $_SESSION))?$_SESSION['user']:null;
+		$base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
+		$_SESSION['headertitle'] = "ClassBash User Update";
+		MasterView::showHeader();
+	
+		echo '<h1>ClassBash user update</h1>';
+		if (is_null($user)) {
+			echo '<section>User does not exist</section>';
+			return;
+		}
+
+		echo '<section><form action ="/'.$base.'/user/update" method="Post">';
+		echo '<p>User name: <input type="text" name ="userName"';
+		if (!is_null($user))
+			echo 'value = "'. $user->getUserName() .'"';
+		echo '><span class="error">';
+		if (!is_null($user))
+			echo $user->getError('userName');
+		echo '</span></p>';
+		
+		echo '<p>Password: <input type="text" name ="password"><span class="error">';
+		if (!is_null($user))
+			echo $user->getError('password');
+		echo '</span></p>';
+		
+		echo '<input type="submit" value="Submit" />';
+		echo '</form></section>';
+		$_SESSION['footertitle'] = "The footer";
+		MasterView::showFooter();
+	}
 }
 ?>	

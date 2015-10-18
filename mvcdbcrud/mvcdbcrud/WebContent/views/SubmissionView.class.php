@@ -45,9 +45,7 @@ class SubmissionView {
   
   public static function showDetails() {
   	 $submission = (array_key_exists('submission', $_SESSION))?$_SESSION['submission']:null;
-  	 print_r($submission);
-	  if (!is_null($submission)) {
-	  	
+	  if (!is_null($submission)) {  	
 	  	echo '<p>Submission Id: '.$submission->getSubmissionId().'<p>';
 	  	echo '<p>Submitter name: '.$submission->getSubmitterName().'<p>';
 	  	echo '<p> Assignment number: '. $submission->getAssignmentNumber() .'</p>';
@@ -63,7 +61,7 @@ class SubmissionView {
    
    	echo '<h1>ClassBash submission</h1>';
    	echo '<form enctype="multipart/form-data" 
-   		   action ="/'.$base.'/login" method="Post">';
+   		   action ="/'.$base.'/submission/new" method="Post">';
    	echo '<p>Submitter name: <input type="text" required name ="submitterName"';
    	if (!is_null($submission))
    		echo 'value = "'. $submission->getSubmitterName() .'"';
@@ -100,15 +98,15 @@ class SubmissionView {
 
    	echo '<h1>ClassBash submission update</h1>';
     if (is_null($submission)) {
-	    echo '<section>Review does not exist</section>';
+	    echo '<section>Submission does not exist</section>';
 		return;
 	}
 	echo '<section>';
-	echo '<h3>Submssion information:</h3>';
+	echo '<h3>Submission information:</h3>';
 	echo 'Submitter name: '.$submission->getSubmitterName().'<br>';
 	echo 'Submission Id: '.$submission->getSubmissionId().'<br>';
 	echo 'Assignment number: '.$submission->getAssignmentNumber().'<br>'; 		 
-   	echo '<form enctype="multipart/form-data" action ="new" method="Post">';  
+   	echo '<form enctype="multipart/form-data" action ="/'.$base.'/submission/update" method="Post">';  
    	echo '<input type="hidden" name="MAX_FILE_SIZE" value="500000" />';
    	echo 'Upload submission: <input name="submissionFile" type="file" required /><br><br>';
    
