@@ -44,12 +44,11 @@ class ReviewView {
 	}
 	
 	public static function showDetails() {
-		$reviews = (array_key_exists('reviews', $_SESSION))?$_SESSION['reviews']:null;
-	    if (!is_null($reviews) && !empty($reviews) && !is_null($reviews[0])) {
-	  	    $review = $reviews[0];
-			echo '<p>Review Id: '.$review->getReviewId().'<p>';
-			echo '<p>Submission Id: '.$review->getSubmissionId().'<p>';
-			echo '<p>Reviewer name: '.$review->getReviewerName().'<p>';
+		$review = (array_key_exists('review', $_SESSION))?$_SESSION['review']:null;
+	    if (!is_null($review)) {
+			echo '<p>Review Id: '.$review->getReviewId().'</p>';
+			echo '<p>Submission Id: '.$review->getSubmissionId().'</p>';
+			echo '<p>Reviewer name: '.$review->getReviewerName().'</p>';
 			echo '<p>Score: '. $review->getScore() .'</p>';
 			echo '<p>Review:<br> '. $review->getReview() .'</p>';
 		}

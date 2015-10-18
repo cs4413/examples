@@ -19,23 +19,11 @@ include_once("../views/SubmissionView.class.php");
 $validSubmission = array("submitterName" => "krobbins", "assignmentNumber" => "1",
 		           "submissionFile" => "myText.apl");
 $s1 = new Submission($validSubmission);
-$_SESSION = array('submission' => $s1,
-		             'headerTitle' => "ClassBash Submission Form",
-		             'footerTitle' => "<h3>The footer goes here</h3>",
-		             'base' => "mvcdbcrud");
+$_SESSION = array('submission' => $s1, 'base' => "mvcdbcrud");
 
 SubmissionView::show();
 ?>
 
-<h2>It should show a Submission with no header and footer</h2>
-<?php 
-$validSubmission = array("submitterName" => "krobbins", "assignmentNumber" => "1",
-		           "submissionFile" => "myText.apl");
-$s1 = new Submission($validSubmission);
-$_SESSION = array('submission' => $s1,
-		             'base' => "mvcdbcrud");
-SubmissionView::show();		             
-?> 
 
 <h2>It should show a Submission table with a header and a footer</h2>
 <?php 

@@ -10,7 +10,8 @@ class SubmissionController {
         		self::newSubmission();
         		break;
         	case "show":
-        		$_SESSION['submissions'] = SubmissionsDB::getSubmissionsBy('submissionId', $arguments);
+        		$submissions = SubmissionsDB::getSubmissionsBy('submissionId', $arguments);
+        		$_SESSION['submission'] = (!empty($submissions))?$submissions[0]:null;
         		SubmissionView::show();
         		break;
         	case  "showall":

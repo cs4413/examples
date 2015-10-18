@@ -44,9 +44,10 @@ class SubmissionView {
 
   
   public static function showDetails() {
-  	 $submissions = (array_key_exists('submissions', $_SESSION))?$_SESSION['submissions']:null;
-	  if (!is_null($submissions) && !empty($submissions) && !is_null($submissions[0])) {
-	  	$submission = $submissions[0];
+  	 $submission = (array_key_exists('submission', $_SESSION))?$_SESSION['submission']:null;
+  	 print_r($submission);
+	  if (!is_null($submission)) {
+	  	
 	  	echo '<p>Submission Id: '.$submission->getSubmissionId().'<p>';
 	  	echo '<p>Submitter name: '.$submission->getSubmitterName().'<p>';
 	  	echo '<p> Assignment number: '. $submission->getAssignmentNumber() .'</p>';

@@ -10,7 +10,8 @@ class ReviewController {
 				self::newReview();
 				break;
 			case "show":
-				$_SESSION['reviews'] = ReviewsDB::getReviewsBy('reviewId', $arguments);
+				$reviews = ReviewsDB::getReviewsBy('reviewId', $arguments);
+				$_SESSION['review'] = (!empty($reviews))?$reviews[0]:null;
 	            ReviewView::show();
 				break;
 			case  "showall":
