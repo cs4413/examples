@@ -29,10 +29,13 @@ class UserController {
 		$user = (!empty($users))?$users[0]:null;
 		if (!is_null($user)) {
 			$_SESSION['user'] = $user;
+			echo "User: $user<br>";
 		    $_SESSION['userSubmissions'] =  
 		        SubmissionsDB::getSubmissionsBy('submitterName', $user->getUserName());
 		    $_SESSION['userReviews'] =
 		        ReviewsDB::getReviewsBy('reviewerName', $user->getUserName());
+		    print_r($_SESSION);
+		    echo "Submissions: ".$_SESSION['userSubmissions']."<br>";
 		    UserView::show();
 		} else
 			HomeView::show();

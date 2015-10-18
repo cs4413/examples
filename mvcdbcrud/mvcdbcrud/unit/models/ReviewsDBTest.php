@@ -81,5 +81,19 @@ class ReviewsDBTest extends PHPUnit_Framework_TestCase {
 	 $this->assertEquals($updatedReview->getReviewId(), $newReview->getReviewId(),
 	 		'The id of the updated review should remain the same'); 
   }
+
+  public function testGetReviewByReviewerName() {
+  	$myDb = DBMaker::create ('ptest');
+  	Database::clearDB();
+  	$db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
+    $reviews = ReviewsDB::getReviewsBy('reviewerName', 'Alice');
+    $this->assertEquals(count($reviews), 3, 'Alice should have three reviews');
+    foreach($reviews as $review) {
+    	$this->assertTrue(is_a($review, "Review"),
+    			'The returned values should be Review objects');
+    	$this->assertTrue(empty($review->getErrors()), 
+    			"The returned reviews should have no errors");
+    }
+  }
 }
 ?>

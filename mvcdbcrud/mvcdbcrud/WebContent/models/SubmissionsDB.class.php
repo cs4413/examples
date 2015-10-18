@@ -30,18 +30,21 @@ class SubmissionsDB {
 	
 	public static function getSubmissionRowSetsBy($type = null, $value = null) {
 		// Returns the rows of Submissions whose $type field has value $value
-		$allowedTypes = ["submissionId", "submitterName", "assignmentNumber"];
+		$allowedTypes = array("submissionId", "submitterName", "assignmentNumber");
+		$typeAlias = array("submitterName" => "Users.userName");
 		$submissionRowSets = array();
 		try {
 			$db = Database::getDB ();
 			$query = "SELECT Submissions.assignmentNumber, Submissions.submissionFile, 
-	   		          Submissions.submissionId, Users.userName as submitterName
+					  Submissions.submitterId, Submissions.submissionId, 
+	   		          Users.userName as submitterName
 	   		          FROM Submissions LEFT JOIN Users ON Submissions.submitterId = Users.userId";
 
 			if (!is_null($type)) {
 				if (!in_array($type, $allowedTypes))
 					throw new PDOException("$type not an allowed search criterion for Submissions");
-			    $query = $query. " WHERE ($type = :$type)";
+				$typeValue = (isset($typeAlias[$type]))?$typeAlias[$type]:$type; 
+			    $query = $query. " WHERE ($typeValue = :$type)";
 			    $statement = $db->prepare($query);
 			    $statement->bindParam(":$type", $value);
 			} else 

@@ -92,6 +92,18 @@ echo "<br>Count before update = $beforeCount<br>";
 echo "Count after = $afterCount<br>";
 ?>
 
+ <h2>It should get a review by reviewer name</h2>
+<?php
+  DBMaker::create('ptest');
+  Database::clearDB();
+  $db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
+ 
+  $reviews = ReviewsDB::getReviewsBy('reviewerName', 'Alice');
+  echo "<br>Number of reviews by Alice is ". count($reviews);
+  foreach ($reviews as $review)
+  	echo "<br>Review: $review<br>";
+   
+?>
 
 </body>
 </html>

@@ -65,5 +65,16 @@ print_r($newS1->getErrors());
 echo "Before the database has $beforeCount";
 echo "Now the database has $afterCount";
 ?>
+
+<h2>It should get a submission by submitter name</h2>
+<?php 
+DBMaker::create('ptest');
+Database::clearDB();
+$db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
+$submissions = SubmissionsDB::getSubmissionsBy('submitterName', 'Kay');
+echo "<br>Number of submissions by Kay is ". count($submissions);
+foreach ($submissions as $submission)
+    echo "<br>Submission: $submission<br>";
+?>
 </body>
 </html>

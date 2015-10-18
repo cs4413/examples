@@ -75,28 +75,19 @@ class SubmissionsDBTest extends PHPUnit_Framework_TestCase {
   			'The id of the updated submission should remain the same');
   }
   
-
-  
-//   public function testInsertDuplicateReview() {
-//   	ob_start();
-//   	$myDb = DBMaker::create ('ptest');
-//   	Database::clearDB();
-//   	$db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
-//   	$beforeCount = count(ReviewsDB::getReviewsBy());
-//   	$duplicateTest =  	$validTest = array("reviewerName" => "John",
-//   			"submissionId" => "1",
-//   			"score" => "5",
-//   			"review" => "This was a great presentation"
-//   	);
-//   	$s1 = new Review($duplicateTest);
-//   	$review = ReviewsDB::addReview($s1);
-//   	$this->assertTrue(!is_null($review), 'The returned review should not be null');
-//   	$this->assertTrue(!empty($review->getErrors()), 'The returned review should have errors');
-//   	$afterCount = count(ReviewsDB::getReviewsBy());
-//   	$this->assertEquals($afterCount, $beforeCount,
-//   			'The database should have the same number of reviews after trying to insert duplicate');
-//   	ob_get_clean();
-//   }
+  public function testGetSubmissionBySubmitterName() {
+  	$myDb = DBMaker::create ('ptest');
+  	Database::clearDB();
+  	$db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
+    $submissions = SubmissionsDB::getSubmissionsBy('submitterName', 'Kay');
+    $this->assertEquals(count($submissions), 2, 'Kay should have two submissions');
+    foreach($submissions as $submission) {
+    	$this->assertTrue(is_a($submission, "Submission"),
+    			'The returned values should be Submission objects');
+    	$this->assertTrue(empty($submission->getErrors()), 
+    			"The returned submissions should have no errors");
+    }
+  }
 
 }
 ?>

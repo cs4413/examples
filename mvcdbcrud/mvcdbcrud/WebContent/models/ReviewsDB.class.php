@@ -32,6 +32,7 @@ class ReviewsDB {
 	public static function getReviewRowSetsBy($type = null, $value = null) {
 		// Returns the rows of Reviews whose $type field has value $value
 		$allowedTypes = ["reviewId", "reviewerName", "submissionId", "score", "userId"];
+		$typeAlias = array("reviewerName" => "Users.userName");
 		$reviewRowSets = array();
 		try {
 			$db = Database::getDB ();
@@ -41,7 +42,8 @@ class ReviewsDB {
 			if (!is_null($type)) {
 			    if (!in_array($type, $allowedTypes))
 					throw new PDOException("$type not an allowed search criterion for Reviews");
-			    $query = $query. " WHERE ($type = :$type)";
+				$typeValue = (isset($typeAlias[$type]))?$typeAlias[$type]:$type; 
+			    $query = $query. " WHERE ($typeValue = :$type)";
 			    $statement = $db->prepare($query);
 			    $statement->bindParam(":$type", $value);
 			} else 
