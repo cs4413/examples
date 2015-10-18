@@ -17,13 +17,13 @@ include_once("../models/Submission.class.php");
 include_once("../models/SubmissionsDB.class.php");
 include_once("../models/User.class.php");
 include_once("../models/UsersDB.class.php");
-include_once("./makeDB.php");
+include_once("./DBMaker.class.php");
 ?>
 
 
 <h2>It should get all reviews from a test database</h2>
 <?php
-makeDB('ptest'); 
+DBMaker::create('ptest'); 
 Database::clearDB();
 $db = Database::getDB('ptest');
 $reviews = ReviewsDB::getReviewsBy();
@@ -35,7 +35,7 @@ foreach ($reviews as $review)
 
 <h2>It should insert a valid review in the database</h2>
 <?php 
-makeDB('ptest'); 
+DBMaker::create('ptest');
 Database::clearDB();
 $db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
 $beforeCount = count(ReviewsDB::getReviewsBy());
@@ -54,7 +54,7 @@ echo "Now the database has $afterCount<br>";
 
 <h2>It should not allow insertion of a duplicate review</h2>
 <?php 
-makeDB('ptest'); 
+DBMaker::create('ptest');
 Database::clearDB();
 $db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
 $beforeCount = count(ReviewsDB::getReviewsBy());
@@ -74,7 +74,7 @@ echo "Now the database has $afterCount<br>";
 
 <h2>It should all update of a valid review</h2>
 <?php 
-makeDB('ptest'); 
+DBMaker::create('ptest'); 
 Database::clearDB();
 $db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
 $beforeCount = count(ReviewsDB::getReviewsBy());

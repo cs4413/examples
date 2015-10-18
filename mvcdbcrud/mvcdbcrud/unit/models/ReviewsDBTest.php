@@ -7,7 +7,7 @@ require_once dirname(__FILE__).'\..\..\WebContent\models\Submission.class.php';
 require_once dirname(__FILE__).'\..\..\WebContent\models\SubmissionsDB.class.php';
 require_once dirname(__FILE__).'\..\..\WebContent\models\User.class.php';
 require_once dirname(__FILE__).'\..\..\WebContent\models\UsersDB.class.php';
-require_once dirname(__FILE__).'\DBMaker.php';
+require_once dirname(__FILE__).'\..\..\WebContent\tests\DBMaker.class.php';
 
 
 class ReviewsDBTest extends PHPUnit_Framework_TestCase {

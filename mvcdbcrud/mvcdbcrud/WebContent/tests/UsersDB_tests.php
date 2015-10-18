@@ -13,13 +13,13 @@ include_once("../models/Database.class.php");
 include_once("../models/Messages.class.php");
 include_once("../models/User.class.php");
 include_once("../models/UsersDB.class.php");
-include_once("./makeDB.php");
+include_once("./DBMaker.class.php");
 ?>
 
 
 <h2>It should get all users from a test database</h2>
 <?php
-makeDB('ptest'); 
+DBMaker::create('ptest');
 Database::clearDB();
 $db = Database::getDB('ptest');
 $users = UsersDB::getUsersBy();

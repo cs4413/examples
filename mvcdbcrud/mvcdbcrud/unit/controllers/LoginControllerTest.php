@@ -7,7 +7,7 @@ require_once dirname ( __FILE__ ) . '\..\..\WebContent\models\UsersDB.class.php'
 require_once dirname ( __FILE__ ) . '\..\..\WebContent\views\HomeView.class.php';
 require_once dirname ( __FILE__ ) . '\..\..\WebContent\views\LoginView.class.php';
 require_once dirname ( __FILE__ ) . '\..\..\WebContent\views\MasterView.class.php';
-require_once dirname ( __FILE__ ) . '\..\models\DBMaker.php';
+require_once dirname(__FILE__).'\..\..\WebContent\tests\DBMaker.class.php';
 
 class LoginControllerTest extends PHPUnit_Framework_TestCase {
 	/**

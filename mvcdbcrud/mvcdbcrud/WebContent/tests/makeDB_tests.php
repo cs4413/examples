@@ -10,14 +10,14 @@
 <?php
 include_once("../models/Database.class.php");
 include_once("../models/Messages.class.php");
-include_once("./makeDB.php");
+include_once("./DBMaker.class.php");
 ?>
 
 <h1>Tests for making a database using prepared statements</h1>
 
 <h2>It should create a database for a particular name</h2>
 <?php
-$myDb = makeDB('ptest');
+$myDb = DBMaker::create('ptest');
 ?>
 
 </body>

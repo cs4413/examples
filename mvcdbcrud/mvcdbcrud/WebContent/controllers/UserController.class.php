@@ -26,7 +26,6 @@ class UserController {
 	public static function show() {
 		$arguments = (array_key_exists('arguments', $_SESSION))?$_SESSION['arguments']:0;
 		$users = UsersDB::getUsersBy('userId', $arguments);	
-		print_r($users);
 		$user = (!empty($users))?$users[0]:null;
 		if (!is_null($user)) {
 			$_SESSION['user'] = $user;

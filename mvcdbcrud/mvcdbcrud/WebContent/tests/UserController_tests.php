@@ -21,12 +21,12 @@ include_once("../views/HomeView.class.php");
 include_once("../views/MasterView.class.php");
 include_once("../views/SubmissionView.class.php");
 include_once("../views/UserView.class.php");
-include_once("./makeDB.php");
+include_once("./DBMaker.class.php");
 ?>
 
 <h2>It should should show a user that exists</h2>
 <?php 
-$myDb = makeDB('ptest');
+DBMaker::create('ptest');
 $_SERVER ["REQUEST_METHOD"] = "POST";
 $_SESSION = array('base' => 'mvcdbcrud', 'control' => 'user', 
 	                      'action' =>'show', 'arguments' => 1);

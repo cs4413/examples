@@ -20,13 +20,13 @@ include_once("../models/UsersDB.class.php");
 include_once("../views/HomeView.class.php");
 include_once("../views/MasterView.class.php");
 include_once("../views/ReviewView.class.php");
-include_once("./makeDB.php");
+include_once("./DBMaker.class.php");
 ?>
 
 
 <h2>It should should show a review that exists</h2>
 <?php
-$myDb = makeDB('ptest');
+$myDb = DBMaker::create('ptest');
 $_SERVER ["REQUEST_METHOD"] = "POST";
 $_SESSION = array('base' => 'mvcdbcrud', 'control' => 'review',
 		'action' =>'show', 'arguments' => 1);
@@ -35,7 +35,7 @@ ReviewController::run();
 
 <h2>It should go to home when no review exists</h2>
 <?php 
-$myDb = makeDB('ptest');
+$myDb = DBMaker::create('ptest');
 $_SERVER ["REQUEST_METHOD"] = "GET";
 $_SESSION = array('base' => 'mvcdbcrud', 'control' => 'review',
 		             'action' =>'show', 'arguments' => 0);
@@ -44,7 +44,7 @@ ReviewController::run();
 
 <h2>It should display a form for a new review</h2>
 <?php 
-$myDb = makeDB('ptest');
+$myDb = DBMaker::create('ptest');
 $_SERVER ["REQUEST_METHOD"] = "GET";
 $_SESSION = array('base' => 'mvcdbcrud', 'control' => 'review',
 		             'action' =>'new', 'arguments' => null);
@@ -53,7 +53,7 @@ ReviewController::run();
 
 <h2>It should display a form for an update</h2>
 <?php 
-$myDb = makeDB('ptest');
+$myDb = DBMaker::create('ptest');
 $_SERVER ["REQUEST_METHOD"] = "GET";
 $_SESSION = array('base' => 'mvcdbcrud', 'control' => 'review',
 		             'action' =>'update', 'arguments' => 1);
