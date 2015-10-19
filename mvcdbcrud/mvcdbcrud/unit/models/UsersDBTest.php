@@ -52,5 +52,25 @@ class UsersDBTest extends PHPUnit_Framework_TestCase {
   			'The database should have the same number of elements after trying to insert duplicate');
   	ob_get_clean();
   }
+  
+  public function testUpdateUserName() {
+  	// Test the update of the userName 
+ 	$myDb = DBMaker::create ('ptest');
+  	Database::clearDB();
+  	$db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
+	$users = UsersDB::getUsersBy('userId', 1);
+	$user = $users[0];
+	$parms = $user->getParameters();
+	$this->assertEquals($user->getUserName(), 'Kay',
+			'Before the update it should have user name Kay');
+	$parms['userName'] = 'Kay1';
+	$newUser = new User($parms);
+	$newUser->setUserId(1);
+	$user = UsersDB::updateUser($newUser);
+	$this->assertEquals($user->getUserName(), 'Kay1',
+			'Before the update it should have user name Kay1');
+	$this->assertTrue(empty($user->getErrors()),
+			'The updated user should not have errors');
+  }
 }
 ?>

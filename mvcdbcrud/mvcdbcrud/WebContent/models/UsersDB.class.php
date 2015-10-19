@@ -79,5 +79,32 @@ class UsersDB {
 		$userRows = UsersDB::getUserRowSetsBy($type, $value);
 		return UsersDB::getUserValues($userRows, $column);
 	}
+	
+	public static function updateUser($user) {
+		// Update a user
+		try {
+			$db = Database::getDB ();
+			if (is_null($user) || $user->getErrorCount() > 0)
+				return $user;
+			$checkUser = UsersDB::getUsersBy('userId', $user->getUserId());
+			if (empty($checkUser))
+				$user->setError('userId', 'USER_DOES_NOT_EXIST');
+			if ($user->getErrorCount() > 0)
+				return $user;
+	
+			$query = "UPDATE Users SET userName = :userName, password = :password
+	    			                 WHERE userId = :userId";
+	
+			$statement = $db->prepare ($query);
+			$statement->bindValue(":userName", $user->getUserName());
+			$statement->bindValue(":password", $user->getPassword());
+			$statement->bindValue(":userId", $user->getUserId());
+			$statement->execute ();
+			$statement->closeCursor();
+		} catch (Exception $e) { // Not permanent error handling
+			$user->setError('userId', 'USER_COULD_NOT_BE_UPDATED');
+		}
+		return $user;
+	}
 }
 ?>

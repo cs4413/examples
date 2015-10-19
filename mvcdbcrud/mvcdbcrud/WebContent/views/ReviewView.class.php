@@ -96,6 +96,9 @@ class ReviewView {
 	public static function showUpdate() {
 		$reviews = (array_key_exists('reviews', $_SESSION))?$_SESSION['reviews']:null;
 		$base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
+		$_SESSION['headertitle'] = "ClassBash update review";
+		MasterView::showHeader();
+		
 		echo '<h1>ClassBash update review</h1>';
 		if (is_null($reviews) || empty($reviews) || is_null($reviews[0])) {
 			echo '<section>Review does not exist</section>';
@@ -109,10 +112,10 @@ class ReviewView {
 		
 		if ($review->getErrors() > 0) {
 			$errors = $review->getErrors();
-			echo '<p>Errors:<br>';
+			echo '<section><p>Errors:<br>';
 			foreach($errors as $key => $value)
 				echo $value . "<br>";
-			echo '</p>';
+			echo '</p></section>';
 		}
 		echo '</section>';
 		echo '<form method="post" action="/'.$base.'/review/update/'.
@@ -127,6 +130,8 @@ class ReviewView {
         echo '</textarea><br> <br>';
 		echo '<input type="submit" value="Submit">';
 		echo '</form></section>';
+		$_SESSION['footertitle'] = "The review update footer";
+		MasterView::showFooter();
 	}
 }
 ?>

@@ -1,3 +1,4 @@
+<?php ob_start(); ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,10 +36,25 @@ UserController::run();
 
 <h2>It should go to home when no user exists</h2>
 <?php 
+DBMaker::create('ptest');
 $_SERVER ["REQUEST_METHOD"] = "GET";
 $_SESSION = array('base' => 'mvcdbcrud', 'control' => 'user',
 		             'action' =>'show', 'arguments' => 0);
 UserController::run();
 ?>
+
+<h2>It should allow update</h2>
+<?php 
+$db = DBMaker::create('ptest');
+$_SERVER ["REQUEST_METHOD"] = "POST";
+$_SESSION = array('base' => 'mvcdbcrud', 'control' => 'user',
+		             'action' =>'update', 'arguments' => 1);
+$_POST = array("userName" => 'Kay1', 'password' => 'xxx');
+print_r($_POST);
+UserController::run();
+$users = UsersDB::getUsersBy('userId', '1')
+?>
+
+<?php ob_end_flush();  ?>
 </body>
 </html>

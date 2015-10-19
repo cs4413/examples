@@ -42,5 +42,15 @@ $s2 -> setUserId(2);
 $_SESSION = array('users' => array($s1, $s2), 'base' => 'mvcdbdcrud', 'arguments' =>null);
 UserView::showall();
 ?>
+
+<h2>It should allow updating when a valid user is passed</h2>
+<?php 
+$validTest = array("userName" => "Kay", "password" => "xxx");
+$user = new User($validTest);
+$user->setUserId(1);
+echo $user;
+$_SESSION = array('users' => array($user), 'base' => "mvcdbcrud");
+UserView::showUpdate();
+?>
 </body>
 </html>

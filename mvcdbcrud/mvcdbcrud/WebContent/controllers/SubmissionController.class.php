@@ -53,7 +53,7 @@ class SubmissionController {
 			HomeView::show();
 			header('Location: /'.$_SESSION['base']);
 		} elseif ($_SERVER["REQUEST_METHOD"] == "GET") {
-			$_SESSION['submission'] = $submissions[0];
+			$_SESSION['submissions'] = $submissions;
 			SubmissionView::showUpdate();
 		} else {
 			$parms = $submissions[0]->getParameters();
@@ -64,7 +64,7 @@ class SubmissionController {
 			$submission = SubmissionsDB::updateSubmission($newSubmission);
 		
 			if ($submission->getErrorCount() != 0) {
-				$_SESSION['submission'] = $newSubmission;
+				$_SESSION['submissions'] = array($newSubmission);
 				SubmissionView::showUpdate();
 			} else {
 				HomeView::show();

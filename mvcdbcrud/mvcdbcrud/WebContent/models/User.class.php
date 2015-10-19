@@ -72,7 +72,7 @@ class User {
 			$errorStr = $errorStr . " ". $error;
 		$str = "User name: ".$this->userName."<br>Password: ".$this->password . 
 		       "<br>User id: ". $this->userId.
-		        "Errors: " . $errorStr;
+		        "<br>Errors:  $errorStr<br>";
 		return $str;
 	}
 	

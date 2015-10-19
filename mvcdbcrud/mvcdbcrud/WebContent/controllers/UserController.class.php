@@ -21,6 +21,7 @@ class UserController {
 				UserView::showall();
 				break;
 			case "update":
+				echo "Update";
 				self::updateUser();
 				break;
 			default:
@@ -62,7 +63,7 @@ class UserController {
 			HomeView::show();
 			header('Location: /'.$_SESSION['base']);
 		} elseif ($_SERVER["REQUEST_METHOD"] == "GET") {
-			$_SESSION['user'] = $users[0];
+			$_SESSION['users'] = $users;
 			UserView::showUpdate();
 		} else {
 			$parms = $users[0]->getParameters();
@@ -72,10 +73,11 @@ class UserController {
 	                 		$_POST['password']:"";
 			$newUser = new User($parms);
 			$newUser->setUserId($users[0]->getUserId());
-			$user = UsersDB::updateSUser($newUser);
-	
+			$user = UsersDB::updateUser($newUser);
+		
 			if ($user->getErrorCount() != 0) {
-				$_SESSION['user'] = $newUser;
+				$_SESSION['users'] = array($newUser);
+				return;
 				UserView::showUpdate();
 			} else {
 				HomeView::show();

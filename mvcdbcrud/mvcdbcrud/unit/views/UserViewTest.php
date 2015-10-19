@@ -49,5 +49,16 @@ class UserViewTest extends PHPUnit_Framework_TestCase {
      $output = ob_get_clean();
      $this->assertFalse(empty($output), "It should show the Users table");
   }
+  
+   public function testUpdateUser() {
+     // Test show the update
+  	 ob_start();
+     $user = new User(array("userName" => "Kay", "password" => "xxx"));
+     $user -> setUserId(1);
+   	 $_SESSION = array('users' => array($user), 'base' => "mvcdbcrud");
+   	 UserView::showUpdate();
+   	 $output = ob_get_clean();
+   	 $this->assertFalse(empty($output), "It should show the user update form");
+   }
 }
 ?>

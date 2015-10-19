@@ -91,15 +91,23 @@ class SubmissionView {
    }
    
    public static function showUpdate() {
-   	$submission = (array_key_exists('submission', $_SESSION))?$_SESSION['submission']:null;
+   	$submissions = (array_key_exists('submissions', $_SESSION))?$_SESSION['submissions']:null;
    	$base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
-   	$_SESSION['headertitle'] = "ClassBash Submission Update";
+   	$_SESSION['headertitle'] = "ClassBash update submission";
    	MasterView::showHeader();
 
    	echo '<h1>ClassBash submission update</h1>';
-    if (is_null($submission)) {
+   	if (is_null($submissions) || empty($submissions) || is_null($submissions[0])) {
 	    echo '<section>Submission does not exist</section>';
 		return;
+	}
+	$submission = $submissions[0];
+	if ($submission->getErrors() > 0) {
+		$errors = $submission->getErrors();
+		echo '<section><p>Errors:<br>';
+		foreach($errors as $key => $value)
+			echo $value . "<br>";
+		echo '</p></section>';
 	}
 	echo '<section>';
 	echo '<h3>Submission information:</h3>';
@@ -112,7 +120,7 @@ class SubmissionView {
    
    	echo '<input type="submit" value="Submit" />';
    	echo '</form>';
-   	$_SESSION['footertitle'] = "The footer";
+   	$_SESSION['footertitle'] = "The submission update footer";
    	MasterView::showFooter();
    }
 }

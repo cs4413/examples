@@ -97,18 +97,26 @@ class UserView {
 	}	
 	
 	public static function showUpdate() {
-		$user = (array_key_exists('user', $_SESSION))?$_SESSION['user']:null;
+		$users = (array_key_exists('users', $_SESSION))?$_SESSION['users']:null;
 		$base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
-		$_SESSION['headertitle'] = "ClassBash User Update";
+				$_SESSION['headertitle'] = "ClassBash User Update";
 		MasterView::showHeader();
-	
 		echo '<h1>ClassBash user update</h1>';
-		if (is_null($user)) {
-			echo '<section>User does not exist</section>';
+		if (is_null($users) || empty($users) || is_null($users[0])) {
+			echo '<section>users does not exist</section>';
 			return;
 		}
+		$user = $users[0];
+		if ($user->getErrors() > 0) {
+			$errors = $user->getErrors();
+			echo '<section><p>Errors:<br>';
+			foreach($errors as $key => $value)
+				echo $value . "<br>";
+			echo '</p></section>';
+		}
 
-		echo '<section><form action ="/'.$base.'/user/update" method="Post">';
+		echo '<section><form method="Post" action ="/'.$base.
+		            '/user/update/'.$user->getUserId().'">';
 		echo '<p>User name: <input type="text" name ="userName"';
 		if (!is_null($user))
 			echo 'value = "'. $user->getUserName() .'"';

@@ -29,6 +29,8 @@ SUBMITTER_NAME_DOES_NOT_EXIST You must be a registered user in order to submit
 SUBMITTER_NAME_DOES_NOT_MATCH The submitter name does not match that of the original submission
 SUBMITTER_NAME_EMPTY The submitter name can not be empty or only contain white space
 SUBMITTER_NAME_HAS_INVALID_CHARS The submitter name can only contain letters, numbers, dashes and underscores
+USER_COULD_NOT_BE_UPDATED The user could not be updated
+USER_DOES_NOT_EXIST A user with this Id does not exist
 USER_NAME_EMPTY Your user name can not be empty or only contain white space
 USER_NAME_HAS_INVALID_CHARS Your user name can only contain letters, numbers, dashes and underscores
 USER_NAME_DOES_NOT_EXIST This user name does not exist

@@ -66,7 +66,7 @@ class ReviewController {
 			$review = ReviewsDB::updateReview($newReview);
 		
 		    if ($review->getErrorCount() != 0) {
-			   $_SESSION['review'] = $newReview;
+			   $_SESSION['reviews'] = array($newReview);
 		   	   ReviewView::showUpdate();
 		    } else {
 			   HomeView::show();

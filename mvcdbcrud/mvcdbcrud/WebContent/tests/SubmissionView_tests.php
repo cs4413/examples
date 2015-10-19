@@ -55,7 +55,7 @@ $validSubmission = array("submitterName" => "krobbins", "assignmentNumber" => "1
 		           "submissionFile" => "myText.apl");
 $s1 = new Submission($validSubmission);
 $s1->setSubmissionId(1);
-$_SESSION = array('submission' => $s1, 'base' => "mvcdbcrud");
+$_SESSION = array('submissions' => array($s1), 'base' => "mvcdbcrud");
 echo $s1;
 SubmissionView::showUpdate();
 ?>
