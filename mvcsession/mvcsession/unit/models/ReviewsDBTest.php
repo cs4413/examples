@@ -13,9 +13,10 @@ require_once dirname(__FILE__).'\..\..\WebContent\tests\DBMaker.class.php';
 class ReviewsDBTest extends PHPUnit_Framework_TestCase {
 	
   public function testGetAllReviews() {
+  	  DBMaker::setConfigurationPath(DBMaker::$unitTestPath);
   	  $myDb = DBMaker::create ('ptest');
   	  Database::clearDB();
-  	  $db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
+  	  $db = Database::getDB('ptest', DBMaker::$unitTestPath);
   	  $reviews = ReviewsDB::getReviewsBy();
   	  $this->assertEquals(8, count($reviews), 
   	  		'It should fetch all of the reviews in the test database');
@@ -26,9 +27,10 @@ class ReviewsDBTest extends PHPUnit_Framework_TestCase {
   }
   
   public function testInsertValidReview() {
+  	DBMaker::setConfigurationPath(DBMaker::$unitTestPath);
   	$myDb = DBMaker::create ('ptest');
   	Database::clearDB();
-  	$db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
+  	$db = Database::getDB('ptest', DBMaker::$unitTestPath);
   	$beforeCount = count(ReviewsDB::getReviewsBy());
   	$validTest = array("reviewerName" => "Kay",
   			"submissionId" => "1",
@@ -45,7 +47,8 @@ class ReviewsDBTest extends PHPUnit_Framework_TestCase {
   }
   
   public function testInsertDuplicateReview() {
-  	$myDb = DBMaker::create ('ptest');
+  	DBMaker::setConfigurationPath(DBMaker::$unitTestPath);
+  	$myDb = DBMaker::create ('ptest', DBMaker::$unitTestPath);
   	Database::clearDB();
   	$db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
   	$beforeCount = count(ReviewsDB::getReviewsBy());
@@ -64,7 +67,8 @@ class ReviewsDBTest extends PHPUnit_Framework_TestCase {
   }
   
   public function testUpdateReview() {
-  	 $myDb = DBMaker::create ('ptest');
+  	 DBMaker::setConfigurationPath(DBMaker::$unitTestPath);
+  	 $myDb = DBMaker::create ('ptest', DBMaker::$unitTestPath);
    	 Database::clearDB();
   	 $db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
   	 $beforeCount = count(ReviewsDB::getReviewsBy());
@@ -83,7 +87,8 @@ class ReviewsDBTest extends PHPUnit_Framework_TestCase {
   }
 
   public function testGetReviewByReviewerName() {
-  	$myDb = DBMaker::create ('ptest');
+  	DBMaker::setConfigurationPath(DBMaker::$unitTestPath);
+  	$myDb = DBMaker::create ('ptest', DBMaker::$unitTestPath);
   	Database::clearDB();
   	$db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
     $reviews = ReviewsDB::getReviewsBy('reviewerName', 'Alice');

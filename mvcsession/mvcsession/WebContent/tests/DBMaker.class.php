@@ -1,16 +1,19 @@
 <?php
 
 class DBMaker {
+	public static $configPath = null;
+	public static $unitTestPath = 'C:\xampp\myConfig.ini';
+	
 	public static function create($dbName) {
 		// Creates a database named $dbName for testing and returns connection
 		$db = null;
 		try {
 			$dbspec = 'mysql:host=localhost;dbname=' . "". ";charset=utf8";
-			$username = 'root';
-			$password = '';
-			$options = array (
-					PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION 
-			);
+			self::setConfigurationPath(null); //Make sure path is set
+			$passArray = parse_ini_file(self::$configPath);
+			$username = $passArray["username"];
+			$password = $passArray["password"];
+			$options = array (PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION );
 			$db = new PDO ( $dbspec, $username, $password, $options );
 			$st = $db->prepare ( "DROP DATABASE if EXISTS $dbName" );
 			$st->execute ();
@@ -107,8 +110,10 @@ class DBMaker {
 		// Delete a database named $dbName
 		try {
 			$dbspec = 'mysql:host=localhost;dbname=' . $dbName . ";charset=utf8";
-			$username = 'root';
-			$password = '';
+			self::setConfigurationPath(null); //Make sure path is set
+			$passArray = parse_ini_file(self::$configPath);
+			$username = $passArray["username"];
+			$password = $passArray["password"];
 			$options = array (PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 			$db = new PDO ($dbspec, $username, $password, $options);
 			$st = $db->prepare ("DROP DATABASE if EXISTS $dbName");
@@ -116,6 +121,15 @@ class DBMaker {
 		} catch ( PDOException $e ) {
 			echo $e->getMessage (); // not final error handling
 		}
+	}
+	
+	public static function setConfigurationPath($path = null) {
+		if (!is_null($path))
+			self::$configPath = $path;
+		elseif (self::$configPath == null)
+			self::$configPath = dirname(__FILE__).DIRECTORY_SEPARATOR."..".
+			DIRECTORY_SEPARATOR. ".." . DIRECTORY_SEPARATOR.
+			".." . DIRECTORY_SEPARATOR . "myConfig.ini";
 	}
 }
 ?>

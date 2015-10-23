@@ -18,9 +18,10 @@ class ReviewControllerTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCallRunFromPost() {
 		ob_start ();
+		DBMaker::setConfigurationPath(DBMaker::$unitTestPath);
 		DBMaker::create ( 'ptest1' );
 		Database::clearDB ();
-		$db = Database::getDB ( $dbName = 'ptest1', $configPath = "C:" . DIRECTORY_SEPARATOR . "xampp" . DIRECTORY_SEPARATOR . "myConfig.ini" );
+		$db = Database::getDB ('ptest1', DBMaker::$unitTestPath);
 		$_SERVER ["REQUEST_METHOD"] = "POST";
 		$_POST =  array("reviewerName" => "Kay",
              	   "submissionId" => "3",
@@ -38,9 +39,10 @@ class ReviewControllerTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCallRunFromGet() {
 		ob_start ();
-		DBMaker::create ( 'ptest1' );
+		DBMaker::setConfigurationPath(DBMaker::$unitTestPath);
+		DBMaker::create ('ptest1');
 		Database::clearDB ();
-		$db = Database::getDB ( $dbName = 'ptest1', $configPath = "C:" . DIRECTORY_SEPARATOR . "xampp" . DIRECTORY_SEPARATOR . "myConfig.ini" );
+		$db = Database::getDB ('ptest1', DBMaker::$unitTestPath);
 		$_SERVER ["REQUEST_METHOD"] = "GET";
 		$_SESSION = array('base' => 'mvcdbcrud', 'action' => 'new', 'arguments' => null);
 

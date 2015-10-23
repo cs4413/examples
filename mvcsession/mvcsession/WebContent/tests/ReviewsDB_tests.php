@@ -37,7 +37,7 @@ foreach ($reviews as $review)
 <?php 
 DBMaker::create('ptest');
 Database::clearDB();
-$db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
+$db = Database::getDB('ptest');
 $beforeCount = count(ReviewsDB::getReviewsBy());
 $validTest = array("reviewerName" => "Kay",
   			"submissionId" => "1",
@@ -56,7 +56,7 @@ echo "Now the database has $afterCount<br>";
 <?php 
 DBMaker::create('ptest');
 Database::clearDB();
-$db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
+$db = Database::getDB('ptest');
 $beforeCount = count(ReviewsDB::getReviewsBy());
 $duplicateTest = array("reviewerName" => "Alice",
 		"submissionId" => "1",
@@ -76,7 +76,7 @@ echo "Now the database has $afterCount<br>";
 <?php 
 DBMaker::create('ptest'); 
 Database::clearDB();
-$db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
+$db = Database::getDB('ptest');
 $beforeCount = count(ReviewsDB::getReviewsBy());
 $reviews = ReviewsDB::getReviewsBy('reviewId', 1);
 $currentReview = $reviews[0];
@@ -96,7 +96,7 @@ echo "Count after = $afterCount<br>";
 <?php
   DBMaker::create('ptest');
   Database::clearDB();
-  $db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
+  $db = Database::getDB('ptest');
  
   $reviews = ReviewsDB::getReviewsBy('reviewerName', 'Alice');
   echo "<br>Number of reviews by Alice is ". count($reviews);

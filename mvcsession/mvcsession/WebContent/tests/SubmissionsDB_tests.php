@@ -35,7 +35,7 @@ foreach ($submissions as $submission)
 <?php 
 DBMaker::create('ptest');
 Database::clearDB();
-$db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
+$db = Database::getDB('ptest');
 $beforeCount = count(SubmissionsDB::getSubmissionsBy());
 $validTest = array("submitterName" => "Kay", "assignmentNumber" => "8",
 		           "submissionFile" => "V:\test.txt");
@@ -53,7 +53,7 @@ echo "Now the database has $afterCount";
 <?php 
 DBMaker::create('ptest');
 Database::clearDB();
-$db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
+$db = Database::getDB('ptest');
 $beforeCount = count(SubmissionsDB::getSubmissionsBy());
 $duplicateTest =  array("submitterName" => "Kay", "assignmentNumber" => "1",
 		           "submissionFile" => "V:\test.txt");
@@ -70,7 +70,7 @@ echo "Now the database has $afterCount";
 <?php 
 DBMaker::create('ptest');
 Database::clearDB();
-$db = Database::getDB('ptest', 'C:\xampp\myConfig.ini');
+$db = Database::getDB('ptest');
 $submissions = SubmissionsDB::getSubmissionsBy('submitterName', 'Kay');
 echo "<br>Number of submissions by Kay is ". count($submissions);
 foreach ($submissions as $submission)
