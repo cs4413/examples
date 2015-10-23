@@ -73,27 +73,50 @@ class UserView {
 	public static function showNew() {
 		$user = (array_key_exists ( 'user', $_SESSION )) ? $_SESSION ['user'] : null;
 		$base = (array_key_exists ( 'base', $_SESSION )) ? $_SESSION ['base'] : "";
-		$_SESSION ['headertitle'] = "ClassBash User Update";
-		MasterView::showHeader ();
+		$_SESSION ['headertitle'] = "New user registration";
+		$_SESSION['styles'] = array('jumbotron.css');
+		MasterView::showHeader();
+		MasterView::showNavbar();
 		
-		echo '<h1>ClassBash registration</h1>';
+		echo '<div class="container">';
+		echo '<h1 class ="page-header">'.$_SESSION['headertitle'].'</h1>';
+		echo "</div>";
 		
-		echo '<form action ="/' . $base . '/user/new" method="Post">';
-		echo '<p>User name: <input type="text" name ="userName"';
-		if (! is_null ( $user ))
+		echo '<div class="container">';
+
+		if (!is_null($user) && $user->getErrors() > 0) {
+			$errors = $user->getErrors();
+			foreach($errors as $key => $value)
+				echo $value . "<br>";
+		}
+		echo '</div>';
+		
+		echo '<form role="form" action ="/' . $base . '/user/new" method="Post">';
+		
+		echo '<div class="form-group">';
+        echo '<label for="userName">User name:</label>';
+        echo '<input type="text" name ="userName" id = "reviewerName"';
+		if (! is_null ($user))
 			echo 'value = "' . $user->getUserName () . '"';
 		echo '><span class="error">';
 		if (! is_null ( $user ))
 			echo $user->getError ( 'userName' );
 		echo '</span></p>';
+		echo '</div>';
 		
-		echo '<p>Password: <input type="text" name ="password"><span class="error">';
+		echo '<div class="form-group">';
+		echo '<label for="password">Password:</label>';
+		echo '<input type="text" id = "password" name ="password"><span class="error">';
 		if (! is_null ( $user ))
 			echo $user->getError ( 'password' );
-		echo '</span></p>';
-		echo '<p><input type = "submit" name = "submit" value="Submit"></p></form>';
-		$_SESSION['footertitle'] = "The footer";
-		MasterView::showFooter();
+		echo '</span>';
+		echo '</div>';
+		
+		echo '<button type="submit" class="btn btn-default">Submit</button>';
+	    echo '</form>';
+        echo '</div>';
+        $_SESSION['footertitle'] = "<h3>User registration footer</h3>";
+        MasterView::showFooter();
 	}	
 	
 	public static function showUpdate() {

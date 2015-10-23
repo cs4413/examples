@@ -1,0 +1,37 @@
+ASSIGNMENT_NUMBER_EMPTY You must give an assignment number
+ASIGNMENT_NUMBER_INVALID
+EMAIL_INVALID Your email is invalid
+FIRST_NAME_EMPTY Your first name can not be empty or only contain white space
+FIRST_NAME_HAS_INVALID_CHARS Your first name contains invalid characters
+LAST_NAME_EMPTY Your last name can not be empty or only contain white space
+LAST_NAME_HAS_INVALID_CHARS Your last name contains invalid characters
+LAST_NAME_TOO_SHORT Your last name is too short
+PASSWORD_EMPTY You must provide a password
+REVIEW_COULD_NOT_BE_UPDATED Review was invalid and could not updated
+REVIEW_DOES_NOT_EXIST The review does not exist
+REVIEW_EMPTY You must provide an actual review
+REVIEW_HAS_WRONG_SUBMISSION_ID This review corresponds to a different submission
+REVIEW_IDENTITY_INVALID You have already reviewed this submission, you must update
+REVIEWER_NAME_DOES_NOT_EXIST You must be a registered user in order to review
+REVIEWER_NAME_DOES_NOT_MATCH Your name does not match the reviewer name
+REVIEWER_NAME_EMPTY The reviewer name can not be empty or only contain white space
+REVIEWER_NAME_HAS_INVALID_CHARS The reviewer name can only contain letters, numbers, dashes and underscores
+SCORE_EMPTY You must provide a score between 1 and 5
+SUBMISSION_ASSIGNMENT_NUMBERS_DO_NOT_MATCH You cannot change the assignment number when updating a submission
+SUBMISSION_COULD_NOT_BE_UPDATED Unable to replace submission
+SUBMISSION_DOES_NOT_EXIST The submission you are updating does not exist
+SUBMISSION_EMPTY You must include a non-empty submission
+SUBMISSION_ID_EMPTY You must indicate the ID of the item you are reviewing
+SUBMISSION_IDENTITY_INVALID You have already submitted this assignment and must update
+SUBMISSION_INVALID Submission has invalid submitter name or duplicate assignment number
+SUBMISSION_UPLOAD_ERROR Your file could not be uploaded
+SUBMITTER_NAME_DOES_NOT_EXIST You must be a registered user in order to submit
+SUBMITTER_NAME_DOES_NOT_MATCH The submitter name does not match that of the original submission
+SUBMITTER_NAME_EMPTY The submitter name can not be empty or only contain white space
+SUBMITTER_NAME_HAS_INVALID_CHARS The submitter name can only contain letters, numbers, dashes and underscores
+USER_COULD_NOT_BE_UPDATED The user could not be updated
+USER_DOES_NOT_EXIST A user with this Id does not exist
+USER_NAME_EMPTY Your user name can not be empty or only contain white space
+USER_NAME_HAS_INVALID_CHARS Your user name can only contain letters, numbers, dashes and underscores
+USER_NAME_DOES_NOT_EXIST This user name does not exist
+USER_INVALID User could not be created
