@@ -17,10 +17,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCallRunFromPost() {
 		ob_start ();
-		DBMaker::setConfigurationPath(DBMaker::$unitTestPath);
-		DBMaker::create ( 'ptest1' );
-		Database::clearDB ();
-		$db = Database::getDB ('ptest1', DBMaker::$unitTestPath);
+ 	    DBMakerUnit::createDB('ptest');
 		$_SERVER ["REQUEST_METHOD"] = "POST";
 		$_POST =  array("userName" => "Granger", "password" => "XXX");
 		$_SESSION = array('base' => 'mvcdbcrud', 'action' => 'new', 'arguments' => null);
@@ -34,10 +31,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCallRunFromGet() {
 		ob_start ();
-		DBMaker::setConfigurationPath(DBMaker::$unitTestPath);
-		DBMaker::create ( 'ptest1' );
-		Database::clearDB ();
-		$db = Database::getDB ('ptest1', DBMaker::$unitTestPath);
+ 	    DBMakerUnit::createDB('ptest');
 		$_SERVER ["REQUEST_METHOD"] = "GET";
 		$_SESSION = array('base' => 'mvcdbcrud', 'action' => 'new', 'arguments' => null);
 

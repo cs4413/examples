@@ -15,10 +15,7 @@ class LoginControllerTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCallRunFromPost() {
 		ob_start();
-		DBMaker::setConfigurationPath(DBMaker::$unitTestPath);
-		DBMaker::create ('ptest1');
-		Database::clearDB ();
-		$db = Database::getDB ('ptest1', DBMaker::$unitTestPath );
+ 	    DBMakerUnit::createDB('ptest');
 		$_SERVER ["REQUEST_METHOD"] = "POST";
 		$_SERVER ["HTTP_HOST"] = "localhost";
 		$_POST = array ("userName" => "Kay", "password" => "xyz");
@@ -33,10 +30,7 @@ class LoginControllerTest extends PHPUnit_Framework_TestCase {
 	 */
 	public function testCallRunFromGet() {
 		ob_start ();
-		DBMaker::setConfigurationPath(DBMaker::$unitTestPath);
-		DBMaker::create ( 'ptest1' );
-		Database::clearDB ();
-		$db = Database::getDB ('ptest1', DBMaker::$unitTestPath);
+ 	    $db = DBMakerUnit::createDB('ptest');
 		$_SERVER ["REQUEST_METHOD"] = "GET";
 		$_SERVER ["HTTP_HOST"] = "localhost";
 		$_SESSION = array('base' => 'mvcdbcrud');

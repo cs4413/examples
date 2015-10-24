@@ -4,11 +4,8 @@ require_once dirname(__FILE__).'\..\..\WebContent\tests\DBMaker.class.php';
 
 class DatabaseTest extends PHPUnit_Framework_TestCase {
 
-	public function testOpenConnectionToValidDatabase() {
-	  DBMaker::setConfigurationPath(DBMaker::$unitTestPath);
-	  DBMaker::create( 'ptest1' );
-	  Database::clearDB();
-	  $db = Database::getDB($dbName = 'ptest1', DBMaker::$unitTestPath);
+	public function testOpenConnectionToValidDatabase() {   
+	  $db = DBMakerUnit::createDB('ptest');
 	  $this->assertTrue($db != null, 
 	  		'It should create a non-null connection to a database that does not exist');
 	}
@@ -18,7 +15,7 @@ class DatabaseTest extends PHPUnit_Framework_TestCase {
 		DBMaker::delete('ptest1');
 		Database::clearDB();
 
-		$db = Database::getDB($dbName = 'ptest1', DBMaker::$unitTestPath);
+		$db = Database::getDB($dbName = 'ptest1', DBMakerUnit::$unitTestPath);
 		$output = ob_get_clean();
 		$this->assertNull($db,
 				'It should not create a connection to a database that does not exist');

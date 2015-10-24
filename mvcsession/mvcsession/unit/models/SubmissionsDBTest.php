@@ -11,10 +11,7 @@ require_once dirname(__FILE__).'\..\..\WebContent\tests\DBMaker.class.php';
 class SubmissionsDBTest extends PHPUnit_Framework_TestCase {
 	
   public function testGetAllSubmissions() {
-  	  DBMaker::setConfigurationPath(DBMaker::$unitTestPath);
-  	  $myDb = DBMaker::create ('ptest');
-  	  Database::clearDB();
-  	  $db = Database::getDB('ptest', DBMaker::$unitTestPath);
+  	  DBMakerUnit::createDB('ptest');
   	  $submissions = SubmissionsDB::getSubmissionsBy();
   	  $this->assertEquals(3, count($submissions), 
   	  		'It should fetch all of the submissions in the test database');
@@ -25,10 +22,7 @@ class SubmissionsDBTest extends PHPUnit_Framework_TestCase {
   }
   
   public function testInsertValidSubmission() {
-  	DBMaker::setConfigurationPath(DBMaker::$unitTestPath);
-  	$myDb = DBMaker::create ('ptest');
-  	Database::clearDB();
-  	$db = Database::getDB('ptest', DBMaker::$unitTestPath);
+  	DBMakerUnit::createDB('ptest');
   	$beforeCount = count(SubmissionsDB::getSubmissionsBy());
     $validTest = array("submitterName" => "George", "assignmentNumber" => "1",
   		                "submissionFile" => "myText.apl");
@@ -43,10 +37,7 @@ class SubmissionsDBTest extends PHPUnit_Framework_TestCase {
   }
   
   public function testInsertDuplicateSubmission() {
-  	DBMaker::setConfigurationPath(DBMaker::$unitTestPath);
-  	$myDb = DBMaker::create ('ptest');
-  	Database::clearDB();
-  	$db = Database::getDB('ptest', DBMaker::$unitTestPath);
+  	DBMakerUnit::createDB('ptest');
   	$beforeCount = count(SubmissionsDB::getSubmissionsBy());
     $duplicateTest =  array("submitterName" => "Kay", "assignmentNumber" => "1",
 		           "submissionFile" =>  "V:\test.txt");
@@ -60,10 +51,7 @@ class SubmissionsDBTest extends PHPUnit_Framework_TestCase {
   }
   
   public function testUpdateSubmission() {
-  	DBMaker::setConfigurationPath(DBMaker::$unitTestPath);
-  	$myDb = DBMaker::create ('ptest');
-  	Database::clearDB();
-  	$db = Database::getDB('ptest', DBMaker::$unitTestPath);
+  	DBMakerUnit::createDB('ptest');
   	$beforeCount = count(SubmissionsDB::getSubmissionsBy());
   	$submissions = SubmissionsDB::getSubmissionsBy('submissionId', 1);
   	$currentSubmission = $submissions[0];
@@ -80,10 +68,7 @@ class SubmissionsDBTest extends PHPUnit_Framework_TestCase {
   }
   
   public function testGetSubmissionBySubmitterName() {
-  	DBMaker::setConfigurationPath(DBMaker::$unitTestPath);
-  	$myDb = DBMaker::create ('ptest');
-  	Database::clearDB();
-  	$db = Database::getDB('ptest', DBMaker::$unitTestPath);
+ 	DBMakerUnit::createDB('ptest');
     $submissions = SubmissionsDB::getSubmissionsBy('submitterName', 'Kay');
     $this->assertEquals(count($submissions), 2, 'Kay should have two submissions');
     foreach($submissions as $submission) {

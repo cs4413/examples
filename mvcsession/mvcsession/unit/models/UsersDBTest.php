@@ -9,10 +9,7 @@ require_once dirname(__FILE__).'\..\..\WebContent\tests\DBMaker.class.php';
 class UsersDBTest extends PHPUnit_Framework_TestCase {
 	
   public function testGetAllUsers() {
-  	  DBMaker::setConfigurationPath(DBMaker::$unitTestPath);
-  	  $myDb = DBMaker::create ('ptest');
-  	  Database::clearDB();
-  	  $db = Database::getDB('ptest', DBMaker::$unitTestPath);
+  	  DBMakerUnit::createDB('ptest');
   	  $users = UsersDB::getUsersBy();
   	  $this->assertEquals(4, count($users), 
   	  		'It should fetch all of the users in the test database');
@@ -23,10 +20,7 @@ class UsersDBTest extends PHPUnit_Framework_TestCase {
   }
   
   public function testInsertValidUser() {
-  	DBMaker::setConfigurationPath(DBMaker::$unitTestPath);
-  	$myDb = DBMaker::create ('ptest');
-  	Database::clearDB();
-  	$db = Database::getDB('ptest', DBMaker::$unitTestPath);
+   	DBMakerUnit::createDB('ptest');
   	$beforeCount = count(UsersDB::getUsersBy());
   	$validTest = array("userName" => "krobbins", "password" => "123");
   	$s1 = new User($validTest);
@@ -40,10 +34,7 @@ class UsersDBTest extends PHPUnit_Framework_TestCase {
   
   public function testInsertDuplicateUser() {
   	ob_start();
-  	DBMaker::setConfigurationPath(DBMaker::$unitTestPath);
-  	$myDb = DBMaker::create ('ptest');
-  	Database::clearDB();
-  	$db = Database::getDB('ptest', DBMaker::$unitTestPath);
+ 	DBMakerUnit::createDB('ptest');
   	$beforeCount = count(UsersDB::getUsersBy());
   	$duplicateTest = array("userName" => "Kay", "password" => "123");
   	$s1 = new User($duplicateTest);
@@ -58,10 +49,7 @@ class UsersDBTest extends PHPUnit_Framework_TestCase {
   
   public function testUpdateUserName() {
   	// Test the update of the userName 
-  	DBMaker::setConfigurationPath(DBMaker::$unitTestPath);
- 	$myDb = DBMaker::create ('ptest');
-  	Database::clearDB();
-  	$db = Database::getDB('ptest', DBMaker::$unitTestPath);
+ 	DBMakerUnit::createDB('ptest');
 	$users = UsersDB::getUsersBy('userId', 1);
 	$user = $users[0];
 	$parms = $user->getParameters();

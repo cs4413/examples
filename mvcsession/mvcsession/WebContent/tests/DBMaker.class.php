@@ -2,7 +2,7 @@
 
 class DBMaker {
 	public static $configPath = null;
-	public static $unitTestPath = 'C:\xampp\myConfig.ini';
+	
 	
 	public static function create($dbName) {
 		// Creates a database named $dbName for testing and returns connection
