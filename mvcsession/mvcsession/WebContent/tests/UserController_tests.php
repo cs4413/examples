@@ -29,7 +29,7 @@ include_once("./DBMaker.class.php");
 <?php 
 DBMaker::create('ptest');
 $_SERVER ["REQUEST_METHOD"] = "POST";
-$_SESSION = array('base' => 'mvcdbcrud', 'control' => 'user', 
+$_SESSION = array('base' => 'mvcsession', 'control' => 'user', 
 	                      'action' =>'show', 'arguments' => 1);
 UserController::run();
 ?>
@@ -38,7 +38,7 @@ UserController::run();
 <?php 
 DBMaker::create('ptest');
 $_SERVER ["REQUEST_METHOD"] = "GET";
-$_SESSION = array('base' => 'mvcdbcrud', 'control' => 'user',
+$_SESSION = array('base' => 'mvcsession', 'control' => 'user',
 		             'action' =>'show', 'arguments' => 0);
 UserController::run();
 ?>
@@ -47,7 +47,7 @@ UserController::run();
 <?php 
 $db = DBMaker::create('ptest');
 $_SERVER ["REQUEST_METHOD"] = "POST";
-$_SESSION = array('base' => 'mvcdbcrud', 'control' => 'user',
+$_SESSION = array('base' => 'mvcsession', 'control' => 'user',
 		             'action' =>'update', 'arguments' => 1);
 $_POST = array("userName" => 'Kay1', 'password' => 'xxx');
 print_r($_POST);

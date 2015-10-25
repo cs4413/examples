@@ -16,7 +16,7 @@ include_once("../views/MasterView.class.php");
 
 <h2>It should call show without crashing</h2>
 <?php 
-$_SESSION = array("base" => "mvcdbcrud");
+$_SESSION = array("base" => "mvcsession");
 HomeView::show();
 ?>
 
@@ -24,7 +24,7 @@ HomeView::show();
 <?php 
 $validTest = array("userName" => "krobbins", "password" => "123");
 $s1 = new User($validTest);
-$_SESSION = array("user" => $s1, "base" => "mvcdbcrud");
+$_SESSION = array("user" => $s1, "base" => "mvcsession");
 HomeView::show();
 ?>
 </body>

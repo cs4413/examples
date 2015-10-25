@@ -36,7 +36,7 @@ LoginController::run();
 $myDb = DBMaker::create('ptest');
 $_SERVER ["REQUEST_METHOD"] = "POST";
 $_POST = array("userName" => "Kay");
-$_SESSION = array('base' =>'mvcdbcrud');
+$_SESSION = array('base' =>'mvcsession');
 LoginController::run();
 ?>
 
@@ -45,14 +45,14 @@ LoginController::run();
 $myDb = DBMaker::create('ptest');
 $_SERVER ["REQUEST_METHOD"] = "POST";
 $_POST = array("userName" => "krobbins", "password" => "xyz");
-$_SESSION = array('base' => 'mvcdbcrud');
+$_SESSION = array('base' => 'mvcsession');
 LoginController::run();
 ?>
 
 <h2>It should call show the login page for a $GET request</h2>
 <?php 
 $_SERVER ["REQUEST_METHOD"] = "GET";
-$_SESSION = array('base'=> 'mvcdbcrud');
+$_SESSION = array('base'=> 'mvcsession');
 LoginController::run();
 ?>
 </body>

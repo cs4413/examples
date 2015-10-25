@@ -30,7 +30,7 @@ $input = array("reviewerName" => "Kay",
 $theReview = new Review($input);
 echo "The review $theReview";
 echo "The reviewer name is ". $theReview->getReviewerName() ."<br>";
-$_SESSION = array('reviews' => array($theReview), 'base' => "mvcdbcrud");
+$_SESSION = array('reviews' => array($theReview), 'base' => "mvcsession");
 ReviewView::show();
 ?>
 
@@ -40,7 +40,7 @@ $input = array("reviewerName" => "Kay#");
 $theReview = new Review($input);
 echo "The review $theReview";
 echo "The reviewer name is ". $theReview->getReviewerName() ."<br>";
-$_SESSION = array('reviews' => array($theReview), 'base' => "mvcdbcrud");
+$_SESSION = array('reviews' => array($theReview), 'base' => "mvcsession");
 ReviewView::show();
 ?>
 
@@ -54,7 +54,7 @@ $validTest = array("reviewerName" => "Kay",
 $review = new Review($validTest);
 $review->setReviewId(1);
 echo $review;
-$_SESSION = array('reviews' => array($review), 'base' => "mvcdbcrud");
+$_SESSION = array('reviews' => array($review), 'base' => "mvcsession");
 ReviewView::showUpdate();
 ?>
 </body>

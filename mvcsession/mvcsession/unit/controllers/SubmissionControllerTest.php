@@ -21,7 +21,7 @@ class SubmissionControllerTest extends PHPUnit_Framework_TestCase {
 		$_POST = array("userName" => "krobbins", "assignmentNumber" => "1",
 		           "submissionFile" => array("name" => "myText.apl", 
 		           		                     "tmp_name" => "temp.1"));
-		$_SESSION = array('base' => 'mvcdbcrud', 'control' => 'submission',
+		$_SESSION = array('base' => 'mvcsession', 'control' => 'submission',
 				'action' =>'new', 'arguments' => null);
 
 		SubmissionController::run ();
@@ -36,7 +36,7 @@ class SubmissionControllerTest extends PHPUnit_Framework_TestCase {
 		ob_start ();
  	    DBMakerUnit::createDB('ptest');
 		$_SERVER ["REQUEST_METHOD"] = "GET";
-		$_SESSION = array('base' => 'mvcdbcrud', 'control' => 'submission',
+		$_SESSION = array('base' => 'mvcsession', 'control' => 'submission',
 				'action' =>'new', 'arguments' => null);
 
 		SubmissionController::run ();

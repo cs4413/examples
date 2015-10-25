@@ -28,7 +28,7 @@ include_once("./DBMaker.class.php");
 <?php 
 DBMaker::create('ptest');
 $_SERVER ["REQUEST_METHOD"] = "POST";
-$_SESSION = array('base' => 'mvcdbcrud', 'control' => 'submission', 
+$_SESSION = array('base' => 'mvcsession', 'control' => 'submission', 
 	                      'action' =>'new', 'arguments' => null);
 $_POST = array("submitterName" => "Kay");
 SubmissionController::run();
@@ -37,7 +37,7 @@ SubmissionController::run();
 <h2>It should call show a new submission form for a $GET request</h2>
 <?php 
 $_SERVER ["REQUEST_METHOD"] = "GET";
-$_SESSION = array('base' => 'mvcdbcrud', 'control' => 'submission',
+$_SESSION = array('base' => 'mvcsession', 'control' => 'submission',
 		             'action' =>'new', 'arguments' => null);
 SubmissionController::run();
 ?>

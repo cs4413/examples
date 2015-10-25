@@ -9,7 +9,7 @@ class LoginViewTest extends PHPUnit_Framework_TestCase {
   public function testShowLoginViewWithUser() {
   	$validTest = array("userName" => "krobbins", "password" => "123");
   	$s1 = new User($validTest);
-  	$_SESSION = array('user' => $s1, 'base' => 'mbcdbcrud');
+  	$_SESSION = array('user' => $s1, 'base' => 'mvcsession');
   	ob_start();
   	LoginView::show();
   	$output = ob_get_clean();
@@ -18,7 +18,7 @@ class LoginViewTest extends PHPUnit_Framework_TestCase {
   }
   
   public function testShowLoginViewWithNullUser() {
-  	$_SESSION = array('base' => 'mbcdbcrud');
+  	$_SESSION = array('base' => 'mvcsession');
   	ob_start();
   	$return = LoginView::show();
   	$output = ob_get_clean();

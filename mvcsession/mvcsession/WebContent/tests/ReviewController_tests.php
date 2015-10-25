@@ -28,7 +28,7 @@ include_once("./DBMaker.class.php");
 <?php
 $myDb = DBMaker::create('ptest');
 $_SERVER ["REQUEST_METHOD"] = "POST";
-$_SESSION = array('base' => 'mvcdbcrud', 'control' => 'review',
+$_SESSION = array('base' => 'mvcsession', 'control' => 'review',
 		'action' =>'show', 'arguments' => 1);
 ReviewController::run();
 ?>
@@ -37,7 +37,7 @@ ReviewController::run();
 <?php 
 $myDb = DBMaker::create('ptest');
 $_SERVER ["REQUEST_METHOD"] = "GET";
-$_SESSION = array('base' => 'mvcdbcrud', 'control' => 'review',
+$_SESSION = array('base' => 'mvcsession', 'control' => 'review',
 		             'action' =>'show', 'arguments' => 0);
 ReviewController::run();
 ?>
@@ -46,7 +46,7 @@ ReviewController::run();
 <?php 
 $myDb = DBMaker::create('ptest');
 $_SERVER ["REQUEST_METHOD"] = "GET";
-$_SESSION = array('base' => 'mvcdbcrud', 'control' => 'review',
+$_SESSION = array('base' => 'mvcsession', 'control' => 'review',
 		             'action' =>'new', 'arguments' => null);
 ReviewController::run();
 ?>
@@ -55,7 +55,7 @@ ReviewController::run();
 <?php 
 $myDb = DBMaker::create('ptest');
 $_SERVER ["REQUEST_METHOD"] = "GET";
-$_SESSION = array('base' => 'mvcdbcrud', 'control' => 'review',
+$_SESSION = array('base' => 'mvcsession', 'control' => 'review',
 		             'action' =>'update', 'arguments' => 1);
 ReviewController::run();
 ?>

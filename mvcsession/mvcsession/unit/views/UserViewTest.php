@@ -9,7 +9,7 @@ class UserViewTest extends PHPUnit_Framework_TestCase {
   public function testShowUserViewWithUser() {
   	ob_start();
   	$validTest = array("userName" => "krobbins", "password" =>"xxx");
-  	$_SESSION = array('user' => new User($validTest), 'base' => 'mvcdbcrud');
+  	$_SESSION = array('user' => new User($validTest), 'base' => 'mvcsession');
   	$validSubmission = array("submitterName" => "krobbins", "assignmentNumber" => "1",
   			"submissionFile" => "myText.apl");
   	$_SESSION['userSubmissions'] = array(new Submission($validSubmission));
@@ -28,7 +28,7 @@ class UserViewTest extends PHPUnit_Framework_TestCase {
   
   public function testShowUserViewWithNullUser() {
   	 ob_start();
-     $_SESSION = array('user' => null, 'base' => 'mvcdbcrud');
+     $_SESSION = array('user' => null, 'base' => 'mvcsession');
      $return = UserView::show();
      $output = ob_get_clean();
      $this->assertFalse(empty($output),
@@ -43,7 +43,7 @@ class UserViewTest extends PHPUnit_Framework_TestCase {
      $s2 = new User(array("userName" => "John", "password" => "yyy"));
      $s2 -> setUserId(2);  
      $_SESSION['users'] = array($s1, $s2);
-     $_SESSION['base'] = 'mvcdbdcrud';
+     $_SESSION['base'] = 'mvcsession';
      $_SESSION['arguments'] = null;
      UserView::showall();
      $output = ob_get_clean();
@@ -55,7 +55,7 @@ class UserViewTest extends PHPUnit_Framework_TestCase {
   	 ob_start();
      $user = new User(array("userName" => "Kay", "password" => "xxx"));
      $user -> setUserId(1);
-   	 $_SESSION = array('users' => array($user), 'base' => "mvcdbcrud");
+   	 $_SESSION = array('users' => array($user), 'base' => "mvcsession");
    	 UserView::showUpdate();
    	 $output = ob_get_clean();
    	 $this->assertFalse(empty($output), "It should show the user update form");

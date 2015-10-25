@@ -19,7 +19,7 @@ include_once("../views/SubmissionView.class.php");
 $validSubmission = array("submitterName" => "krobbins", "assignmentNumber" => "1",
 		           "submissionFile" => "myText.apl");
 $s1 = new Submission($validSubmission);
-$_SESSION = array('submission' => $s1, 'base' => "mvcdbcrud");
+$_SESSION = array('submission' => $s1, 'base' => "mvcsession");
 
 SubmissionView::show();
 ?>
@@ -36,7 +36,7 @@ $submissions = array($s1, $s1);
 $_SESSION = array('submissions' => $submissions,
    		            'headerTitle' => "ClassBash Submissions",
 		            'footerTitle' => "<h3>The footer goes here</h3>",
-		            'base' => "mvcdbcrud");
+		            'base' => "mvcsession");
 SubmissionView::showall();
 ?> 
  
@@ -45,7 +45,7 @@ SubmissionView::showall();
 $s1 -> setSubmissionId(1);
 $submissions = array($s1, $s1);
 $_SESSION = array('submissions' => $submissions,
-		            'base' => "mvcdbcrud");
+		            'base' => "mvcsession");
 SubmissionView::showall();
 ?>  
 
@@ -55,7 +55,7 @@ $validSubmission = array("submitterName" => "krobbins", "assignmentNumber" => "1
 		           "submissionFile" => "myText.apl");
 $s1 = new Submission($validSubmission);
 $s1->setSubmissionId(1);
-$_SESSION = array('submissions' => array($s1), 'base' => "mvcdbcrud");
+$_SESSION = array('submissions' => array($s1), 'base' => "mvcsession");
 echo $s1;
 SubmissionView::showUpdate();
 ?>

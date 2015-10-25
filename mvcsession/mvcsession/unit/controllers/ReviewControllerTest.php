@@ -25,7 +25,7 @@ class ReviewControllerTest extends PHPUnit_Framework_TestCase {
 	           	   "score" => "5",
 		           "review" => "This was a great presentation"
 		          );
-		$_SESSION = array('base' => 'mvcdbcrud', 'action' => 'new', 'arguments' => null);
+		$_SESSION = array('base' => 'mvcsession', 'action' => 'new', 'arguments' => null);
 		ReviewController::run ();
 		$output = ob_get_clean();
 		$this->assertFalse ( empty ( $output ), "It should show something from a POST" );
@@ -38,7 +38,7 @@ class ReviewControllerTest extends PHPUnit_Framework_TestCase {
 		ob_start ();
  	    DBMakerUnit::createDB('ptest');
 		$_SERVER ["REQUEST_METHOD"] = "GET";
-		$_SESSION = array('base' => 'mvcdbcrud', 'action' => 'new', 'arguments' => null);
+		$_SESSION = array('base' => 'mvcsession', 'action' => 'new', 'arguments' => null);
 
 		ReviewController::run();
 		$output = ob_get_clean();

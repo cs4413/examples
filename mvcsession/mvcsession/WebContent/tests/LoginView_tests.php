@@ -18,7 +18,7 @@ include_once("../views/MasterView.class.php");
 <?php 
 $validTest = array("userName" => "krobbins",  "password" => "xyz");
 $s1 = new User($validTest);
-$_SESSION = array('user' => $s1, 'base' => 'mbcdbcrud');
+$_SESSION = array('user' => $s1, 'base' => 'mvcsession');
 LoginView::show();
 ?>
 
@@ -26,7 +26,7 @@ LoginView::show();
 <?php 
 $invalidTest = array("userName" => "krobbins");
 $s1 = new User($invalidTest);
-$_SESSION = array('user' => $s1, 'base' => 'mbcdbcrud');
+$_SESSION = array('user' => $s1, 'base' => 'mvcsession');
 LoginView::show();
 ?>
 

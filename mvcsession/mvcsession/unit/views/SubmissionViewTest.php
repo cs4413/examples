@@ -11,7 +11,7 @@ class SubmissionViewTest extends PHPUnit_Framework_TestCase {
   	$validTest = array("submitterName" => "krobbins", "assignmentNumber" => "1",
 		               "submissionFile" => "myText.apl");
   	$s1 = new Submission($validTest);
-  	$_SESSION = array('submission' => $s1, 'base' => 'mbcdbcrud');
+  	$_SESSION = array('submission' => $s1, 'base' => 'mvcsession');
     SubmissionView::show();
     $output = ob_get_clean();
     $this->assertFalse(empty($output), 
@@ -23,7 +23,7 @@ class SubmissionViewTest extends PHPUnit_Framework_TestCase {
   	$validTest = array("submitterName" => "krobbins", "assignmentNumber" => "1",
   			"submissionFile" =>  "myText.apl");
   	$s1 = new Submission($validTest);
-  	$_SESSION = array('submission' => $s1, 'base' => 'mbcdbcrud');
+  	$_SESSION = array('submission' => $s1, 'base' => 'mvcsession');
 
   	SubmissionView::show();
   	$output = ob_get_clean();
@@ -38,7 +38,7 @@ class SubmissionViewTest extends PHPUnit_Framework_TestCase {
   	$s1 = new Submission($validTest);
   	$s1 -> setSubmissionId(1);
   	$submissions = array($s1, $s1);
-  	$_SESSION = array('submissions' => $submissions, 'base' => 'mbcdbcrud');
+  	$_SESSION = array('submissions' => $submissions, 'base' => 'mvcsession');
   	SubmissionView::showall();
   	$output = ob_get_clean();
   	$this->assertFalse(empty($output),
@@ -52,7 +52,7 @@ class SubmissionViewTest extends PHPUnit_Framework_TestCase {
   	$s1 = new Submission($validTest);
   	$s1 -> setSubmissionId(1);
   	$submissions = array($s1, $s1);
-  	$_SESSION = array('submissions' => $submissions, 'base' => 'mvcdbcrud');
+  	$_SESSION = array('submissions' => $submissions, 'base' => 'mvcsession');
 
   	SubmissionView::showall();
   	$output = ob_get_clean();
@@ -66,7 +66,7 @@ class SubmissionViewTest extends PHPUnit_Framework_TestCase {
   		     "submissionFile" => "myText.apl");
       $s1 = new Submission($validSubmission);
       $s1->setSubmissionId(1);
-      $_SESSION = array('submission' => $s1, 'base' => "mvcdbcrud");
+      $_SESSION = array('submission' => $s1, 'base' => "mvcsession");
       SubmissionView::showUpdate();
   	  $output = ob_get_clean();
       $this->assertFalse(empty($output), "It should show an update form");
