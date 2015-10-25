@@ -4,29 +4,39 @@ class SubmissionView {
 	public static function show() {
 		// Show a single Submission object
 		$_SESSION['headertitle'] = "ClassBash Submission Report";
+		$_SESSION['styles'] = array('jumbotron.css');
 		MasterView::showHeader();
 		MasterView::showNavbar();
         SubmissionView::showDetails();
-		$_SESSION['footertitle'] ="<h3>The footer goes here</h3>";
+		$_SESSION['footertitle'] ="<h3>Submission footer</h3>";
         MasterView::showFooter();
 	}
 	
 	public static function showAll() {
+		// Show all submission objects on own page
+		$_SESSION['headertitle'] = "List of submissions";
+		$_SESSION['styles'] = array('jumbotron.css');
+		MasterView::showHeader();
+		MasterView::showNavbar();
+		SubmissionView::showAllDetails();
+		$_SESSION['footertitle'] ="<h3>Submission footer</h3>";
+		MasterView::showFooter();
+	}
+	
+	public static function showAllDetails() {
 		// SHow a table of submission objects with links
-		if (array_key_exists('headertitle', $_SESSION)) {
-			MasterView::showHeader();
-			MasterView::showNavbar();
-		}
 		$submissions = (array_key_exists('submissions', $_SESSION))?$_SESSION['submissions']:array();
 		$base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
 
-		echo "<h1>ClassBash submission list</h1>";
-		echo "<table>";
-		echo "<thead>";
-		echo "<tr><th>Submitter</th><th>Assignment number</th>
-	         <th>Download</th><th>Show summary</th><th>Update</th><th>Review link</th></tr>";
-		echo "</thead>";
-		echo "<tbody>";
+	    echo '<div class="container">';
+		echo '<h1>List of submissions</h1>';
+		echo '<div class="table-responsive">';
+		echo '<table class="table table-striped">';
+		echo '<thead>';
+		echo '<tr><th>Submitter</th><th>Assignment number</th>
+	         <th>Download</th><th>Show summary</th><th>Update</th><th>Review link</th></tr>';
+		echo '</thead>';
+		echo '<tbody>';
 		foreach($submissions as $submission) {
 			echo '<tr><td>'.$submission->getSubmitterName().'</td>';
 			echo '<td>'.$submission->getAssignmentNumber().'</td>';
@@ -35,21 +45,22 @@ class SubmissionView {
 			echo '<td><a href="/'.$base.'/submission/update/'.$submission->getSubmissionId().'">Update</a></td>';
 			echo '<td><a href="/'.$base.'/review/new/'.$submission->getSubmissionId().'">Submit review</a></td></tr>';
 		}
-		echo "</tbody>";
-		echo "</table>";
-		if (array_key_exists('footertitle', $_SESSION))
-			MasterView::showFooter();
+		echo '</tbody>';
+		echo '</table>';
+		echo '</div>';
+		echo '</div>';
 	}
 	
 
-  
   public static function showDetails() {
   	 $submission = (array_key_exists('submission', $_SESSION))?$_SESSION['submission']:null;
-	  if (!is_null($submission)) {  	
-	  	echo '<p>Submission Id: '.$submission->getSubmissionId().'<p>';
-	  	echo '<p>Submitter name: '.$submission->getSubmitterName().'<p>';
+	  if (!is_null($submission)) { 
+	  	echo '<div class="container">';
+	  	echo '<h2>Submission: '.$submission->getSubmissionId().'</h2>';
+	  	echo '<p>Submitter name: '.$submission->getSubmitterName().'</p>';
 	  	echo '<p> Assignment number: '. $submission->getAssignmentNumber() .'</p>';
 	  	echo '<p> File name: '. $submission->getSubmissionFile() .'</p>';
+	  	echo '</div>';
 	  }
    }
    

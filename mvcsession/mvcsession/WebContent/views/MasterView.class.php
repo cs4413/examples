@@ -40,7 +40,8 @@ class MasterView {
     	echo '<div id="navbar" class="navbar-collapse collapse">';
     	echo '<ul class="nav navbar-nav">';
     	if (!is_null($authenticatedUser))
-    	   echo '<li class="active"><a href="/'.$base.'/">Dashboard</a></li>';
+    	   echo '<li class="active"><a href="/'.$base.'/user/show/'.
+    	         $authenticatedUser->getUserId().'">Dashboard</a></li>';
     	echo '<li class="dropdown">';
     	echo '<a class="dropdown-toggle" data-toggle="dropdown" href="#">Examples <span class="caret"></span></a>';
     	echo '<ul class="dropdown-menu">';

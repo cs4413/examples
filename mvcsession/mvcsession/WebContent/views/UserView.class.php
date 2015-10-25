@@ -2,6 +2,7 @@
 class UserView {
 	public static function show() {
 		$_SESSION['headertitle'] = "User details";
+		$_SESSION['styles'] = array('jumbotron.css');
 		MasterView::showHeader();
 		MasterView::showNavbar();
 		
@@ -10,21 +11,30 @@ class UserView {
         MasterView::showFooter();
 	}
 	
-	
 	public static function showAll() {
-		// SHow a table of users with links
-		if (array_key_exists('headertitle', $_SESSION)) {
-			MasterView::showHeader();
-			MasterView::showNavbar();
-		}
+		// Show all user objects on own page
+		$_SESSION['headertitle'] = 'List of users';
+		$_SESSION['styles'] = array('jumbotron.css');
+		MasterView::showHeader();
+		MasterView::showNavbar();
+		UserView::showAllDetails();
+		$_SESSION['footertitle'] ='<h3>Users list footer</h3>';
+		MasterView::showFooter();
+	}
+	
+	public static function showAllDetails() {
+		// Show a table of users with links
 		$users = (array_key_exists('users', $_SESSION))?$_SESSION['users']:array();
 		$base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
-		echo "<h1>ClassBash user list</h1>";
-		echo "<table>";
-		echo "<thead>";
-		echo "<tr><th>User Id</th><th>User name</th> <th>Show</th><th>Update</th></tr>";
-		echo "</thead>";
-		echo "<tbody>";
+		
+		echo '<div class="container">';
+		echo '<h1>List of users</h1>';
+		echo '<div class="table-responsive">';
+		echo '<table class="table table-striped">';
+		echo '<thead>';
+		echo '<tr><th>User Id</th><th>User name</th> <th>Show</th><th>Update</th></tr>';
+		echo '</thead>';
+		echo '<tbody>';
 	
 		foreach($users as $user) {
 			echo '<tr>';
@@ -34,10 +44,9 @@ class UserView {
 			echo '<td><a href="/'.$base.'/user/update/'.$user->getUserId().'">Update</a></td>';
 			echo '</tr>';
 		}
-		echo "</tbody>";
-		echo "</table>";
-		if (array_key_exists('footertitle', $_SESSION))
-			MasterView::showFooter();
+		echo '</tbody>';
+		echo '</table>';
+        echo '</div>';
 	}
 	
 	public static function showDetails() {

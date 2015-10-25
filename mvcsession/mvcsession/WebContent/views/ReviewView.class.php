@@ -3,29 +3,39 @@ class ReviewView {
 	
 	public static function show() {
 		$_SESSION['headertitle'] = "Review for ClassBash";
+		$_SESSION['styles'] = array('jumbotron.css');
 		MasterView::showHeader();
 		MasterView::showNavbar();
 		ReviewView::showDetails();
-		$_SESSION['footertitle'] ="<h3>The footer goes here</h3>";
+		$_SESSION['footertitle'] ="<h3>The review footer</h3>";
         MasterView::showFooter();
 	}
 	
 	public static function showAll() {
-		// SHow a table of submission objects with links
-		if (array_key_exists('headertitle', $_SESSION)) {
-			MasterView::showHeader();
-			MasterView::showNavbar();
-		}
+		// Show all review objects on own page
+		$_SESSION['headertitle'] = 'List of reviews';
+		$_SESSION['styles'] = array('jumbotron.css');
+		MasterView::showHeader();
+		MasterView::showNavbar();
+		ReviewView::showAllDetails();
+		$_SESSION['footertitle'] ='<h3>Reviews list footer</h3>';
+		MasterView::showFooter();
+	}
+	
+	public static function showAllDetails() {
+		// Show a table of review objects with links
 		$reviews = (array_key_exists('reviews', $_SESSION))?$_SESSION['reviews']:array();
 		$base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
-		echo "<h1>ClassBash review list</h1>";
-		echo "<table>";
-		echo "<thead>";
-		echo "<tr><th>Review Id</th><th>Submission Id</th>
+		echo '<div class="container">';
+		echo '<h1>List of reviews</h1>';
+		echo '<div class="table-responsive">';
+		echo '<table class="table table-striped">';
+		echo '<thead>';
+		echo '<tr><th>Review Id</th><th>Submission Id</th>
 			 <th>Reviewer name</th> <th>Review score</th>
-			 <th>Show review</td> <th> Update review</th></tr>";
-		echo "</thead>";
-		echo "<tbody>";
+			 <th>Show review</td> <th> Update review</th></tr>';
+		echo '</thead>';
+		echo '<tbody>';
 	
 		foreach($reviews as $review) {
 			echo '<tr>';
@@ -37,20 +47,23 @@ class ReviewView {
 			echo '<td><a href="/'.$base.'/review/update/'.$review->getReviewId().'">Update</a></td>';
 	        echo '</tr>';
 		}
-		echo "</tbody>";
-		echo "</table>";
-		if (array_key_exists('footertitle', $_SESSION))
-			MasterView::showFooter();
+		echo '</tbody>';
+		echo '</table>';
+		echo '</div>';
+		echo '</div>';
 	}
 	
 	public static function showDetails() {
+		// Show the details of a review object without header or footer
 		$review = (array_key_exists('review', $_SESSION))?$_SESSION['review']:null;
 	    if (!is_null($review)) {
-			echo '<p>Review Id: '.$review->getReviewId().'</p>';
-			echo '<p>Submission Id: '.$review->getSubmissionId().'</p>';
+	    	echo '<div class="container">';
+	    	echo '<h2>Review: '.$review->getReviewId().'</h2>';
+			echo '<p>Submission reviewed: '.$review->getSubmissionId().'</p>';
 			echo '<p>Reviewer name: '.$review->getReviewerName().'</p>';
 			echo '<p>Score: '. $review->getScore() .'</p>';
 			echo '<p>Review:<br> '. $review->getReview() .'</p>';
+			echo '</div>';
 		}
 	}
 	
