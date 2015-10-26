@@ -11,10 +11,21 @@ CREATE TABLE Users (
   PRIMARY KEY (userId)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+DROP TABLE if EXISTS Assignments;
+CREATE TABLE Assignments (
+  assignmentId           int(11) NOT NULL AUTO_INCREMENT,
+  assignmentOwnerId      int(11) NOT NULL COLLATE utf8_unicode_ci,
+  assignmentDescription  varchar (4096) COLLATE utf8_unicode_ci,
+  dateCreated            TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (assignmentId),
+  FOREIGN KEY (assignmentOwnerId) REFERENCES Users(userId),
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE if EXISTS Submissions;
 CREATE TABLE Submissions (
   submissionId       int(11) NOT NULL AUTO_INCREMENT,
-  submitterId             int(11) NOT NULL COLLATE utf8_unicode_ci,
+  submitterId        int(11) NOT NULL COLLATE utf8_unicode_ci,
   assignmentNumber   int COLLATE utf8_unicode_ci,
   submissionFile     varchar (255) UNIQUE NOT NULL COLLATE utf8_unicode_ci,
   dateCreated        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

@@ -84,7 +84,14 @@ class ReviewView {
 	   echo '<div class="container">';
 	   echo '<h1>New review</h1>';
 
-	   echo '<form role="form" method="post" action="/'.$base.'/review/new">';   
+	   echo '<form role="form" method="post" action="/'.$base.'/review/new">';
+	   if (!is_null($review) && !empty($review->getError('reviewId'))) {
+	     	echo  '<div class="form-group">';
+	   	    echo  '<label><span class="label label-danger">';
+	   		echo  $review->getError('reviewId');
+	   	    echo '</span></label></div>';
+	   }
+	   	   
 	   echo  '<div class="form-group">';
        echo  '<label for="reviewerName">Reviewer name: ';
        echo '<span class="error">';
@@ -114,9 +121,13 @@ class ReviewView {
 	   echo '</div>';
 	   
 	   echo '<div class="form-group">';
-	   echo '<label for="review">Review:</label>';
-       echo '<textarea class="form-control" name="review" placeholder="Write your review here"
-					rows="10" cols="80" required>';
+	   echo '<label for="review">Review:';
+	   echo '<span class="label label-danger">';
+	   if (!is_null($review))
+	   	  echo $review->getError('review');
+	   echo '</span></label>';
+       echo '<textarea class="form-control" name="review" id = "review"
+       		placeholder="Write your review here" rows="10" required>';
        if (!is_null($review))
           echo $review->getReview();
        echo '</textarea>';
@@ -124,7 +135,6 @@ class ReviewView {
        
        echo '<button type="submit" class="btn btn-default">Submit</button>';
 	   echo '</form>';
-       echo '</div>';
        echo '</div>';
 	}
 	

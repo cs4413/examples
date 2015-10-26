@@ -31,9 +31,11 @@ class ReviewController {
 	public static function newReview() {
 		// Process a new review
 		$review = null;
+		print_r($_SESSION);
 		if ($_SERVER["REQUEST_METHOD"] == "POST")  {
 			$review = new Review($_POST);
 			$review = ReviewsDB::addReview($review);
+			echo "Added review $review<br>";
 		}
 		if (is_null($review) || $review->getErrorCount() != 0) {
 			$_SESSION['review'] = $review;

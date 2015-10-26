@@ -77,12 +77,12 @@ class SubmissionView {
    	  $submission = (array_key_exists('submission', $_SESSION))?$_SESSION['submission']:null;
    	  $base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
       echo '<div class="container">';
-   	  echo '<h1>ClassBash submission</h1>';
+   	  echo '<h1>New submission</h1>';
    	  echo '<form role = "form" enctype="multipart/form-data" 
    		   action ="/'.$base.'/submission/new" method="Post">';
    	  echo '<div class="form-group">';
    	  echo '<label for="submitterName">Submitter name:';
-      echo '<span class="error">';
+      echo '<span class="label label-danger">';
    	  if (!is_null($submission))
    		 echo $submission->getError('submitterName'); 
    	  echo '</span></label>';
@@ -94,7 +94,7 @@ class SubmissionView {
    	
    	  echo '<div class="form-group">';
    	  echo '<label for="assignmentNumber">Assignment number:';
-      echo '<span class="error">';
+      echo '<span class=""label label-danger"">';
    	  if (!is_null($submission))
    		 echo $submission->getError('assignmentNumber');
    	  echo '</span></label>';
@@ -108,13 +108,14 @@ class SubmissionView {
    	
    	  echo '<div class="form-group">';
    	  echo '<label for="submissionFile">Upload submission:';
-   	  echo '<span class="error">';
+   	  echo '<span class="label label-danger">';
    	  if (!is_null($submission))
    		  echo $submission->getError('submissionFile');
    	  echo '</span></label>';
-   	  echo '<input class="form-control" name="submissionFile" type="file" required /><br><br>';
+   	  echo '<input name="submissionFile"
+   	  		id = "submissionFile" type="file" required />';
       echo '</div>';
-   	  echo '<input type="submit" value="Submit" />';
+      echo '<button type="submit" class="btn btn-default">Submit</button>';
    	  echo '</form>';
       echo '</div>';
    }
