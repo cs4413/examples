@@ -18,7 +18,7 @@ class SubmissionView {
 		$_SESSION['styles'] = array('jumbotron.css');
 		MasterView::showHeader();
 		MasterView::showNavbar();
-		SubmissionView::showAllDetails();
+		self::showAllDetails();
 		$_SESSION['footertitle'] ="<h3>Submission footer</h3>";
 		MasterView::showFooter();
 	}
@@ -51,87 +51,121 @@ class SubmissionView {
 		echo '</div>';
 	}
 	
-
   public static function showDetails() {
   	 $submission = (array_key_exists('submission', $_SESSION))?$_SESSION['submission']:null;
 	  if (!is_null($submission)) { 
-	  	echo '<div class="container">';
-	  	echo '<h2>Submission: '.$submission->getSubmissionId().'</h2>';
-	  	echo '<p>Submitter name: '.$submission->getSubmitterName().'</p>';
-	  	echo '<p> Assignment number: '. $submission->getAssignmentNumber() .'</p>';
-	  	echo '<p> File name: '. $submission->getSubmissionFile() .'</p>';
-	  	echo '</div>';
+	  	 echo '<div class="container">';
+	  	 echo '<h2>Submission: '.$submission->getSubmissionId().'</h2>';
+	  	 echo '<p>Submitter name: '.$submission->getSubmitterName().'</p>';
+	  	 echo '<p> Assignment number: '. $submission->getAssignmentNumber() .'</p>';
+	  	 echo '<p> File name: '. $submission->getSubmissionFile() .'</p>';
+	  	 echo '</div>';
 	  }
    }
    
    public static function showNew() {
-   	$submission = (array_key_exists('submission', $_SESSION))?$_SESSION['submission']:null;
-   	$base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
-   	$_SESSION['headertitle'] = "ClassBash Submission Report";
-   	MasterView::showHeader();
+   	  $_SESSION['headertitle'] = "Create a new submission";
+      $_SESSION['styles'] = array('jumbotron.css');
+   	  MasterView::showHeader();
+   	  MasterView::showNavbar();
+   	  self::showNewDetails();
+   	  $_SESSION['footertitle'] = "<h3>Submission footer</h3>";
+   	  MasterView::showFooter();
+   }
    
-   	echo '<h1>ClassBash submission</h1>';
-   	echo '<form enctype="multipart/form-data" 
+   public static function showNewDetails() {
+   	  $submission = (array_key_exists('submission', $_SESSION))?$_SESSION['submission']:null;
+   	  $base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
+      echo '<div class="container">';
+   	  echo '<h1>ClassBash submission</h1>';
+   	  echo '<form role = "form" enctype="multipart/form-data" 
    		   action ="/'.$base.'/submission/new" method="Post">';
-   	echo '<p>Submitter name: <input type="text" required name ="submitterName"';
-   	if (!is_null($submission))
-   		echo 'value = "'. $submission->getSubmitterName() .'"';
-   	echo '>';
-   	echo '<span class="error">';
-   	if (!is_null($submission))
-   		echo $submission->getError('submitterName');
-   	 
-   	echo '</span></p>';
-   	echo '<p> Assignment number: <input type = "number" min="1"
+   	  echo '<div class="form-group">';
+   	  echo '<label for="submitterName">Submitter name:';
+      echo '<span class="error">';
+   	  if (!is_null($submission))
+   		 echo $submission->getError('submitterName'); 
+   	  echo '</span></label>';
+   	  echo '<input type="text" class="form-control" id = "submitterName" name="submitterName"';
+   	  if (!is_null($submission))
+   		 echo 'value = "'. $submission->getSubmitterName() .'"';
+   	  echo 'required>';
+   	  echo '</div>';
+   	
+   	  echo '<div class="form-group">';
+   	  echo '<label for="assignmentNumber">Assignment number:';
+      echo '<span class="error">';
+   	  if (!is_null($submission))
+   		 echo $submission->getError('assignmentNumber');
+   	  echo '</span></label>';
+   	  echo '<input class="form-control" type = "number" min="1" id = "assignmentNumber"
 	   		 required name ="assignmentNumber"';
-   	if (!is_null($submission))
-   		echo 'value = "'. $submission->getAssignmentNumber() .'"';
-   	echo '>';
-   	echo '<span class="error">';
-   	if (!is_null($submission))
-   		echo $submission->getError('assignmentNumber');
-   	echo '</span></p>';
-   
-   	echo '<input type="hidden" name="MAX_FILE_SIZE" value="500000" />';
-   	echo 'Upload submission: <input name="submissionFile" type="file" required /><br><br>';
-   
-   	echo '<input type="submit" value="Submit" />';
-   	echo '</form>';
-   	$_SESSION['footertitle'] = "The footer";
-   	MasterView::showFooter();
+   	  if (!is_null($submission))
+   		 echo 'value = "'. $submission->getAssignmentNumber() .'"';
+   	  echo '>';
+   	  echo '</div>';  
+   	  echo '<input type="hidden" name="MAX_FILE_SIZE" value="500000" />';
+   	
+   	  echo '<div class="form-group">';
+   	  echo '<label for="submissionFile">Upload submission:';
+   	  echo '<span class="error">';
+   	  if (!is_null($submission))
+   		  echo $submission->getError('submissionFile');
+   	  echo '</span></label>';
+   	  echo '<input class="form-control" name="submissionFile" type="file" required /><br><br>';
+      echo '</div>';
+   	  echo '<input type="submit" value="Submit" />';
+   	  echo '</form>';
+      echo '</div>';
    }
    
    public static function showUpdate() {
+	  $_SESSION['headertitle'] = "Update submission";
+	  $_SESSION['styles'] = array('Jumbotron.css');
+	  MasterView::showHeader();
+	  MasterView::showNavbar();
+	  self::showUpdateDetails();
+	  $_SESSION['footertitle'] = "The submission update footer";
+	  MasterView::showFooter();
+   }
+   
+   public static function showUpdateDetails() {
    	$submissions = (array_key_exists('submissions', $_SESSION))?$_SESSION['submissions']:null;
    	$base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
-   	$_SESSION['headertitle'] = "ClassBash update submission";
-   	MasterView::showHeader();
 
-   	echo '<h1>ClassBash submission update</h1>';
    	if (is_null($submissions) || empty($submissions) || is_null($submissions[0])) {
 	    echo '<section>Submission does not exist</section>';
 		return;
 	}
 	$submission = $submissions[0];
-	if ($submission->getErrors() > 0) {
-		$errors = $submission->getErrors();
-		echo '<section><p>Errors:<br>';
-		foreach($errors as $key => $value)
-			echo $value . "<br>";
-		echo '</p></section>';
-	}
-	echo '<section>';
+	echo '<div class ="container">';
 	echo '<h3>Submission information:</h3>';
 	echo 'Submitter name: '.$submission->getSubmitterName().'<br>';
 	echo 'Submission Id: '.$submission->getSubmissionId().'<br>';
-	echo 'Assignment number: '.$submission->getAssignmentNumber().'<br>'; 		 
-   	echo '<form enctype="multipart/form-data" action ="/'.$base.'/submission/update" method="Post">';  
+	echo 'Assignment number: '.$submission->getAssignmentNumber().'<br>';
+	echo '<div class="container">';
+	if ($submission->getErrors() > 0) {
+		$errors = $submission->getErrors();
+		echo 'Errors:<br>';
+		foreach($errors as $key => $value)
+			echo $value . "<br>";   
+	}
+	echo '</div>';
+   	echo '<form role="form" enctype="multipart/form-data" 
+   			action ="/'.$base.'/submission/update" method="Post">';  
    	echo '<input type="hidden" name="MAX_FILE_SIZE" value="500000" />';
-   	echo 'Upload submission: <input name="submissionFile" type="file" required /><br><br>';
-   
+   	echo '<div class="form-group">';
+   	echo '<label for="submissionFile">Submission file: ';
+   	echo '<span class="error">';
+   	if (!is_null($submission))
+   		echo $submission->getError('submissionFile');
+   	echo '</span></label>';
+   	echo '<input class="form-control" type="file" name="submissionFile" id = "submissionFile"';
+   	echo 'value = "'. $submission->getSubmissionFile() .'"';
+   	echo 'required>';
+   	echo '</div>';
    	echo '<input type="submit" value="Submit" />';
    	echo '</form>';
-   	$_SESSION['footertitle'] = "The submission update footer";
-   	MasterView::showFooter();
+   	echo '</div>';
    }
 }

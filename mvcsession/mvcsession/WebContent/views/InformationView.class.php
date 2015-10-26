@@ -5,13 +5,13 @@ class InformationView {
   	  $_SESSION['styles'] = array('jumbotron.css');
 	  MasterView::showHeader();
 	  MasterView::showNavbar();
-	  HomeView::showDetails();
+	  self::showDetails();
 	  $_SESSION['footertitle'] = "<h3>The footer goes here</h3>";
       MasterView::showHomeFooter();
       MasterView::showPageEnd();
   }
 
-   public static function showInformation() { 
+   public static function showDetails() { 
       $base = $_SESSION['base'];
       echo '<div class="container">';
       echo '<h1>How ClassBash works</h1>';

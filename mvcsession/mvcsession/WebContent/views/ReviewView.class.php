@@ -68,34 +68,29 @@ class ReviewView {
 	}
 	
 	public static function showNew() {
-	   $reviews = (array_key_exists('reviews', $_SESSION))?$_SESSION['reviews']:null;
+		$_SESSION['headertitle'] = "Create a new ClassBash review";
+		$_SESSION['styles'] = array('jumbotron.css');
+		MasterView::showHeader();
+		MasterView::showNavbar();
+		self::showNewDetails();
+		$_SESSION['footertitle'] = "<h3>Review footer</h3>";
+		MasterView::showFooter();
+	}
+	
+	public static function showNewDetails() {
+	   $review = (array_key_exists('review', $_SESSION))?$_SESSION['review']:null;
 	   $base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
-	   $_SESSION['headertitle'] = "Create a new ClassBash review";
-	   $_SESSION['styles'] = array('jumbotron.css');
-	   MasterView::showHeader();
-	   MasterView::showNavbar();
 	   
 	   echo '<div class="container">';
-	   echo '<h1 class ="page-header">'.$_SESSION['headertitle'].'</h1>';
-	   echo "</div>";
-   
-	   echo '<div class="container">';
-	   if (is_null($reviews) || empty($reviews) || is_null($reviews[0]))  
-	   	   $review = null;
-	   else
-	       $review = $reviews[0];
+	   echo '<h1>New review</h1>';
 
-	   if (!is_null($review) && $review->getErrors() > 0) {
-	      $errors = $review->getErrors();
-	      foreach($errors as $key => $value) 
-	          echo $value . "<br>";
-	   }
-	   echo '</div>';
-	   
-	   echo '<form role="form" method="post" action="/'.$base.'/review/new">';
-	   
+	   echo '<form role="form" method="post" action="/'.$base.'/review/new">';   
 	   echo  '<div class="form-group">';
-       echo  '<label for="reviewerName">Reviewer name:</label>';
+       echo  '<label for="reviewerName">Reviewer name: ';
+       echo '<span class="error">';
+   	   if (!is_null($review))
+   		  echo $review->getError('reviewName');
+   	   echo '</span></label>';
 	   echo '<input type="text" class="form-control" id = "reviewerName" name="reviewerName"';
 	   if (!is_null($review)) 
 		   echo 'value = "'. $review->getReviewerName() .'"';
@@ -130,20 +125,20 @@ class ReviewView {
        echo '<button type="submit" class="btn btn-default">Submit</button>';
 	   echo '</form>';
        echo '</div>';
-       $_SESSION['footertitle'] = "<h3>Review footer</h3>";
-       MasterView::showFooter();
        echo '</div>';
-       MasterView::showPageEnd();   
 	}
 	
 	public static function showUpdate() {
-		$reviews = (array_key_exists('reviews', $_SESSION))?$_SESSION['reviews']:null;
-		$base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
-		$_SESSION['headertitle'] = "Update a ClassBash review";
-		$_SESSION['styles'] = array();
+		$_SESSION['headertitle'] = "Update review";
+		$_SESSION['styles'] = array('Jumbotron.css');
 		MasterView::showHeader();
 		MasterView::showNavbar();
-		echo '</div>';
+		self::showUpdateDetails();
+	}	
+		
+	public static function showUpdateDetails() {
+		$reviews = (array_key_exists('reviews', $_SESSION))?$_SESSION['reviews']:null;
+		$base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
 		echo '<div class="container">';
 		echo '<h1>'.$_SESSION['headertitle'].'</h1>';
 		echo "</div>";
@@ -176,28 +171,32 @@ class ReviewView {
 		echo '<form role="form" method="post" action="/'.$base.'/review/update/'.
 		                         $review->getReviewId().'">';
 		echo '<div class="form-group">';
-		echo '<label for="score">Score:</label>';
-		echo '<input class="form-control" type="number" name="score"';
+		echo '<label for="score">Score: ';
+		echo '<span class="error">';
+   	    if (!is_null($review))
+   		    echo $review->getError('score');
+   	    echo '</span></label>';
+		echo '<input class="form-control" type="number" name="score" id = "score"';
 		echo 'value = "'. $review->getScore() .'"';
 		echo 'required min="1" max="5">';
 		echo '</div>';
 			
 	    echo '<div class="form-group">';
-		echo '<label for="review">Review:</label>';
-		echo '<textarea class="form-control" name="review" placeholder="Write your review here"
-					rows="10" cols="80" required>';
+		echo '<label for="review">Review: ';
+		if (!is_null($review))
+   		    echo $review->getError('review');
+   	    echo '</span></label>';
+
+		echo '<textarea class="form-control" name="review" id="review" 
+				placeholder="Write your review here" rows="10" cols="80" required>';
         echo $review->getReview();
         echo '</textarea>';
         echo '</div>';
         
 		echo '<button type="submit" class="btn btn-default">Submit</button>';
 	    echo '</form>';
-        echo '</div>';
-        
-		$_SESSION['footertitle'] = "The review update footer";
-		MasterView::showFooter();
-		echo '</div>';
-		MasterView::showPageEnd();
+        echo '</div>';     
+		echo '</div>';	
 	}
 }
 ?>

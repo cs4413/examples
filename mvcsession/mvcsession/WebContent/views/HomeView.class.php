@@ -18,7 +18,7 @@ class HomeView {
       echo '<h1>ClassBash</h1>';
       echo '<p>Hone your critical thinking skills by critiquing, analyzing, discussing ....<br>
       not just listening ... </p>';
-      echo '<p><a class="btn btn-primary btn-lg" href="#" role="button">Join the party! &raquo;</a></p>';
+      echo '<p><a class="btn btn-primary btn-lg" href="/'.$base.'/information/show" role="button">Join the party! &raquo;</a></p>';
       echo '</div>';
       echo '</div>';
       
@@ -27,22 +27,22 @@ class HomeView {
       echo '<div class="col-md-3">';
       echo '<h2>Assign</h2>';
       echo '<p><img src = "/'.$base.'/images/document6.png"></p>';
-      echo '<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>';
+      echo '<p><a class="btn btn-default" href="/'.$base.'/assignment/new" role="button">Do it now &raquo;</a></p>';
       echo '</div>';
       echo '<div class="col-md-3">';
       echo '<h2>Submit</h2>';
       echo '<p><img src = "/'.$base.'/images/checkbox6.png"> </p>';
-      echo '<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>';
+      echo '<p><a class="btn btn-default" href="/'.$base.'/submission/new" role="button">Do it now &raquo;</a></p>';
       echo '</div>';
       echo '<div class="col-md-3">';
       echo '<h2>Review</h2>';
       echo '<p><img src = "/'.$base.'/images/social16.png"></p>';
-      echo '<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>';
+      echo '<p><a class="btn btn-default" href="/'.$base.'/review/new"  role="button">Do it now &raquo;</a></p>';
       echo '</div>';
       echo '<div class="col-md-3">';
       echo '<h2>Report</h2>';
       echo '<p><img src = "/'.$base.'/images/layers.png"></p>';
-      echo '<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>';
+      echo '<p><a class="btn btn-default" href="/'.$base.'/report/new"  role="button">See it now &raquo;</a></p>';
       echo '</div>';
       echo '</div>';
       echo '<hr>';

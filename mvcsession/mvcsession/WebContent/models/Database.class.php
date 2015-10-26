@@ -8,7 +8,7 @@ class Database {
 	private static $options = 
 	   array (PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
 	
-	public static function getDB($dbName = 'classbash', $configPath = null) {
+	public static function getDB($dbName = 'classbashdb', $configPath = null) {
 		
 		if (!isset (self::$db) || self::$db == null) {
 			try {

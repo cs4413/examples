@@ -5,9 +5,8 @@ class UserView {
 		$_SESSION['styles'] = array('jumbotron.css');
 		MasterView::showHeader();
 		MasterView::showNavbar();
-		
-		UserView::showDetails();
-		$_SESSION['footertitle'] ="<h3>The footer goes here</h3>";
+		self::showDetails();
+		$_SESSION['footertitle'] ="<h3>User footer</h3>";
         MasterView::showFooter();
 	}
 	
@@ -128,11 +127,21 @@ class UserView {
         MasterView::showFooter();
 	}	
 	
+	
 	public static function showUpdate() {
+		$_SESSION['headertitle'] = "Update user";
+		$_SESSION['styles'] = array('Jumbotron.css');
+		MasterView::showHeader();
+		MasterView::showNavbar();
+		self::showUpdateDetails();
+		$_SESSION['footertitle'] = "The user update footer";
+		MasterView::showFooter();
+	}
+	
+	public static function showUpdateDetails() {
 		$users = (array_key_exists('users', $_SESSION))?$_SESSION['users']:null;
 		$base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
-				$_SESSION['headertitle'] = "ClassBash User Update";
-		MasterView::showHeader();
+	
 		echo '<h1>ClassBash user update</h1>';
 		if (is_null($users) || empty($users) || is_null($users[0])) {
 			echo '<section>users does not exist</section>';
@@ -164,8 +173,6 @@ class UserView {
 		
 		echo '<input type="submit" value="Submit" />';
 		echo '</form></section>';
-		$_SESSION['footertitle'] = "The footer";
-		MasterView::showFooter();
 	}
 }
 ?>	
