@@ -53,14 +53,14 @@ class SubmissionView {
 	
   public static function showDetails() {
   	 $submission = (array_key_exists('submission', $_SESSION))?$_SESSION['submission']:null;
-	  if (!is_null($submission)) { 
+	 if (!is_null($submission)) { 
 	  	 echo '<div class="container">';
 	  	 echo '<h2>Submission: '.$submission->getSubmissionId().'</h2>';
 	  	 echo '<p>Submitter name: '.$submission->getSubmitterName().'</p>';
 	  	 echo '<p> Assignment number: '. $submission->getAssignmentNumber() .'</p>';
 	  	 echo '<p> File name: '. $submission->getSubmissionFile() .'</p>';
 	  	 echo '</div>';
-	  }
+	 }
    }
    
    public static function showNew() {
@@ -80,7 +80,16 @@ class SubmissionView {
    	  echo '<h1>New submission</h1>';
    	  echo '<form role = "form" enctype="multipart/form-data" 
    		   action ="/'.$base.'/submission/new" method="Post">';
-   	  echo '<div class="form-group">';
+   	  
+   	  // Error at the top of the form
+   	  if (!is_null($submission) && !empty($submission->getError('submissionId'))) {
+   	  	echo  '<div class="form-group">';
+   	  	echo  '<label><span class="label label-danger">';
+   	  	echo  $submission->getError('submissionId');
+   	  	echo '</span></label></div>';
+   	  }
+   	  
+   	  echo '<div class="form-group">'; // Submitter name
    	  echo '<label for="submitterName">Submitter name:';
       echo '<span class="label label-danger">';
    	  if (!is_null($submission))
@@ -92,9 +101,9 @@ class SubmissionView {
    	  echo 'required>';
    	  echo '</div>';
    	
-   	  echo '<div class="form-group">';
-   	  echo '<label for="assignmentNumber">Assignment number:';
-      echo '<span class=""label label-danger"">';
+   	  echo '<div class="form-group">'; //Assignment number
+   	  echo '<label for="assignmentNumber">Assignment number: ';
+      echo '<span class="label label-danger">';
    	  if (!is_null($submission))
    		 echo $submission->getError('assignmentNumber');
    	  echo '</span></label>';
@@ -103,10 +112,10 @@ class SubmissionView {
    	  if (!is_null($submission))
    		 echo 'value = "'. $submission->getAssignmentNumber() .'"';
    	  echo '>';
-   	  echo '</div>';  
+   	  echo '</div>'; 
+   	  
+   	  echo '<div class="form-group">';  // File upload
    	  echo '<input type="hidden" name="MAX_FILE_SIZE" value="500000" />';
-   	
-   	  echo '<div class="form-group">';
    	  echo '<label for="submissionFile">Upload submission:';
    	  echo '<span class="label label-danger">';
    	  if (!is_null($submission))
@@ -115,9 +124,10 @@ class SubmissionView {
    	  echo '<input name="submissionFile"
    	  		id = "submissionFile" type="file" required />';
       echo '</div>';
+      
       echo '<button type="submit" class="btn btn-default">Submit</button>';
    	  echo '</form>';
-      echo '</div>';
+      echo '</div>';  // Container
    }
    
    public static function showUpdate() {
@@ -131,41 +141,44 @@ class SubmissionView {
    }
    
    public static function showUpdateDetails() {
-   	$submissions = (array_key_exists('submissions', $_SESSION))?$_SESSION['submissions']:null;
+   	$submission = (array_key_exists('submission', $_SESSION))?$_SESSION['submission']:null;
    	$base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
 
-   	if (is_null($submissions) || empty($submissions) || is_null($submissions[0])) {
-	    echo '<section>Submission does not exist</section>';
+   	echo '<div class ="container">';
+   	if (is_null($submission)) {
+	    echo '<section>Submission does not exist</section></div>';
 		return;
 	}
-	$submission = $submissions[0];
-	echo '<div class ="container">';
+	
 	echo '<h3>Submission information:</h3>';
-	echo 'Submitter name: '.$submission->getSubmitterName().'<br>';
-	echo 'Submission Id: '.$submission->getSubmissionId().'<br>';
-	echo 'Assignment number: '.$submission->getAssignmentNumber().'<br>';
-	echo '<div class="container">';
-	if ($submission->getErrors() > 0) {
-		$errors = $submission->getErrors();
-		echo 'Errors:<br>';
-		foreach($errors as $key => $value)
-			echo $value . "<br>";   
-	}
-	echo '</div>';
+	echo '<h4>Assignment number: '.$submission->getAssignmentNumber().'</h4>';
+	echo '<h4>Submitter: '.$submission->getSubmitterName().'</h4>';
+	echo '<h4>Submission Id: '.$submission->getSubmissionId().'</h4>';
+	
    	echo '<form role="form" enctype="multipart/form-data" 
-   			action ="/'.$base.'/submission/update" method="Post">';  
-   	echo '<input type="hidden" name="MAX_FILE_SIZE" value="500000" />';
+   			action ="/'.$base.'/submission/update" method="Post">'; 
+   	
+   	// Error at the top of the form
+   	if (!is_null($submission) && !empty($submission->getError('submissionId'))) {
+   		echo  '<div class="form-group">';
+   		echo  '<label><span class="label label-danger">';
+   		echo  $submission->getError('submissionId');
+   		echo '</span></label></div>';
+   	}
+ 
    	echo '<div class="form-group">';
+   	echo '<input type="hidden" name="MAX_FILE_SIZE" value="500000" />';
    	echo '<label for="submissionFile">Submission file: ';
    	echo '<span class="error">';
    	if (!is_null($submission))
    		echo $submission->getError('submissionFile');
    	echo '</span></label>';
-   	echo '<input class="form-control" type="file" name="submissionFile" id = "submissionFile"';
+   	echo '<input  type="file" class="btn btn-default" name="submissionFile" id = "submissionFile"';
    	echo 'value = "'. $submission->getSubmissionFile() .'"';
    	echo 'required>';
    	echo '</div>';
-   	echo '<input type="submit" value="Submit" />';
+   	
+    echo '<button type="submit" class="btn btn-default">Submit</button>';
    	echo '</form>';
    	echo '</div>';
    }

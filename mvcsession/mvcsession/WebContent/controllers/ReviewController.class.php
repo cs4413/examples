@@ -31,11 +31,9 @@ class ReviewController {
 	public static function newReview() {
 		// Process a new review
 		$review = null;
-		print_r($_SESSION);
 		if ($_SERVER["REQUEST_METHOD"] == "POST")  {
 			$review = new Review($_POST);
 			$review = ReviewsDB::addReview($review);
-			echo "Added review $review<br>";
 		}
 		if (is_null($review) || $review->getErrorCount() != 0) {
 			$_SESSION['review'] = $review;
@@ -54,10 +52,9 @@ class ReviewController {
 			HomeView::show();
 			header('Location: /'.$_SESSION['base']);
 		} elseif ($_SERVER["REQUEST_METHOD"] == "GET") {
-			$_SESSION['reviews'] = $reviews;
+			$_SESSION['review'] = $reviews[0];
 			ReviewView::showUpdate();
 		} else {
-
 			$parms = $reviews[0]->getParameters();
 			$parms['score'] = (array_key_exists('score', $_POST))?
 			                  $_POST['score']:$reviews[0]->getScore();
@@ -68,7 +65,7 @@ class ReviewController {
 			$review = ReviewsDB::updateReview($newReview);
 		
 		    if ($review->getErrorCount() != 0) {
-			   $_SESSION['reviews'] = array($newReview);
+			   $_SESSION['review'] = $newReview;
 		   	   ReviewView::showUpdate();
 		    } else {
 			   HomeView::show();

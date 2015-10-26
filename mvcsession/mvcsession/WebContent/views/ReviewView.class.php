@@ -85,6 +85,8 @@ class ReviewView {
 	   echo '<h1>New review</h1>';
 
 	   echo '<form role="form" method="post" action="/'.$base.'/review/new">';
+	   
+	   // Error at the top of the form
 	   if (!is_null($review) && !empty($review->getError('reviewId'))) {
 	     	echo  '<div class="form-group">';
 	   	    echo  '<label><span class="label label-danger">';
@@ -94,7 +96,7 @@ class ReviewView {
 	   	   
 	   echo  '<div class="form-group">';
        echo  '<label for="reviewerName">Reviewer name: ';
-       echo '<span class="error">';
+       echo '<span class="label label-danger">';
    	   if (!is_null($review))
    		  echo $review->getError('reviewName');
    	   echo '</span></label>';
@@ -147,21 +149,18 @@ class ReviewView {
 	}	
 		
 	public static function showUpdateDetails() {
-		$reviews = (array_key_exists('reviews', $_SESSION))?$_SESSION['reviews']:null;
+		$review = (array_key_exists('review', $_SESSION))?$_SESSION['review']:null;
 		$base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
 		echo '<div class="container">';
 		echo '<h1>'.$_SESSION['headertitle'].'</h1>';
 		echo "</div>";
 		
 		echo '<div class="container">';
-		if (is_null($reviews) || empty($reviews) || is_null($reviews[0])) {
-			echo '<section>Review does not exist</section>';
+		if (is_null($review)) {
+			echo '<section>Review does not exist</section></div>';
 			return;
 		}
-		echo '</div>';
-		
-		echo '<div class ="container">';
-		$review = $reviews[0];
+
 		echo '<section>';
 		echo '<h3>Review information:</h3>';
 		echo 'Reviewer name: '.$review->getReviewerName().'<br>';

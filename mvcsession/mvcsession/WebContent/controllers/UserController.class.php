@@ -45,8 +45,10 @@ class UserController {
 	public static function newUser() {
 		// Process a new review
 		$user = null;
-		if ($_SERVER["REQUEST_METHOD"] == "POST")  
+		if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			$user = new User($_POST);  
+			$user = UsersDB::addUser($user);
+		}
 		if (is_null($user) || $user->getErrorCount() != 0) {
 			$_SESSION['user'] = $user;
 			UserView::showNew();	
@@ -63,7 +65,7 @@ class UserController {
 			HomeView::show();
 			header('Location: /'.$_SESSION['base']);
 		} elseif ($_SERVER["REQUEST_METHOD"] == "GET") {
-			$_SESSION['users'] = $users;
+			$_SESSION['user'] = $users[0];
 			UserView::showUpdate();
 		} else {
 			$parms = $users[0]->getParameters();
@@ -76,8 +78,7 @@ class UserController {
 			$user = UsersDB::updateUser($newUser);
 		
 			if ($user->getErrorCount() != 0) {
-				$_SESSION['users'] = array($newUser);
-				return;
+				$_SESSION['user'] = $newUser;
 				UserView::showUpdate();
 			} else {
 				HomeView::show();
