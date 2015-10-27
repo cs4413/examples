@@ -14,8 +14,9 @@ include_once("../models/Assignment.class.php");
 
 <h2>It should create a valid Assignment object when all input is provided</h2>
 <?php 
-$validTest = array("description" => "This is a description of the assignment",
-             	   "assignmentOwnerId" => "1");
+$validTest = array("assignmentDescription" => "This is a description of the assignment",
+    	           	"assignmentTitle" => "This is an assignment title",
+             	   "assignmentOwnerName" => "George");
 $s1 = new Assignment($validTest);
 echo "The object is: $s1<br>";
 $test1 = (is_object($s1))?'':
@@ -34,7 +35,7 @@ print_r($props);
 
 <h2>It should have an error when the description is missing</h2>
 <?php 
-$invalidTest = array("assignmentOwnerId" => 1);
+$invalidTest = array("assignmentOwnerName" => "Kay$");
 $s1 = new Assignment($invalidTest);
 $test2 = (empty($s1->getErrors()))?'':
 'Failed:It should have errors when invalid input is provided<br>';

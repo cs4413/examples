@@ -4,7 +4,7 @@ class Submission {
 	private $errorCount;
 	private $errors;
 	private $formInput;
-	private $assignmentNumber;
+	private $assignmentId;
 	private $submissionFile;
 	private $submissionId;
 	private $submitterName;
@@ -30,8 +30,8 @@ class Submission {
 		return $this->errors;
 	}
 	
-	public function getAssignmentNumber() {
-		return $this->assignmentNumber;
+	public function getAssignmentId() {
+		return $this->assignmentId;
 	}
 	
 	public function getSubmissionFile() {
@@ -53,7 +53,7 @@ class Submission {
 	public function getParameters() {
 		// Return data fields as an associative array
 		$paramArray = array("submitterName" => $this->submitterName,
-				"assignmentNumber" => $this->assignmentNumber,
+				"assignmentId" => $this->assignmentId,
 				"submissionFile" => $this->submissionFile,
 				"submissionId" => $this->submissionId
 		);
@@ -79,7 +79,7 @@ class Submission {
 			$errorStr = $errorStr . " ". $error;
 			
 		$str = "Submitter name: ".$this->submitterName."<br>".
-			    "Assignment number: ".$this->assignmentNumber."<br>".
+			    "Assignment id: ".$this->assignmentId."<br>".
 				"Submission file: ".$this->submissionFile."<br>".
 		        "Submission id: ". $this->submissionId."<br>".
 		        "Errors: " . $errorStr;
@@ -106,25 +106,25 @@ class Submission {
 	 	    $this->submissionFile = "";
 		} else  {	 
 		   $this->validateSubmitterName();
-		   $this->validateAssignmentNumber();
+		   $this->validateAssignmentId();
 		   $this->validateSubmissionFile();
 		}
 	}
 	
-	private function validateAssignmentNumber() {
-		// Username should only contain letters, numbers, dashes and underscore
-		$this->assignmentNumber = $this->extractForm('assignmentNumber');
-		if (empty($this->assignmentNumber))
-			$this->setError('assignmentNumber', 'ASSIGNMENT_NUMBER_EMPTY');
-		elseif (!is_numeric($this->assignmentNumber))
-	     	$this->setError('assignmentNumber', 'ASSIGNMENT_NUMBER_INVALID');
-		elseif (!filter_var($this->assignmentNumber, FILTER_VALIDATE_REGEXP,
+	private function validateAssignmentId() {
+		// Assignment Id should be a positive integer
+		$this->assignmentId = $this->extractForm('assignmentId');
+		if (empty($this->assignmentId))
+			$this->setError('assignmentId', 'ASSIGNMENT_NUMBER_EMPTY');
+		elseif (!is_numeric($this->assignmentId))
+	     	$this->setError('assignmentId', 'ASSIGNMENT_NUMBER_INVALID');
+		elseif (!filter_var($this->assignmentId, FILTER_VALIDATE_REGEXP,
 				array("options"=>array("regexp" =>"/^([0-9])+$/i")) )) {
-			$this->setError('assignmentNumber', 'ASSIGNMENT_NUMBER_INVALID');
+			$this->setError('assignmentId', 'ASSIGNMENT_NUMBER_INVALID');
 		} else {
-			$value = intval($this->assignmentNumber);
+			$value = intval($this->assignmentId);
 			if ($value <= 0)
-				$this->setError('assignmentNumber', 'ASSIGNMENT_NUMBER_INVALID');
+				$this->setError('assignmentId', 'ASSIGNMENT_NUMBER_INVALID');
 		}
 	}
 
@@ -148,7 +148,7 @@ class Submission {
 		}
 		$this->submissionFile = $this->formInput['submissionFile'];
 		if (empty($this->submissionFile)) 
-			$this->submissionFile = $this->submitterName . $this->assignmentNumber. '.txt';
+			$this->submissionFile = $this->submitterName . $this->assignmentId. '.txt';
 			
 	}
 }

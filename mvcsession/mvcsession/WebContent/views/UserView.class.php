@@ -63,8 +63,8 @@ class UserView {
 	    echo '<ul>';
 	    foreach ($userSubmissions as $submission) {
 		   echo '<li> <a href = "/'.$base.'/submission/show/'. 
-		                      $submission->getAssignmentNumber().'">Submission '.
-		                      $submission->getAssignmentNumber().'</a></li>';
+		                      $submission->getAssignmentId().'">Submission '.
+		                      $submission->getAssignmentId().'</a></li>';
 	    }
 	    echo '</ul></section>';
 	    
@@ -73,7 +73,7 @@ class UserView {
 	    foreach ($userReviews as $review) {
 	    	echo '<li> <a href = "/'.$base.'/review/show/'. 
 		               $review->getReviewId().'">Review of assignment '.
-		               $submission->getAssignmentNumber().'</a></li>';
+		               $submission->getAssignmentId().'</a></li>';
 	    }
 	    echo '</ul></section>';
 	    echo '</div>';

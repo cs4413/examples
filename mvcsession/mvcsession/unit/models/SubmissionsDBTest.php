@@ -24,7 +24,7 @@ class SubmissionsDBTest extends PHPUnit_Framework_TestCase {
   public function testInsertValidSubmission() {
   	DBMakerUnit::createDB('ptest');
   	$beforeCount = count(SubmissionsDB::getSubmissionsBy());
-    $validTest = array("submitterName" => "George", "assignmentNumber" => "1",
+    $validTest = array("submitterName" => "George", "assignmentId" => "1",
   		                "submissionFile" => "myText.apl");
   	$s1 = new Submission($validTest);
   	$submission = SubmissionsDB::addSubmission($s1);
@@ -39,7 +39,7 @@ class SubmissionsDBTest extends PHPUnit_Framework_TestCase {
   public function testInsertDuplicateSubmission() {
   	DBMakerUnit::createDB('ptest');
   	$beforeCount = count(SubmissionsDB::getSubmissionsBy());
-    $duplicateTest =  array("submitterName" => "Kay", "assignmentNumber" => "1",
+    $duplicateTest =  array("submitterName" => "Kay", "assignmentId" => "1",
 		           "submissionFile" =>  "V:\test.txt");
   	$s1 = new Submission($duplicateTest);
   	$submission = SubmissionsDB::addSubmission($s1);

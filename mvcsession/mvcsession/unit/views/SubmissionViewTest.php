@@ -8,7 +8,7 @@ class SubmissionViewTest extends PHPUnit_Framework_TestCase {
 	
   public function testShowSubmissionViewWithSubmission() {
   	ob_start();
-  	$validTest = array("submitterName" => "krobbins", "assignmentNumber" => "1",
+  	$validTest = array("submitterName" => "krobbins", "assignmentId" => "1",
 		               "submissionFile" => "myText.apl");
   	$s1 = new Submission($validTest);
   	$_SESSION = array('submission' => $s1, 'base' => 'mvcsession');
@@ -20,7 +20,7 @@ class SubmissionViewTest extends PHPUnit_Framework_TestCase {
   
   public function testShowSubmissionViewWithoutHeaderAndFooter() {
   	ob_start();
-  	$validTest = array("submitterName" => "krobbins", "assignmentNumber" => "1",
+  	$validTest = array("submitterName" => "krobbins", "assignmentId" => "1",
   			"submissionFile" =>  "myText.apl");
   	$s1 = new Submission($validTest);
   	$_SESSION = array('submission' => $s1, 'base' => 'mvcsession');
@@ -33,7 +33,7 @@ class SubmissionViewTest extends PHPUnit_Framework_TestCase {
   
   public function testShowAllSubmissions() {
   	ob_start();
-  	$validTest = array("submitterName" => "krobbins", "assignmentNumber" => "1",
+  	$validTest = array("submitterName" => "krobbins", "assignmentId" => "1",
   			"submissionFile" =>  "myText.apl");
   	$s1 = new Submission($validTest);
   	$s1 -> setSubmissionId(1);
@@ -47,7 +47,7 @@ class SubmissionViewTest extends PHPUnit_Framework_TestCase {
   
   public function testShowAllSubmissionsWithNoHeaderAndFooter() {
   	ob_start();
-  	$validTest = array("submitterName" => "krobbins", "assignmentNumber" => "1",
+  	$validTest = array("submitterName" => "krobbins", "assignmentId" => "1",
   			"submissionFile" => "myText.apl");
   	$s1 = new Submission($validTest);
   	$s1 -> setSubmissionId(1);
@@ -62,7 +62,7 @@ class SubmissionViewTest extends PHPUnit_Framework_TestCase {
   
   public function testUpdateSubmission() {
   	  ob_start();
-      $validSubmission = array("submitterName" => "krobbins", "assignmentNumber" => "1",
+      $validSubmission = array("submitterName" => "krobbins", "assignmentId" => "1",
   		     "submissionFile" => "myText.apl");
       $s1 = new Submission($validSubmission);
       $s1->setSubmissionId(1);

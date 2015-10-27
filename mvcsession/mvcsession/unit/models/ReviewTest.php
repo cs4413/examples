@@ -14,6 +14,8 @@ class ReviewTest extends PHPUnit_Framework_TestCase {
     $s1 = new Review($validTest);
     $this->assertTrue(is_a($s1, 'Review'), 
     	'It should create a valid Review object when valid input is provided');
+    $this->assertEquals($s1->getErrorCount(), 0,
+    		'It should not have errors when creating a valid review');
     ob_end_flush();
   }
   

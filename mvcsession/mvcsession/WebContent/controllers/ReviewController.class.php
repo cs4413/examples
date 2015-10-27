@@ -15,9 +15,7 @@ class ReviewController {
 	            ReviewView::show();
 				break;
 			case  "showall":
-				$_SESSION['reviews'] = reviewsDB::getReviewsBy();
-				$_SESSION['headertitle'] = "ClassBash Reviews";
-				$_SESSION['footertitle'] = "<h3>The footer goes here</h3>";
+				$_SESSION['reviews'] = ReviewsDB::getReviewsBy();
 				ReviewView::showall();
 				break;
 			case "update":
@@ -60,12 +58,12 @@ class ReviewController {
 			                  $_POST['score']:$reviews[0]->getScore();
 			$parms['review'] = (array_key_exists('review', $_POST))?
 		                    	$_POST['review']:$reviews[0]->getReview();
-			$newReview = new Review($parms);
-			$newReview->setReviewId($reviews[0]->getReviewId());
-			$review = ReviewsDB::updateReview($newReview);
+			$review = new Review($parms);
+			$review->setReviewId($reviews[0]->getReviewId());
+			$review = ReviewsDB::updateReview($review);
 		
 		    if ($review->getErrorCount() != 0) {
-			   $_SESSION['review'] = $newReview;
+			   $_SESSION['review'] = $review;
 		   	   ReviewView::showUpdate();
 		    } else {
 			   HomeView::show();

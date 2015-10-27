@@ -24,44 +24,58 @@ class DBMaker {
 			$st = $db->prepare ( "DROP TABLE if EXISTS Users" );
 			$st->execute ();
 			$st = $db->prepare ( "CREATE TABLE Users (
-					userId             int(11) NOT NULL AUTO_INCREMENT,
-					userName           varchar (255) UNIQUE NOT NULL COLLATE utf8_unicode_ci,
-					password           varchar(255) COLLATE utf8_unicode_ci,
-				    dateCreated    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-					PRIMARY KEY (userId)
-			)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci" );
+  userId             int(11) NOT NULL AUTO_INCREMENT,
+  userName           varchar (255) UNIQUE NOT NULL COLLATE utf8_unicode_ci,
+  password           varchar(255) NOT NULL COLLATE utf8_unicode_ci,
+  dateCreated        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (userId)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;");
+			$st->execute ();
+			
+			$st = $db->prepare ( "DROP TABLE if EXISTS Assignments" );
+			$st->execute ();
+			$st = $db->prepare ("CREATE TABLE Assignments (
+			         assignmentId           int(11) NOT NULL AUTO_INCREMENT,
+			         assignmentOwnerId      int(11) NOT NULL,
+			         assignmentDescription  varchar (4096) COLLATE utf8_unicode_ci,
+			         assignmentTitle        varchar (255) COLLATE utf8_unicode_ci,
+			         dateCreated            TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+			         PRIMARY KEY (assignmentId),
+			         FOREIGN KEY (assignmentOwnerId) REFERENCES Users(userId)
+			         )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;");
 			$st->execute ();
 			
 			$st = $db->prepare ("CREATE TABLE Submissions (
-			  	             submissionId       int(11) NOT NULL AUTO_INCREMENT,
-				             submitterId        int(11) NOT NULL COLLATE utf8_unicode_ci,
-				             assignmentNumber   int COLLATE utf8_unicode_ci,
-				             submissionFile     varchar (255) UNIQUE NOT NULL COLLATE utf8_unicode_ci,
-				             dateCreated    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-				             PRIMARY KEY (submissionId),
-				             FOREIGN KEY (submitterId) REFERENCES Users(userId),
-					         CONSTRAINT sid_anum UNIQUE (submitterId, assignmentNumber)
-		              )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;" );
+			         submissionId       int(11) NOT NULL AUTO_INCREMENT,
+			         submitterId        int(11) NOT NULL,
+			         assignmentId       int(11) NOT NULL,
+			         submissionFile     varchar (255) UNIQUE NOT NULL COLLATE utf8_unicode_ci,
+			         dateCreated        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+			         PRIMARY KEY (submissionId),
+			         FOREIGN KEY (submitterId) REFERENCES Users(userId),
+			         FOREIGN KEY (assignmentId) REFERENCES Assignments(assignmentId),
+			         CONSTRAINT sid_anum UNIQUE (submitterId, assignmentId)
+			         )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;" );
 			$st->execute ();
 			
 			$st = $db->prepare ("DROP TABLE if EXISTS Reviews");
 			$st->execute ();
 			
-			$st = $db->prepare ("CREATE TABLE Reviews (
-		  			             reviewId           int(11) NOT NULL AUTO_INCREMENT,
-					             submissionId       int(11) NOT NULL,
-					             reviewerId             int(11) NOT NULL COLLATE utf8_unicode_ci,
-					             score              int NOT NULL COLLATE utf8_unicode_ci,
-					             review             varchar (4096) NOT NULL COLLATE utf8_unicode_ci,
-					             dateCreated    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-					             PRIMARY KEY (reviewId),
-					             FOREIGN KEY (submissionId) REFERENCES Submissions(submissionId),
-					             FOREIGN KEY (reviewerId) REFERENCES Users(userId),
-                                 CONSTRAINT rid_subid UNIQUE (reviewerId, submissionId)
-			                 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;"
-					        );
+			$st = $db->prepare (
+				 "CREATE TABLE Reviews (
+			         reviewId           int(11) NOT NULL AUTO_INCREMENT,
+			         submissionId       int(11) NOT NULL,
+			         reviewerId         int(11) NOT NULL,
+			         score              int NOT NULL COLLATE utf8_unicode_ci,
+			         review             varchar (4096) NOT NULL COLLATE utf8_unicode_ci,
+			         dateCreated        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+			         PRIMARY KEY (reviewId),
+			         FOREIGN KEY (submissionId) REFERENCES Submissions(submissionId),
+			         FOREIGN KEY (reviewerId) REFERENCES Users(userId),
+			         CONSTRAINT rid_subid UNIQUE (reviewerId, submissionId)
+			         )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;");
 			$st->execute ();
-			
+				
 			$sql = "INSERT INTO Users (userId, userName, password) VALUES
 		                          (:userId, :userName, :password)";
 			$st = $db->prepare ( $sql );
@@ -70,14 +84,32 @@ class DBMaker {
 			$st->execute (array (':userId' => 3, ':userName' => 'Alice', ':password' => 'zzz'));
 			$st->execute (array (':userId' => 4, ':userName' => 'George', ':password' => 'www'));
 			
-			$sql = "INSERT INTO Submissions (submissionId, submitterId, assignmentNumber, submissionFile) 
-	                             VALUES (:submissionId, :submitterId, :assignmentNumber, :submissionFile)";
+			$sql = "INSERT INTO Assignments (assignmentId, assignmentOwnerId, 
+			          assignmentDescription, assignmentTitle) VALUES
+			          (:assignmentId, :assignmentOwnerId, :assignmentDescription, :assignmentTitle)";
 			$st = $db->prepare ($sql);
-			$st->execute (array (':submissionId' => 1, ':submitterId' => 1, ':assignmentNumber' => '1',
+			
+			$st->execute (array (':assignmentId' => 1 , ':assignmentOwnerId' => 1, 
+			                     ':assignmentDescription' =>  'This is an assignment', 
+			                     ':assignmentTitle' => 'Assignment 1'));
+			$st->execute (array (':assignmentId' => 2 , ':assignmentOwnerId' => 1, 
+			                     ':assignmentDescription' =>  'This is another assignment', 
+			                     ':assignmentTitle' => 'Assignment 2'));
+			$st->execute (array (':assignmentId' => 3 , ':assignmentOwnerId' => 1, 
+			                     ':assignmentDescription' =>  'This is a third assignment', 
+			                     ':assignmentTitle' => 'Assignment 3'));
+			$st->execute (array (':assignmentId' => 4 , ':assignmentOwnerId' => 1, 
+			                     ':assignmentDescription' =>  'This is a fourth assignment', 
+			                     ':assignmentTitle' => 'Assignment 4'));			                     
+			 
+			$sql = "INSERT INTO Submissions (submissionId, submitterId, assignmentId, submissionFile) 
+	                             VALUES (:submissionId, :submitterId, :assignmentId, :submissionFile)";
+			$st = $db->prepare ($sql);
+			$st->execute (array (':submissionId' => 1, ':submitterId' => 1, ':assignmentId' => 1,
 					             ':submissionFile' => 'Kay1.txt'));
-			$st->execute (array (':submissionId' => 2, ':submitterId' => 1, ':assignmentNumber' => '2',
+			$st->execute (array (':submissionId' => 2, ':submitterId' => 1, ':assignmentId' => 2,
 					             ':submissionFile' => 'Kay2.txt'));
-			$st->execute (array (':submissionId' => 3, ':submitterId' => 2, ':assignmentNumber' => '1',
+			$st->execute (array (':submissionId' => 3, ':submitterId' => 2, ':assignmentId' => 1,
 					             ':submissionFile' => 'John1.txt'));
 			
 			$sql = "INSERT INTO Reviews (reviewId, submissionId, reviewerId, score, review)

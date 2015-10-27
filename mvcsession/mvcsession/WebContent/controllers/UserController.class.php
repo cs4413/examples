@@ -10,18 +10,14 @@ class UserController {
 				self::newUser();
 				break;
 			case "show":
-				$users = UsersDB::getUsersBy('userId', $arguments);
-				$_SESSION['user'] = (!empty($users))?$users[0]:null;
+	
 				self::show();
 				break;
 			case  "showall":
 				$_SESSION['users'] = usersDB::getUsersBy();
-				$_SESSION['headertitle'] = "ClassBash Reviews";
-				$_SESSION['footertitle'] = "<h3>The footer goes here</h3>";
 				UserView::showall();
 				break;
 			case "update":
-				echo "Update";
 				self::updateUser();
 				break;
 			default:
@@ -30,16 +26,17 @@ class UserController {
 	
 	public static function show() {
 		$arguments = (array_key_exists('arguments', $_SESSION))?$_SESSION['arguments']:0;
-		$user = $_SESSION['user'];
+		$users = UsersDB::getUsersBy('userId', $arguments);
+		$user = (!empty($users))?$users[0]:null;
+		$_SESSION['user'] = $user;
+	    
 		if (!is_null($user)) {
-			$_SESSION['user'] = $user;
 		    $_SESSION['userSubmissions'] =  
 		        SubmissionsDB::getSubmissionsBy('submitterName', $user->getUserName());
 		    $_SESSION['userReviews'] =
 		        ReviewsDB::getReviewsBy('reviewerName', $user->getUserName());
-		    UserView::show();
-		} else
-			HomeView::show();
+		} 
+		UserView::show();
 	}
 	
 	public static function newUser() {
@@ -73,12 +70,12 @@ class UserController {
 			                $_POST['userName']:"";
 			$parms['password'] = (array_key_exists('password', $_POST))?
 	                 		$_POST['password']:"";
-			$newUser = new User($parms);
-			$newUser->setUserId($users[0]->getUserId());
-			$user = UsersDB::updateUser($newUser);
+			$user = new User($parms);
+			$user->setUserId($users[0]->getUserId());
+			$user = UsersDB::updateUser($user);
 		
 			if ($user->getErrorCount() != 0) {
-				$_SESSION['user'] = $newUser;
+				$_SESSION['user'] = $user;
 				UserView::showUpdate();
 			} else {
 				HomeView::show();

@@ -33,13 +33,13 @@ class SubmissionView {
 		echo '<div class="table-responsive">';
 		echo '<table class="table table-striped">';
 		echo '<thead>';
-		echo '<tr><th>Submitter</th><th>Assignment number</th>
+		echo '<tr><th>Submitter</th><th>Assignment Id</th>
 	         <th>Download</th><th>Show summary</th><th>Update</th><th>Review link</th></tr>';
 		echo '</thead>';
 		echo '<tbody>';
 		foreach($submissions as $submission) {
 			echo '<tr><td>'.$submission->getSubmitterName().'</td>';
-			echo '<td>'.$submission->getAssignmentNumber().'</td>';
+			echo '<td>'.$submission->getAssignmentId().'</td>';
 			echo '<td><a href="/'.$base.'/submission/download/'.$submission->getSubmissionId().'">Download</a></td>';
 			echo '<td><a href="/'.$base.'/submission/show/'.$submission->getSubmissionId().'">Show</a></td>';
 			echo '<td><a href="/'.$base.'/submission/update/'.$submission->getSubmissionId().'">Update</a></td>';
@@ -57,7 +57,7 @@ class SubmissionView {
 	  	 echo '<div class="container">';
 	  	 echo '<h2>Submission: '.$submission->getSubmissionId().'</h2>';
 	  	 echo '<p>Submitter name: '.$submission->getSubmitterName().'</p>';
-	  	 echo '<p> Assignment number: '. $submission->getAssignmentNumber() .'</p>';
+	  	 echo '<p> Assignment Id: '. $submission->getAssignmentId() .'</p>';
 	  	 echo '<p> File name: '. $submission->getSubmissionFile() .'</p>';
 	  	 echo '</div>';
 	 }
@@ -102,15 +102,15 @@ class SubmissionView {
    	  echo '</div>';
    	
    	  echo '<div class="form-group">'; //Assignment number
-   	  echo '<label for="assignmentNumber">Assignment number: ';
+   	  echo '<label for="assignmentId">Assignment Id: ';
       echo '<span class="label label-danger">';
    	  if (!is_null($submission))
-   		 echo $submission->getError('assignmentNumber');
+   		 echo $submission->getError('assignmentId');
    	  echo '</span></label>';
-   	  echo '<input class="form-control" type = "number" min="1" id = "assignmentNumber"
-	   		 required name ="assignmentNumber"';
+   	  echo '<input class="form-control" type = "number" min="1" id = "assignmentId"
+	   		 required name ="assignmentId"';
    	  if (!is_null($submission))
-   		 echo 'value = "'. $submission->getAssignmentNumber() .'"';
+   		 echo 'value = "'. $submission->getAssignmentId() .'"';
    	  echo '>';
    	  echo '</div>'; 
    	  
@@ -151,7 +151,7 @@ class SubmissionView {
 	}
 	
 	echo '<h3>Submission information:</h3>';
-	echo '<h4>Assignment number: '.$submission->getAssignmentNumber().'</h4>';
+	echo '<h4>Assignment Id: '.$submission->getAssignmentId().'</h4>';
 	echo '<h4>Submitter: '.$submission->getSubmitterName().'</h4>';
 	echo '<h4>Submission Id: '.$submission->getSubmissionId().'</h4>';
 	

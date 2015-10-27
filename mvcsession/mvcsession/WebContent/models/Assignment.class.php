@@ -3,9 +3,10 @@ class Assignment {
 	private $errorCount;
 	private $errors;
 	private $formInput;
-	private $description;
+	private $assignmentDescription;
 	private $assignmentId;
-	private $assignmentOwnerId;
+	private $assignmentOwnerName;
+	private $assignmentTitle;
 
 	public function __construct($formInput = null) {
 		$this->formInput = $formInput;
@@ -27,24 +28,29 @@ class Assignment {
 	public function getErrors() {
 		return $this->errors;
 	}
+	
+	public function getAssignmentDescription() {
+		return $this->assignmentDescription;
+	}
 		
 	public function getAssignmentId() {
 		return $this->assignmentId;
 	}
 	
-	public function getAssignmentOwnerId() {
-		return $this->assignmentOwnerId;
+	public function getAssignmentOwnerName() {
+		return $this->assignmentOwnerName;
 	}
 	
-	public function getDescription() {
-		return $this->description;
-	}	
-
+	public function getAssignmentTitle() {
+		return $this->assignmentTitle;
+	}
+	
 	public function getParameters() {
 		// Return data fields as an associative array
 		$paramArray = array("assignmentId" => $this->assignmentId,
-			            	"description" => $this->description,
-				            "assignmentOwnerId" => $this->assignmentOwnerId
+				            "assignmentTitle" => $this->assignmentTitle,
+			            	"assignmentDescription" => $this->assignmentDescription,
+				            "assignmentOwnerName" => $this->assignmentOwnerName
 		); 
 		return $paramArray;
 	}
@@ -67,7 +73,9 @@ class Assignment {
 		foreach($this->errors as $error)
 			$errorStr = $errorStr . " ". $error;
 		$str = "Assignment Id: ".$this->assignmentId.
-		       " Assignment owner Id: ".$this->assignmentOwnerId;
+		       "Assignment title: ".$this->assignmentTitle.
+		       " Assignment owner name: ".$this->assignmentOwnerName.
+		       " Assignment description: ".$this->assignmentDescription;
 		if (!empty($errorStr))
 		    $str = $str. " Errors: [$errorStr.]";
 		return $str;
@@ -88,26 +96,34 @@ class Assignment {
 		$this->assignmentId = 0;
 		$this->errors = array ();
 		if (is_null ($this->formInput)) {
-			$this->description = "";
-	 	    $this->assignmentOwnerId = "";	
+			$this->assignmentDescription = "";
+	 	    $this->assignmentOwnerName = "";	
 		} else {
-			$this->validateDescription();
-			$this->validateAssignmentOwnerId();
+			$this->validateAssignmentDescription();
+			$this->validateAssignmentOwnerName();
+			$this->validateAssignmentTitle();
 		}
 	}
 	
-	private function validateDescription() {
+	private function validateAssignmentDescription() {
 		// Assignment description should not be empty
-		$this->description = $this->extractForm('description');
-		if (empty($this->description)) 
-			$this->setError('description', 'ASSIGNMENT_DESCRIPTION_EMPTY');
+		$this->assignmentDescription = $this->extractForm('assignmentDescription');
+		if (empty($this->assignmentDescription)) 
+			$this->setError('assignmentDescription', 'ASSIGNMENT_DESCRIPTION_EMPTY');
 	}
 	
-	private function validateAssignmentOwnerId() {
+	private function validateAssignmentOwnerName() {
 		// The assignment needs an owner
-		$this->assignmentOwnerId = $this->extractForm('assignmentOwnerId');
-		if (empty($this->assignmentOwnerId))
-			$this->setError('assignmentOwnerId', 'ASSIGNMENT_OWNER_ID_EMPTY');
+		$this->assignmentOwnerName = $this->extractForm('assignmentOwnerName');
+		if (empty($this->assignmentOwnerName))
+			$this->setError('assignmentOwnerName', 'ASSIGNMENT_OWNER_NAME_EMPTY');
+	}
+	
+	private function validateAssignmentTitle() {
+		// Assignment title should not be empty
+		$this->assignmentTitle = $this->extractForm('assignmentTitle');
+		if (empty($this->assignmentTitle))
+			$this->setError('assignmentTitle', 'ASSIGNMENT_TITLE_EMPTY');
 	}
 }
 ?>

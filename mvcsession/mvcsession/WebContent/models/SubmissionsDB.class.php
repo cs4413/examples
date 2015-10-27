@@ -3,8 +3,8 @@ class SubmissionsDB {
 	
 	public static function addSubmission($submission) {
 		// Inserts $submission into the Submissions table and returns submissionId
-		$query = "INSERT INTO Submissions (submissionFile, assignmentNumber, submitterId)
-		                      VALUES(:submissionFile, :assignmentNumber, :submitterId)";
+		$query = "INSERT INTO Submissions (submissionFile, assignmentId, submitterId)
+		                      VALUES(:submissionFile, :assignmentId, :submitterId)";
 		try {
 			$db = Database::getDB ();
 			if (is_null($submission) || $submission->getErrorCount() > 0)
@@ -16,7 +16,7 @@ class SubmissionsDB {
 			}
 			$statement = $db->prepare ($query);
 			$statement->bindValue(":submissionFile", $submission->getSubmission());
-			$statement->bindValue(":assignmentNumber", $submission->getAssignmentNumber());
+			$statement->bindValue(":assignmentId", $submission->getassignmentId());
 			$statement->bindValue(":submitterId", $users[0]->getUserId());
 			$statement->execute ();
 			$statement->closeCursor();
@@ -30,12 +30,12 @@ class SubmissionsDB {
 	
 	public static function getSubmissionRowSetsBy($type = null, $value = null) {
 		// Returns the rows of Submissions whose $type field has value $value
-		$allowedTypes = array("submissionId", "submitterName", "assignmentNumber");
+		$allowedTypes = array("submissionId", "submitterName", "assignmentId");
 		$typeAlias = array("submitterName" => "Users.userName");
 		$submissionRowSets = array();
 		try {
 			$db = Database::getDB ();
-			$query = "SELECT Submissions.assignmentNumber, Submissions.submissionFile, 
+			$query = "SELECT Submissions.assignmentId, Submissions.submissionFile, 
 					  Submissions.submitterId, Submissions.submissionId, 
 	   		          Users.userName as submitterName
 	   		          FROM Submissions LEFT JOIN Users ON Submissions.submitterId = Users.userId";
@@ -102,8 +102,8 @@ class SubmissionsDB {
 				$submission->setError('submissionId', 'SUBMISSION_DOES_NOT_EXIST');
 			elseif ($checkSubmission[0]->getSubmitterName() != $submission->getSubmitterName())
 			    $submission->setError('submitterName', 'SUBMITTER_NAME_DOES_NOT_MATCH');
-			elseif ($checkSubmission[0]->getAssignmentNumber() != $submission->getAssignmentNumber())
-			$submission->setError('assignmentNumber', 'SUBMISSION_ASSIGNMENT_NUMBERS_DO_NOT_MATCH');
+			elseif ($checkSubmission[0]->getassignmentId() != $submission->getassignmentId())
+			$submission->setError('assignmentId', 'SUBMISSION_ASSIGNMENT_NUMBERS_DO_NOT_MATCH');
 			if ($submission->getErrorCount() > 0)
 				return $submission;
 	

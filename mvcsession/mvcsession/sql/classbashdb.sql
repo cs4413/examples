@@ -6,39 +6,40 @@ DROP TABLE if EXISTS Users;
 CREATE TABLE Users (
   userId             int(11) NOT NULL AUTO_INCREMENT,
   userName           varchar (255) UNIQUE NOT NULL COLLATE utf8_unicode_ci,
-  password           varchar(255) COLLATE utf8_unicode_ci,
-  dateCreated    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  password           varchar(255) NOT NULL COLLATE utf8_unicode_ci,
+  dateCreated        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (userId)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE if EXISTS Assignments;
 CREATE TABLE Assignments (
   assignmentId           int(11) NOT NULL AUTO_INCREMENT,
-  assignmentOwnerId      int(11) NOT NULL COLLATE utf8_unicode_ci,
+  assignmentOwnerId      int(11) NOT NULL,
   assignmentDescription  varchar (4096) COLLATE utf8_unicode_ci,
+  assignmentTitle        varchar (255) COLLATE utf8_unicode_ci,
   dateCreated            TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (assignmentId),
-  FOREIGN KEY (assignmentOwnerId) REFERENCES Users(userId),
+  FOREIGN KEY (assignmentOwnerId) REFERENCES Users(userId)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 
 DROP TABLE if EXISTS Submissions;
 CREATE TABLE Submissions (
   submissionId       int(11) NOT NULL AUTO_INCREMENT,
-  submitterId        int(11) NOT NULL COLLATE utf8_unicode_ci,
-  assignmentNumber   int COLLATE utf8_unicode_ci,
+  submitterId        int(11) NOT NULL,
+  assignmentId       int(11) NOT NULL,
   submissionFile     varchar (255) UNIQUE NOT NULL COLLATE utf8_unicode_ci,
   dateCreated        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (submissionId),
   FOREIGN KEY (submitterId) REFERENCES Users(userId),
-  CONSTRAINT sid_anum UNIQUE (submitterId, assignmentNumber)
+  FOREIGN KEY (assignmentId) REFERENCES Assignments(assignmentId),
+  CONSTRAINT sid_anum UNIQUE (submitterId, assignmentId)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 DROP TABLE if EXISTS Reviews;
 CREATE TABLE Reviews (
   reviewId           int(11) NOT NULL AUTO_INCREMENT,
   submissionId       int(11) NOT NULL,
-  reviewerId         int(11) NOT NULL COLLATE utf8_unicode_ci,
+  reviewerId         int(11) NOT NULL,
   score              int NOT NULL COLLATE utf8_unicode_ci,
   review             varchar (4096) NOT NULL COLLATE utf8_unicode_ci,
   dateCreated        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -48,7 +49,6 @@ CREATE TABLE Reviews (
   CONSTRAINT rid_subid UNIQUE (reviewerId, submissionId)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-
 INSERT INTO Users (userId, userName, password) VALUES 
 	   (1, 'Kay', 'xxx');  
 INSERT INTO Users (userId, userName,  password) VALUES 
@@ -57,13 +57,22 @@ INSERT INTO Users (userId, userName, password) VALUES
 	   (3, 'Alice', 'xxx');  
 INSERT INTO Users (userId, userName,  password) VALUES 
 	   (4, 'George', 'yyy');
+	   
+INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription, assignmentTitle) VALUES
+       (1, 1, 'This is an assignment', 'Assignment 1');
+INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription, assignmentTitle) VALUES
+       (2, 1, 'This is another assignment', 'Assignment 2');
+INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription, assignmentTitle) VALUES
+       (3, 1, 'This is a third assignment', 'Assignment 3');
+INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription, assignmentTitle) VALUES
+       (4, 1, 'This is a fourth assignment', 'Assignment 4');       
 	  
-INSERT INTO Submissions (submissionId, submitterId, assignmentNumber, submissionFile) VALUES 
-	   (1, 1, '1', 'Kay1.txt');  
-INSERT INTO Submissions (submissionId, submitterId, assignmentNumber, submissionFile) VALUES 
-	   (2, 1, '2', 'Kay2.txt');
-INSERT INTO Submissions (submissionId, submitterId, assignmentNumber, submissionFile) VALUES 
-	   (3, 2, '1', 'John1.txt');
+INSERT INTO Submissions (submissionId, submitterId, assignmentId, submissionFile) VALUES 
+	   (1, 1, 1, 'Kay1.txt');  
+INSERT INTO Submissions (submissionId, submitterId, assignmentId, submissionFile) VALUES 
+	   (2, 1, 2, 'Kay2.txt');
+INSERT INTO Submissions (submissionId, submitterId, assignmentId, submissionFile) VALUES 
+	   (3, 2, 1, 'John1.txt');
 	   
 INSERT INTO Reviews (reviewId, submissionId, reviewerId, score, review) VALUES 
 	   (1, 1, 2, 4, 'This is a review by John of Kay1.txt');

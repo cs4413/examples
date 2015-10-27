@@ -20,7 +20,7 @@ include_once("../views/MasterView.class.php");
 <?php 
 $validTest = array("userName" => "krobbins", "password" =>"xxx");
 $_SESSION = array('user' => new User($validTest), 'base' => 'mvcsession');
-$validSubmission = array("submitterName" => "krobbins", "assignmentNumber" => "1",
+$validSubmission = array("submitterName" => "krobbins", "assignmentId" => "1",
 		"submissionFile" => "myText.apl");
 $_SESSION['userSubmissions'] = array(new Submission($validSubmission));
 $input = array("reviewerName" => "krobbins",

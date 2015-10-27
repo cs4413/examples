@@ -24,14 +24,14 @@ class ReviewViewTest extends PHPUnit_Framework_TestCase {
   
   public function testShowReviewViewWithoutReview() {
   	ob_start();	
-  	$_SESSION = array('base' => 'mbcdbcrud');
+  	$_SESSION = array('base' => 'mvcsession');
   	ReviewView::show();
   	$output = ob_get_clean();
   	$this->assertFalse(empty($output),
   			"It should show a ReviewView when Review is not defined");
   }
   
-  public function testShowAllSubmissions() {
+  public function testShowAllReviews() {
   	ob_start();
   	$validTest = array("reviewerName" => "Kay",
              	       "submissionId" => "2",

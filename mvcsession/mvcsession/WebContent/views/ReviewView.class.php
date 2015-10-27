@@ -165,23 +165,21 @@ class ReviewView {
 		echo '<h3>Review information:</h3>';
 		echo 'Reviewer name: '.$review->getReviewerName().'<br>';
 		echo 'Submission Id: '.$review->getSubmissionId().'<br>';
-		
-		if ($review->getErrors() > 0) {
-			$errors = $review->getErrors();
-			echo '<section><p>Errors:<br>';
-			foreach($errors as $key => $value)
-				echo $value . "<br>";
-			echo '</p></section>';
-		}
 		echo '</section>';
-		echo '</container>';
-		
-		echo '<div class="container">';
+
 		echo '<form role="form" method="post" action="/'.$base.'/review/update/'.
 		                         $review->getReviewId().'">';
+		// Error at the top of the form
+		if (!is_null($review) && !empty($review->getError('reviewId'))) {
+			echo  '<div class="form-group">';
+			echo  '<label><span class="label label-danger">';
+			echo  $review->getError('reviewId');
+			echo '</span></label></div>';
+		}
+		
 		echo '<div class="form-group">';
 		echo '<label for="score">Score: ';
-		echo '<span class="error">';
+		echo '<span class="label label-danger">';
    	    if (!is_null($review))
    		    echo $review->getError('score');
    	    echo '</span></label>';
@@ -192,6 +190,7 @@ class ReviewView {
 			
 	    echo '<div class="form-group">';
 		echo '<label for="review">Review: ';
+		echo '<span class="label label-danger">';
 		if (!is_null($review))
    		    echo $review->getError('review');
    	    echo '</span></label>';

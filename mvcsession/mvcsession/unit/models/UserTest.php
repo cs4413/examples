@@ -9,7 +9,8 @@ class UserTest extends PHPUnit_Framework_TestCase {
   	$s1 = new User($validTest);
     $this->assertTrue(is_a($s1, 'User'), 
     	'It should create a valid User object when valid input is provided');
-    
+    $this->assertEquals($s1->getErrorCount(), 0,
+    		'It should not have errors when creating a valid user'); 
   }
   
   public function testInvalidUserName() {

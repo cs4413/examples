@@ -37,7 +37,7 @@ DBMaker::create('ptest');
 Database::clearDB();
 $db = Database::getDB('ptest');
 $beforeCount = count(SubmissionsDB::getSubmissionsBy());
-$validTest = array("submitterName" => "Kay", "assignmentNumber" => "8",
+$validTest = array("submitterName" => "Kay", "assignmentId" => "8",
 		           "submissionFile" => "V:\test.txt");
 $s1 = new Submission($validTest);
 echo "<br>In insertion should not have errors $s1<br>";
@@ -55,7 +55,7 @@ DBMaker::create('ptest');
 Database::clearDB();
 $db = Database::getDB('ptest');
 $beforeCount = count(SubmissionsDB::getSubmissionsBy());
-$duplicateTest =  array("submitterName" => "Kay", "assignmentNumber" => "1",
+$duplicateTest =  array("submitterName" => "Kay", "assignmentId" => "1",
 		           "submissionFile" => "V:\test.txt");
 $s1 = new Submission($duplicateTest);
 $newS1 = SubmissionsDB::addSubmission($s1);

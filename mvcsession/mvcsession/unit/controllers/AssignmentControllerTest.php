@@ -1,17 +1,17 @@
 <?php
-require_once dirname ( __FILE__ ) . '\..\..\WebContent\controllers\ReviewController.class.php';
+require_once dirname ( __FILE__ ) . '\..\..\WebContent\controllers\AssignmentController.class.php';
 require_once dirname ( __FILE__ ) . '\..\..\WebContent\models\Database.class.php';
 require_once dirname ( __FILE__ ) . '\..\..\WebContent\models\Messages.class.php';
-require_once dirname ( __FILE__ ) . '\..\..\WebContent\models\Review.class.php';
-require_once dirname ( __FILE__ ) . '\..\..\WebContent\models\ReviewsDB.class.php';
+require_once dirname ( __FILE__ ) . '\..\..\WebContent\models\Assignment.class.php';
+require_once dirname ( __FILE__ ) . '\..\..\WebContent\models\AssignmentsDB.class.php';
 require_once dirname ( __FILE__ ) . '\..\..\WebContent\models\User.class.php';
 require_once dirname ( __FILE__ ) . '\..\..\WebContent\models\UsersDB.class.php';
 require_once dirname ( __FILE__ ) . '\..\..\WebContent\views\HomeView.class.php';
 require_once dirname ( __FILE__ ) . '\..\..\WebContent\views\MasterView.class.php';
-require_once dirname ( __FILE__ ) . '\..\..\WebContent\views\ReviewView.class.php';
+require_once dirname ( __FILE__ ) . '\..\..\WebContent\views\AssignmentView.class.php';
 require_once dirname(__FILE__).'\..\..\WebContent\tests\DBMaker.class.php';
 
-class ReviewControllerTest extends PHPUnit_Framework_TestCase {
+class AssignmentControllerTest extends PHPUnit_Framework_TestCase {
 	
 	/**
 	 * @runInSeparateProcess
@@ -20,13 +20,14 @@ class ReviewControllerTest extends PHPUnit_Framework_TestCase {
 		ob_start ();
  	    DBMakerUnit::createDB('ptest');
 		$_SERVER ["REQUEST_METHOD"] = "POST";
-		$_POST =  array("reviewerName" => "Kay",
-             	   "submissionId" => "3",
-	           	   "score" => "5",
-		           "review" => "This was a great presentation"
+		$_POST =  array("assignmentOwnerName" => "Kay",
+             	   "assignmentId" => "3",
+	           	   "assignmentTitle" => "This title A",
+		           "assignmentDescription" => "This was a great presentation"
 		          );
-		$_SESSION = array('base' => 'mvcsession', 'control' => 'review', 'action' => 'new', 'arguments' => null);
-		ReviewController::run ();
+		$_SESSION = array('base' => 'mvcsession', 'control' =>'assignment', 
+				          'action' => 'new', 'arguments' => null);
+		AssignmentController::run ();
 		$output = ob_get_clean();
 		$this->assertFalse ( empty ( $output ), "It should show something from a POST" );
 	}
@@ -38,9 +39,10 @@ class ReviewControllerTest extends PHPUnit_Framework_TestCase {
 		ob_start ();
  	    DBMakerUnit::createDB('ptest');
 		$_SERVER ["REQUEST_METHOD"] = "GET";
-		$_SESSION = array('base' => 'mvcsession', 'control' => 'review', 'action' => 'new', 'arguments' => null);
+		$_SESSION = array('base' => 'mvcsession', 'control' =>'assignment',
+				          'action' => 'new', 'arguments' => null);
 
-		ReviewController::run();
+		AssignmentController::run();
 		$output = ob_get_clean();
 		$this->assertFalse ( empty ( $output ), "It should show something from a GET" );
 	}
