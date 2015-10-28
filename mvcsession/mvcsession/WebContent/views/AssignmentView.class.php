@@ -42,6 +42,7 @@ class AssignmentView {
 			echo '<td><a href="/'.$base.'/assignment/show/'.$assignment->getAssignmentId().'">Assignment '. $assignment ->getAssignmentId().'</a></td>';
 			echo '<td>'.$assignment->getAssignmentTitle().'</td>';
 			echo '<td>'.$assignment->getAssignmentDescription().'</td>';
+			echo '<td><a href="/'.$base.'/assignment/update/'.$assignment->getAssignmentId().'">Update</a></td>';
 	        echo '</tr>';
 		}
 		echo '</tbody>';
@@ -77,8 +78,11 @@ class AssignmentView {
 	   $assignment = (array_key_exists('assignment', $_SESSION))?$_SESSION['assignment']:null;
 	   $base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
 	   
-	   echo '<div class="container">';
-	   echo '<h1>New Assignment</h1>';
+	   echo '<div class="container-fluid">';
+	   echo '<div class="row">';
+	   echo '<div class="col-md-3 col-sm-2 col-xs-1"></div>';
+	   echo '<div class="col-md-6 col-sm-8 col-xs-10">';
+	   echo '<h1>'.$_SESSION['headertitle'].'</h1>';
 
 	   echo '<form role="form" method="post" action="/'.$base.'/assignment/new">';
 	   
@@ -137,7 +141,10 @@ class AssignmentView {
        
        echo '<button type="submit" class="btn btn-default">Submit</button>';
 	   echo '</form>';
+       echo '</div>';   
+       echo '<div class="col-md-3 col-sm-2 col-xs-1"></div>';
        echo '</div>';
+	   echo '</div>';	
 	}
 	
 	public static function showUpdate() {
@@ -151,21 +158,17 @@ class AssignmentView {
 	public static function showUpdateDetails() {
 		$assignment = (array_key_exists('assignment', $_SESSION))?$_SESSION['assignment']:null;
 		$base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
-		echo '<div class="container">';
-		echo '<h1>'.$_SESSION['headertitle'].'</h1>';
-		echo "</div>";
 		
-		echo '<div class="container">';
+	    echo '<div class="container-fluid">';
+	    echo '<div class="row">';
+	    echo '<div class="col-md-3 col-sm-2 col-xs-1"></div>';
+	    echo '<div class="col-md-6 col-sm-8 col-xs-10">';
+	    echo '<h1>'.$_SESSION['headertitle'].'</h1>';
+		
 		if (is_null($assignment)) {
-			echo '<section>Assignment does not exist</section></div>';
+			echo '<section>Assignment does not exist</section>';
 			return;
 		}
-
-		echo '<section>';
-		echo '<h3>Assignment information:</h3>';
-		echo 'Assignment owner name: '.$assignment->getAssignmentOwnerName().'<br>';
-		echo 'Assignment Id: '.$assignment->getAssignmentId().'<br>';
-		echo '</section>';
 
 		echo '<form role="form" method="post" action="/'.$base.'/assignment/update/'.
 		                         $assignment->getAssignmentId().'">';
@@ -176,6 +179,25 @@ class AssignmentView {
 			echo  $assignment->getError('assignmentId');
 			echo '</span></label></div>';
 		}
+		
+		echo  '<div class="form-group">';
+		echo  '<label for="assignmentOwnerName">Assignment owner: ';
+		echo '<span class="label label-danger">';
+		if (!is_null($assignment))
+			echo $assignment->getError('assignmentOwnerName');
+		echo '</span></label>';
+		echo '<input type="text" class="form-control" id = "assignmentOwnerName" name="assignmentOwnerName"';
+		if (!is_null($assignment))
+			echo 'value = "'. $assignment->getAssignmentOwnerName() .'"';
+		echo 'required readonly>';
+		echo '</div>';
+		echo '<div class="form-group">';
+		echo '<label for="assignmentId">Assignment Id:</label>';
+		echo '<input type="text" class="form-control" name="assignmentId" id="assignmentId"';
+		if (!is_null($assignment))
+			echo 'value = "'. $assignment->getAssignmentId() .'"';
+		echo 'required readonly>';
+		echo '</div>';
 		
 		echo '<div class="form-group">';
 		echo '<label for="assignmentTitle">Assignment title: ';
@@ -203,8 +225,10 @@ class AssignmentView {
         
 		echo '<button type="submit" class="btn btn-default">Submit</button>';
 	    echo '</form>';
-        echo '</div>';     
-		echo '</div>';	
+       echo '</div>';   
+       echo '<div class="col-md-3 col-sm-2 col-xs-1"></div>';
+       echo '</div>';
+	   echo '</div>';	
 	}
 }
 ?>

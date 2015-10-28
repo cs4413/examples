@@ -45,7 +45,7 @@ class AssignmentController {
 	public static function updateAssignment() {
 		// Process updating assigntment
 		$assignments = AssignmentsDB::getAssignmentsBy('assignmentId', $_SESSION['arguments']);
-		if (empty($reviews)) {
+		if (empty($assignments)) {
 			HomeView::show();
 			header('Location: /'.$_SESSION['base']);
 		} elseif ($_SERVER["REQUEST_METHOD"] == "GET") {

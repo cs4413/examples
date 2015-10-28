@@ -68,7 +68,7 @@ class ReviewView {
 	}
 	
 	public static function showNew() {
-		$_SESSION['headertitle'] = "Create a new ClassBash review";
+		$_SESSION['headertitle'] = "Create a new review";
 		$_SESSION['styles'] = array('jumbotron.css');
 		MasterView::showHeader();
 		MasterView::showNavbar();
@@ -81,8 +81,11 @@ class ReviewView {
 	   $review = (array_key_exists('review', $_SESSION))?$_SESSION['review']:null;
 	   $base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
 	   
-	   echo '<div class="container">';
-	   echo '<h1>New review</h1>';
+	   echo '<div class="container-fluid">';
+	   echo '<div class="row">';
+	   echo '<div class="col-md-3 col-sm-2 col-xs-1"></div>';
+	   echo '<div class="col-md-6 col-sm-8 col-xs-10">';
+	   echo '<h1>'.$_SESSION['headertitle'].'</h1>';
 
 	   echo '<form role="form" method="post" action="/'.$base.'/review/new">';
 	   
@@ -137,7 +140,10 @@ class ReviewView {
        
        echo '<button type="submit" class="btn btn-default">Submit</button>';
 	   echo '</form>';
+       echo '</div>';   
+       echo '<div class="col-md-3 col-sm-2 col-xs-1"></div>';
        echo '</div>';
+	   echo '</div>';	
 	}
 	
 	public static function showUpdate() {
@@ -151,21 +157,17 @@ class ReviewView {
 	public static function showUpdateDetails() {
 		$review = (array_key_exists('review', $_SESSION))?$_SESSION['review']:null;
 		$base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
-		echo '<div class="container">';
-		echo '<h1>'.$_SESSION['headertitle'].'</h1>';
-		echo "</div>";
 		
-		echo '<div class="container">';
+		echo '<div class="container-fluid">';
+		echo '<div class="row">';
+		echo '<div class="col-md-3 col-sm-2 col-xs-1"></div>';
+		echo '<div class="col-md-6 col-sm-8 col-xs-10">';
+		echo '<h1>'.$_SESSION['headertitle'].'</h1>';
+		
 		if (is_null($review)) {
 			echo '<section>Review does not exist</section></div>';
 			return;
 		}
-
-		echo '<section>';
-		echo '<h3>Review information:</h3>';
-		echo 'Reviewer name: '.$review->getReviewerName().'<br>';
-		echo 'Submission Id: '.$review->getSubmissionId().'<br>';
-		echo '</section>';
 
 		echo '<form role="form" method="post" action="/'.$base.'/review/update/'.
 		                         $review->getReviewId().'">';
@@ -176,6 +178,26 @@ class ReviewView {
 			echo  $review->getError('reviewId');
 			echo '</span></label></div>';
 		}
+		
+		echo  '<div class="form-group">';
+		echo  '<label for="reviewerName">Reviewer name: ';
+		echo '<span class="label label-danger">';
+		if (!is_null($review))
+			echo $review->getError('reviewName');
+		echo '</span></label>';
+		echo '<input type="text" class="form-control" id = "reviewerName" name="reviewerName"';
+		if (!is_null($review))
+			echo 'value = "'. $review->getReviewerName() .'"';
+		echo 'required readonly>';
+		echo '</div>';
+		
+		echo '<div class="form-group">';
+		echo '<label for="submissionId">Submission Id:</label>';
+		echo '<input type="text" class="form-control" name="submissionId"';
+		if (!is_null($review))
+			echo 'value = "'. $review->getSubmissionId() .'"';
+		echo 'required readonly>';
+		echo '</div>';
 		
 		echo '<div class="form-group">';
 		echo '<label for="score">Score: ';
@@ -203,7 +225,9 @@ class ReviewView {
         
 		echo '<button type="submit" class="btn btn-default">Submit</button>';
 	    echo '</form>';
-        echo '</div>';     
+        echo '</div>';   
+        echo '<div class="col-md-3 col-sm-2 col-xs-1"></div>';
+        echo '</div>';
 		echo '</div>';	
 	}
 }

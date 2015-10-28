@@ -94,11 +94,13 @@ class UserView {
 		$user = (array_key_exists ( 'user', $_SESSION )) ? $_SESSION ['user'] : null;
 		$base = (array_key_exists ( 'base', $_SESSION )) ? $_SESSION ['base'] : "";
 		
-		echo '<div class="container">';
-		echo '<h1>'.$_SESSION['headertitle'].'</h1>';
-
+		echo '<div class="container-fluid">';
+	    echo '<div class="row">';
+	    echo '<div class="col-md-3 col-sm-2 col-xs-1"></div>';
+	    echo '<div class="col-md-6 col-sm-8 col-xs-10">';
+	    echo '<h1>'.$_SESSION['headertitle'].'</h1>';
 		echo '<form role="form" action ="/' . $base . '/user/new" method="Post">';
-		
+
 		// Error at the top of the form
 		if (!is_null($user) && !empty($user->getError('userId'))) {
 			echo  '<div class="form-group">';
@@ -106,42 +108,48 @@ class UserView {
 			echo  $user->getError('userId');
 			echo '</span></label></div>';
 		}
-		
-		echo '<div class="form-group">';
-        echo '<label for="userName">User name: ';
-        echo '<span class="label label-danger">';
-        if (!is_null($user))
-        	echo $user->getError('userName');
-        echo '</span></label>';
-        
-        echo '<input type="text" class="form-control" name ="userName" id = "userName"';
-		if (!is_null ($user))
-			echo 'value = "' . $user->getUserName () . '"';
-		echo '></div>';
-		
-		echo '<div class="form-group">';
-		echo '<label for="password">Password: ';
-		echo '<span class="label label-danger">';
-        if (!is_null($user))
-        	echo $user->getError('password');
-        echo '</span></label>';
-		echo '<input type="password" required class="form-control" 
-				id = "password" name ="password">';
-		echo '</div>';
-		
-		echo '<div class="form-group">';
-		echo '<label for="passwordRetype">Retype password: ';
+		echo '<div class="form-group">'; // User name
+		echo '<label for="userName">User name:';
 		echo '<span class="label label-danger">';
 		if (!is_null($user))
-			echo $user->getError('passwordRetype');
+			echo $user->getError('userName');
 		echo '</span></label>';
-		echo '<input type="password" required class="form-control"
-				id = "passwordRetype" name ="passwordType">';
+		echo '<input type="text" class="form-control" id = "userName" name="userName"';
+		if (!is_null($user))
+			echo 'value = "'. $user->getUserName() .'"';
+		echo 'required>';
+		echo '</div>';
+		
+		echo '<div class="form-group">'; // User name
+		echo '<label for="password">Password:';
+		echo '<span class="label label-danger">';
+		if (!is_null($user))
+			echo $user->getError('password');
+		echo '</span></label>';
+		echo '<input type="text" class="form-control" id = "password" name="password"';
+		if (!is_null($user))
+			echo 'value = "'. $user->getPassword() .'"';
+		echo 'required>';
+		echo '</div>';
+		
+		echo '<div class="form-group">'; // User name
+		echo '<label for="passwordRetry">Retype password:';
+		echo '<span class="label label-danger">';
+		if (!is_null($user))
+			echo $user->getError('password');
+		echo '</span></label>';
+		echo '<input type="text" class="form-control" id = "passwordRetry" name="passwordRetry"';
+		if (!is_null($user))
+			echo 'value = "'. $user->getPasswordRetry() .'"';
+		echo 'required readonly>';
 		echo '</div>';
 		
 		echo '<button type="submit" class="btn btn-default">Submit</button>';
-	    echo '</form>';
-        echo '</div>';
+		echo '</form>';
+		echo '</div>';
+		echo '<div class="col-md-3 col-sm-2 col-xs-1"></div>';
+		echo '</div>';
+		echo '</div>';
 	}	
 	
 	public static function showUpdate() {
@@ -155,40 +163,65 @@ class UserView {
 	}
 	
 	public static function showUpdateDetails() {
-		$users = (array_key_exists('users', $_SESSION))?$_SESSION['users']:null;
+		$user = (array_key_exists('user', $_SESSION))?$_SESSION['user']:null;
 		$base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
 	
-		echo '<h1>ClassBash user update</h1>';
-		if (is_null($users) || empty($users) || is_null($users[0])) {
-			echo '<section>users does not exist</section>';
-			return;
-		}
-		$user = $users[0];
-		if ($user->getErrors() > 0) {
-			$errors = $user->getErrors();
-			echo '<section><p>Errors:<br>';
-			foreach($errors as $key => $value)
-				echo $value . "<br>";
-			echo '</p></section>';
-		}
-
-		echo '<section><form method="Post" action ="/'.$base.
+		echo '<div class="container-fluid">';
+	    echo '<div class="row">';
+	    echo '<div class="col-md-3 col-sm-2 col-xs-1"></div>';
+	    echo '<div class="col-md-6 col-sm-8 col-xs-10">';
+	    echo '<h1>'.$_SESSION['headertitle'].'</h1>';
+   	    if (is_null($user)) {
+	       echo '<section>User does not exist</section>';
+		   return;
+	    }
+		echo '<form role="form" method="Post" action ="/'.$base.
 		            '/user/update/'.$user->getUserId().'">';
-		echo '<p>User name: <input type="text" name ="userName"';
-		if (!is_null($user))
-			echo 'value = "'. $user->getUserName() .'"';
-		echo '><span class="error">';
+		// Error at the top of the form
+		if (!is_null($user) && !empty($user->getError('userId'))) {
+			echo  '<div class="form-group">';
+			echo  '<label><span class="label label-danger">';
+			echo  $user->getError('userId');
+			echo '</span></label></div>';
+		}
+		echo '<div class="form-group">'; // User name
+		echo '<label for="userName">User name:';
+		echo '<span class="label label-danger">';
 		if (!is_null($user))
 			echo $user->getError('userName');
-		echo '</span></p>';
+		echo '</span></label>';
+		echo '<input type="text" class="form-control" id = "userName" name="userName"';
+		if (!is_null($user))
+			echo 'value = "'. $user->getUserName() .'"';
+		echo 'required>';
+		echo '</div>';
 		
-		echo '<p>Password: <input type="text" name ="password"><span class="error">';
+		echo '<div class="form-group">'; // User name
+		echo '<label for="password">Password:';
+		echo '<span class="label label-danger">';
 		if (!is_null($user))
 			echo $user->getError('password');
-		echo '</span></p>';
+		echo '</span></label>';
+		echo '<input type="text" class="form-control" id = "password" name="password"';
+		echo 'required>';
+		echo '</div>';
 		
-		echo '<input type="submit" value="Submit" />';
-		echo '</form></section>';
+		echo '<div class="form-group">'; // User name
+		echo '<label for="passwordRetry">Retype password:';
+		echo '<span class="label label-danger">';
+		if (!is_null($user))
+			echo $user->getError('password');
+		echo '</span></label>';
+		echo '<input type="text" class="form-control" id = "passwordRetry" name="passwordRetry"';
+		echo 'required>';
+		echo '</div>';
+	
+	    echo '<button type="submit" class="btn btn-default">Submit</button>';
+	   	echo '</form>';
+	   	echo '</div>';
+	   	echo '<div class="col-md-3 col-sm-2 col-xs-1"></div>';
+	   	echo '</div>';
+	   	echo '</div>';
 	}
 }
 ?>	
