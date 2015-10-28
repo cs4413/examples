@@ -27,10 +27,10 @@ class AssignmentsDBTest extends PHPUnit_Framework_TestCase {
   public function testInsertValidAssignment() {
     DBMakerUnit::createDB('ptest');
   	$beforeCount = count(AssignmentsDB::getAssignmentsBy());
-  	$validTest = array("assignmenterName" => "Kay",
-  			"submissionId" => "1",
-  			"score" => "5",
-  			"assignment" => "This was a great presentation"
+  	$validTest = array("assignmentOwnerName" => "Kay",
+  			"assignmentId" => "1",
+  			"assignmentTitle" => "This was a title",
+  			"assignmentDescription" => "This was a great presentation"
   	);
   	$s1 = new Assignment($validTest);
   	$assignment = AssignmentsDB::addAssignment($s1);
@@ -44,10 +44,10 @@ class AssignmentsDBTest extends PHPUnit_Framework_TestCase {
   public function testInsertDuplicateAssignment() {
   	DBMakerUnit::createDB('ptest');
   	$beforeCount = count(AssignmentsDB::getAssignmentsBy());
-  	$duplicateTest =  	$validTest = array("assignmenterName" => "John",
-  		                           	       "submissionId" => "1",
-  			                               "score" => "5",
-  			                               "assignment" => "This was a great presentation"
+  	$duplicateTest =  array("assignmentOwnerName" => "Kay",
+  			"assignmentId" => "1",
+  			"assignmentTitle" => "This was a title",
+  			"assignmentDescription" => "This was a great presentation"
   	);
   	$s1 = new Assignment($duplicateTest);
   	$assignment = AssignmentsDB::addAssignment($s1);
@@ -75,9 +75,9 @@ class AssignmentsDBTest extends PHPUnit_Framework_TestCase {
 	 		'The id of the updated assignment should remain the same'); 
   }
 
-  public function testGetAssignmentByAssignmenterName() {
+  public function testGetAssignmentByAssignmentOwnerName() {
   	DBMakerUnit::createDB('ptest');
-    $assignments = AssignmentsDB::getAssignmentsBy('assignmenterName', 'Alice');
+    $assignments = AssignmentsDB::getAssignmentsBy('assignmentOwnerName', 'Alice');
     $this->assertEquals(count($assignments), 3, 'Alice should have three assignments');
     foreach($assignments as $assignment) {
     	$this->assertTrue(is_a($assignment, "Assignment"),

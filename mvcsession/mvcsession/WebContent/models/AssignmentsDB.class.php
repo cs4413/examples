@@ -32,7 +32,7 @@ class AssignmentsDB {
 		// Returns the rows of Assignments whose $type field has value $value
 		$allowedTypes = array("assignmentId", "assignmentOwnerName", "assignmentTitle", "assignmentDescription");
 		$typeAlias = array("assignmentOwnerName" => "Users.userName");
-		$submissionRowSets = array();
+		$assignmentRowSets = array();
 		try {
 			$db = Database::getDB ();
 			$query = "SELECT Assignments.assignmentId, Assignments.assignmentDescription, 
@@ -90,7 +90,7 @@ class AssignmentsDB {
 		return AssignmentsDB::getAssignmentValues($assignmentRows, $column);
 	}
 	
-	public static function updateAssignment($submission) {
+	public static function updateAssignment($assignment) {
 		// Update a submission
 		try {
 			$db = Database::getDB ();
@@ -99,7 +99,7 @@ class AssignmentsDB {
 			$checkAssignment = AssignmentsDB::getAssignmentsBy('assignmentId', $assignment->getAssignmentId());
 			if (empty($checkAssignment))
 				$assignment->setError('assignmentId', 'ASSIGNMENT_DOES_NOT_EXIST');
-			elseif ($checkAssignment[0]->geAssignmentOwnerName() != $assignment->getAssignmentOwnerName())
+			elseif ($checkAssignment[0]->getAssignmentOwnerName() != $assignment->getAssignmentOwnerName())
 			    $assignment->setError('assignmentOwnerName', 'ASSIGNMENT_OWNER_NAME_DOES_NOT_MATCH');
 			if ($assignment->getErrorCount() > 0)
 				return $assignment;
