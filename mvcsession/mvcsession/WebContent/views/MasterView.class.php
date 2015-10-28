@@ -66,7 +66,7 @@ class MasterView {
 	    	echo '<form class="navbar-form navbar-right" 
 	    			    method="post" action="/'.$base.'/login">';
 	    	echo '<div class="form-group">';
-	    	echo '<input type="text" placeholder="User name" class="form-control" name ="userName"';
+	    	echo '<input type="text" placeholder="User name" class="form-control" name ="userName" ';
 	        if (!is_null($user)) 
 	   	        echo 'value = "'. $user->getUserName();
 	    	echo 'required></div>';
