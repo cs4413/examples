@@ -4,7 +4,7 @@ class AssignmentsDB {
 	public static function addAssignment($assignment) {
 		// Inserts $assignment into the Assignments table and returns assignmentId
 		$query = "INSERT INTO Assignments (assignmentOwnerId, assignmentTitle, assignmentDescription)
-		                      VALUES(:assignmentOwnerId, assignmentTitle, :assignmentDescription)";
+		                      VALUES(:assignmentOwnerId, :assignmentTitle, :assignmentDescription)";
 		try {
 			$db = Database::getDB ();
 			if (is_null($assignment) || $assignment->getErrorCount() > 0)
@@ -14,6 +14,7 @@ class AssignmentsDB {
 				$assignment->setError('assignmentOwnerName', 'ASSIGNMENT_OWNER_NAME_DOES_NOT_EXIST');
 				return $assignment;
 			}
+			
 			$statement = $db->prepare ($query);
 			$statement->bindValue(":assignmentTitle", $assignment->getAssignmentTitle());
 			$statement->bindValue(":assignmentDescription", $assignment->getAssignmentDescription());

@@ -16,7 +16,7 @@ class AssignmentsDBTest extends PHPUnit_Framework_TestCase {
   public function testGetAllAssignments() {
   	  DBMakerUnit::createDB('ptest');
   	  $assignments = AssignmentsDB::getAssignmentsBy();
-  	  $this->assertEquals(8, count($assignments), 
+  	  $this->assertEquals(4, count($assignments), 
   	  		'It should fetch all of the assignments in the test database');
 
   	  foreach ($assignments as $assignment) 
@@ -41,22 +41,7 @@ class AssignmentsDBTest extends PHPUnit_Framework_TestCase {
   			'The database should have one more assignment after insertion');
   }
   
-  public function testInsertDuplicateAssignment() {
-  	DBMakerUnit::createDB('ptest');
-  	$beforeCount = count(AssignmentsDB::getAssignmentsBy());
-  	$duplicateTest =  array("assignmentOwnerName" => "Kay",
-  			"assignmentId" => "1",
-  			"assignmentTitle" => "This was a title",
-  			"assignmentDescription" => "This was a great presentation"
-  	);
-  	$s1 = new Assignment($duplicateTest);
-  	$assignment = AssignmentsDB::addAssignment($s1);
-  	$this->assertTrue(!is_null($assignment), 'The returned assignment should not be null');
-  	$this->assertTrue(!empty($assignment->getErrors()), 'The returned assignment should have errors');
-  	$afterCount = count(AssignmentsDB::getAssignmentsBy());
-  	$this->assertEquals($afterCount, $beforeCount,
-  			'The database should have the same number of assignments after trying to insert duplicate');
-  }
+
   
   public function testUpdateAssignment() {
   	 DBMakerUnit::createDB('ptest');
@@ -78,7 +63,7 @@ class AssignmentsDBTest extends PHPUnit_Framework_TestCase {
   public function testGetAssignmentByAssignmentOwnerName() {
   	DBMakerUnit::createDB('ptest');
     $assignments = AssignmentsDB::getAssignmentsBy('assignmentOwnerName', 'Alice');
-    $this->assertEquals(count($assignments), 3, 'Alice should have three assignments');
+    $this->assertEquals(count($assignments), 1, 'Alice should have one assignment');
     foreach($assignments as $assignment) {
     	$this->assertTrue(is_a($assignment, "Assignment"),
     			'The returned values should be Assignment objects');

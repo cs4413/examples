@@ -5,7 +5,7 @@
 <title>Basic tests for AssignmentsDB</title>
 </head>
 <body>
-<h1>ReviewsDB tests</h1>
+<h1>AssignmentsDB tests</h1>
 
 
 <?php
@@ -38,6 +38,7 @@ Database::clearDB();
 $db = Database::getDB('ptest');
 $beforeCount = count(AssignmentsDB::getAssignmentsBy());
 $validTest = array("assignmentOwnerName" => "Kay",
+		    "assignmentTitle" => "Another great assignment title",
   			"assignmentDescription" => "This was a great presentation"
   	);
 $s1 = new Assignment($validTest);
@@ -48,23 +49,6 @@ echo "Before the database has $beforeCount<br>";
 echo "Now the database has $afterCount<br>";
 ?>
 
-<h2>It should not allow insertion of a duplicate assignment</h2>
-<?php 
-DBMaker::create('ptest');
-Database::clearDB();
-$db = Database::getDB('ptest');
-$beforeCount = count(AssignmentsDB::getAssignmentsBy());
-$duplicateTest = array("reviewerName" => "Alice",
-		"assignmentDescription" => "This was a great presentation"
-);
-$s1 = new Assignment($duplicateTest);
-$s1New = AssignmentsDB::addAssignment($s1);
-$afterCount = count(AssignmentsDB::getAssignmentsBy());
-echo "The errors are: <br>";
-print_r($s1New->getErrors());
-echo "<br>Before the database has $beforeCount<br>";
-echo "Now the database has $afterCount<br>";
-?>
 
 <h2>It should all update of a valid assignment</h2>
 <?php 
@@ -72,21 +56,21 @@ DBMaker::create('ptest');
 Database::clearDB();
 $db = Database::getDB('ptest');
 $beforeCount = count(AssignmentsDB::getAssignmentsBy());
-$assignments = ReviewsDB::getAssignmentsBy('assignmentId', 1);
+$assignments = AssignmentsDB::getAssignmentsBy('assignmentId', 1);
 $currentAssignment = $assignments[0];
 echo "Current review: $currentAssignment<br>";
 $parms = $currentAssignment->getParameters();
 $parms['assignment'] = 'new assignment text';
 $newAssignment = new Assignment($parms);
-$newAssignment->setReviewId($currentAssignment->getAssignmentId());
+$newAssignment->setAssignmentId($currentAssignment->getAssignmentId());
 $updatedAssignment = AssignmentsDB::updateAssignment($newAssignment);
 echo "Updated assignment: $updatedAssignment<br>";
-$afterCount = count(ReviewsDB::getAssignmentsBy());
+$afterCount = count(AssignmentsDB::getAssignmentsBy());
 echo "<br>Count before update = $beforeCount<br>";
 echo "Count after = $afterCount<br>";
 ?>
 
- <h2>It should get a assignment by assignment name</h2>
+ <h2>It should get a assignment by assignment owner name</h2>
 <?php
   DBMaker::create('ptest');
   Database::clearDB();
