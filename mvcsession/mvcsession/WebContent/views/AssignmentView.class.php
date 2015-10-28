@@ -39,8 +39,9 @@ class AssignmentView {
 		foreach($assignments as $assignment) {
 			echo '<tr>';
 			echo '<td>'. $assignment->getAssignmentId().'</td>';
-			echo '<td><a href="/'.$base.'/assignment/show/'.$assignment->getAssignmentId().'">Assignment '. $assignment ->getAssignmentId().'</a></td>';
-			echo '<td>'.$assignment->getAssignmentTitle().'</td>';
+			echo '<td>'. $assignment->getAssignmentOwnerName().'</td>';
+			echo '<td><a href="/'.$base.'/assignment/show/'.$assignment->getAssignmentId().'">';
+			echo  $assignment->getAssignmentTitle().'</a></td>';
 			echo '<td>'.$assignment->getAssignmentDescription().'</td>';
 			echo '<td><a href="/'.$base.'/assignment/update/'.$assignment->getAssignmentId().'">Update</a></td>';
 	        echo '</tr>';

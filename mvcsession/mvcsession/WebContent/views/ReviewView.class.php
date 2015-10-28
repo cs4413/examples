@@ -193,7 +193,7 @@ class ReviewView {
 		
 		echo '<div class="form-group">';
 		echo '<label for="submissionId">Submission Id:</label>';
-		echo '<input type="text" class="form-control" name="submissionId"';
+		echo '<input type="text" class="form-control" id = "submissionId" name="submissionId"';
 		if (!is_null($review))
 			echo 'value = "'. $review->getSubmissionId() .'"';
 		echo 'required readonly>';
