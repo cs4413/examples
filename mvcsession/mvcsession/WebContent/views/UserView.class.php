@@ -96,8 +96,8 @@ class UserView {
 		
 		echo '<div class="container-fluid">';
 	    echo '<div class="row">';
-	    echo '<div class="col-md-3 col-sm-2 col-xs-1"></div>';
-	    echo '<div class="col-md-6 col-sm-8 col-xs-10">';
+	    echo '<div class="col-md-3 col-sm-2 hidden-xs"></div>';
+	    echo '<div class="col-md-6 col-sm-8 col-xs-12">';
 	    echo '<h1>'.$_SESSION['headertitle'].'</h1>';
 		echo '<form role="form" action ="/' . $base . '/user/new" method="Post">';
 
@@ -126,7 +126,7 @@ class UserView {
 		if (!is_null($user))
 			echo $user->getError('password');
 		echo '</span></label>';
-		echo '<input type="text" class="form-control" id = "password" name="password"';
+		echo '<input type="password" class="form-control" id = "password" name="password"';
 		if (!is_null($user))
 			echo 'value = "'. $user->getPassword() .'"';
 		echo 'required>';
@@ -138,16 +138,16 @@ class UserView {
 		if (!is_null($user))
 			echo $user->getError('password');
 		echo '</span></label>';
-		echo '<input type="text" class="form-control" id = "passwordRetry" name="passwordRetry"';
+		echo '<input type="password" class="form-control" id = "passwordRetry" name="passwordRetry"';
 		if (!is_null($user))
 			echo 'value = "'. $user->getPasswordRetry() .'"';
-		echo 'required readonly>';
+		echo 'required>';
 		echo '</div>';
 		
 		echo '<button type="submit" class="btn btn-default">Submit</button>';
 		echo '</form>';
 		echo '</div>';
-		echo '<div class="col-md-3 col-sm-2 col-xs-1"></div>';
+		echo '<div class="col-md-3 col-sm-2 hidden-xs"></div>';
 		echo '</div>';
 		echo '</div>';
 	}	
@@ -202,7 +202,7 @@ class UserView {
 		if (!is_null($user))
 			echo $user->getError('password');
 		echo '</span></label>';
-		echo '<input type="text" class="form-control" id = "password" name="password"';
+		echo '<input type="password" class="form-control" id = "password" name="password"';
 		echo 'required>';
 		echo '</div>';
 		
@@ -210,9 +210,9 @@ class UserView {
 		echo '<label for="passwordRetry">Retype password:';
 		echo '<span class="label label-danger">';
 		if (!is_null($user))
-			echo $user->getError('password');
+			echo $user->getError('passwordRetry');
 		echo '</span></label>';
-		echo '<input type="text" class="form-control" id = "passwordRetry" name="passwordRetry"';
+		echo '<input type="password" class="form-control" id = "passwordRetry" name="passwordRetry"';
 		echo 'required>';
 		echo '</div>';
 	

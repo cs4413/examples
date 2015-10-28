@@ -35,6 +35,10 @@ class User {
 		return $this->password;
 	}
 	
+	public function getPasswordRetry() {
+		return $this->password;
+	}
+	
 	public function getUserId() {
 		return $this->userId;
 	}
