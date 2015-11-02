@@ -147,8 +147,6 @@ class SubmissionsDB {
 		if (!move_uploaded_file($_FILES["submissionFile"]["tmp_name"], $targetFile))
 			$submission->setError('submissionFile', 'SUBMISSION_UPLOAD_ERROR');
 		return $submission;
-	}
-	
-	
+	}	
 }
 ?>

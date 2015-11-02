@@ -53,12 +53,15 @@ class SubmissionView {
 	
   public static function showDetails() {
   	 $submission = (array_key_exists('submission', $_SESSION))?$_SESSION['submission']:null;
+  	 $base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
 	 if (!is_null($submission)) { 
 	  	 echo '<div class="container">';
 	  	 echo '<h2>Submission: '.$submission->getSubmissionId().'</h2>';
 	  	 echo '<p>Submitter name: '.$submission->getSubmitterName().'</p>';
 	  	 echo '<p> Assignment Id: '. $submission->getAssignmentId() .'</p>';
 	  	 echo '<p> File name: '. $submission->getSubmissionFile() .'</p>';
+	  	 echo '<p> <a href="/' . $base.'/submission/download/'.
+	  	 		$submission->getSubmissionId().'">Download</a></p>';
 	  	 echo '</div>';
 	 }
    }
