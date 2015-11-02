@@ -33,5 +33,9 @@ class Database {
 	public static function clearDB() {
 		self::$db = null;
 	}
+	
+	public static function getDBName() {
+		return self::$dbName;
+	}
 }
 ?>

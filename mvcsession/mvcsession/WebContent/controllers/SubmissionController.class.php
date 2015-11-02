@@ -6,6 +6,9 @@ class SubmissionController {
 		$action = $_SESSION['action'];
 		$arguments = $_SESSION['arguments'];
         switch ($action) {
+        	case "download":
+        		self::downloadSubmission();
+        		break;
         	case "new":
         		self::newSubmission();
         		break;
@@ -25,13 +28,23 @@ class SubmissionController {
         }
 	}
 	
+	public static function downloadSubmission() {
+		// Process downloading a submissions
+		$submissions = SubmissionsDB::getSubmissionsBy('submissionId', $_SESSION['arguments']);
+		if (!empty($submissions)) {
+			$theFile = $submissions[0]->getSubmissionFile();
+			$theId = $submissions[0]->getSubmissionId();
+			header('Content-Type: application/text');
+			header('Content-Disposition: attachment; filename="submission'.$theId.'.txt"');
+			readfile($theFile);
+		}
+	}
+	
 	public static function newSubmission() {
 		// Process a new submission
 		$submission = null;
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
-			if (isset($_FILES["submissionFile"]))
-			   $_POST["submissionFile"] = $_FILES["submissionFile"];
-			$submission = new Submission($_POST); 
+			$submission = new Submission($_POST);
 			$submission = SubmissionsDB::addSubmission($submission);
 		}
 		if (is_null($submission) || $submission->getErrorCount() != 0) {
@@ -70,6 +83,7 @@ class SubmissionController {
 			}
 		}
 	}
+	
 
 }
 ?>

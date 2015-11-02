@@ -71,5 +71,17 @@ class SubmissionViewTest extends PHPUnit_Framework_TestCase {
   	  $output = ob_get_clean();
       $this->assertFalse(empty($output), "It should show an update form");
   }
+  
+  public function testNewSubmission() {
+  	ob_start();
+  	$validSubmission = array("submitterName" => "krobbins", "assignmentId" => "1",
+  			"submissionFile" => "myText.apl");
+  	$s1 = new Submission($validSubmission);
+  	$_SESSION = array('submission' => $s1, 'base' => "mvcsession");
+  	SubmissionView::showNew();
+  	$output = ob_get_clean();
+  	$this->assertFalse(empty($output), "It should show a new form");
+  }
+  
 }
 ?>

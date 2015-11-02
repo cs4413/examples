@@ -1,6 +1,8 @@
 <?php
+require_once dirname(__FILE__).'\..\..\WebContent\models\Configuration.class.php';
 require_once dirname(__FILE__).'\..\..\WebContent\models\Database.class.php';
 require_once dirname(__FILE__).'\..\..\WebContent\tests\DBMaker.class.php';
+require_once dirname(__FILE__).'\DBMakerUnit.class.php';
 
 class DatabaseTest extends PHPUnit_Framework_TestCase {
 
@@ -15,7 +17,7 @@ class DatabaseTest extends PHPUnit_Framework_TestCase {
 		DBMaker::delete('ptest1');
 		Database::clearDB();
 
-		$db = Database::getDB($dbName = 'ptest1', DBMakerUnit::$unitTestPath);
+		$db = Database::getDB($dbName = 'ptest1', DBMakerUnit::$unitConfigurationPath);
 		$output = ob_get_clean();
 		$this->assertNull($db,
 				'It should not create a connection to a database that does not exist');

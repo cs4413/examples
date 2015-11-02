@@ -9,6 +9,7 @@
 
 
 <?php
+include_once("../models/Configuration.class.php");
 include_once("../models/Database.class.php");
 include_once("../models/Messages.class.php");
 include_once("../models/Submission.class.php");
@@ -37,8 +38,11 @@ DBMaker::create('ptest');
 Database::clearDB();
 $db = Database::getDB('ptest');
 $beforeCount = count(SubmissionsDB::getSubmissionsBy());
-$validTest = array("submitterName" => "Kay", "assignmentId" => "8",
-		           "submissionFile" => "V:\test.txt");
+$validTest = array("submitterName" => "Kay", 
+		           "assignmentId" => "8");
+$_FILES["submissionFile"] = array('name' => 'V:\test.txt',
+		                          'tmp_name'  => 'V:\testtemp.txt');
+print_r($_FILES);
 $s1 = new Submission($validTest);
 echo "<br>In insertion should not have errors $s1<br>";
 print_r($s1->getErrors());

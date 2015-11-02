@@ -1,16 +1,14 @@
 <?php
 
 class DBMaker {
-	public static $configPath = null;
-	
+
 	
 	public static function create($dbName) {
 		// Creates a database named $dbName for testing and returns connection
 		$db = null;
 		try {
 			$dbspec = 'mysql:host=localhost;dbname=' . "". ";charset=utf8";
-			self::setConfigurationPath(null); //Make sure path is set
-			$passArray = parse_ini_file(self::$configPath);
+			$passArray = parse_ini_file(Configuration::getConfigurationPath());
 			$username = $passArray["username"];
 			$password = $passArray["password"];
 			$options = array (PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION );
@@ -24,12 +22,12 @@ class DBMaker {
 			$st = $db->prepare ( "DROP TABLE if EXISTS Users" );
 			$st->execute ();
 			$st = $db->prepare ( "CREATE TABLE Users (
-  userId             int(11) NOT NULL AUTO_INCREMENT,
-  userName           varchar (255) UNIQUE NOT NULL COLLATE utf8_unicode_ci,
-  password           varchar(255) NOT NULL COLLATE utf8_unicode_ci,
-  dateCreated        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (userId)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;");
+				  userId             int(11) NOT NULL AUTO_INCREMENT,
+				  userName           varchar (255) UNIQUE NOT NULL COLLATE utf8_unicode_ci,
+				  password           varchar(255) NOT NULL COLLATE utf8_unicode_ci,
+				  dateCreated        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+				  PRIMARY KEY (userId)
+				)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;");
 			$st->execute ();
 			
 			$st = $db->prepare ( "DROP TABLE if EXISTS Assignments" );
@@ -49,7 +47,7 @@ class DBMaker {
 			         submissionId       int(11) NOT NULL AUTO_INCREMENT,
 			         submitterId        int(11) NOT NULL,
 			         assignmentId       int(11) NOT NULL,
-			         submissionFile     varchar (255) UNIQUE NOT NULL COLLATE utf8_unicode_ci,
+			         submissionFile     varchar (1024) NOT NULL COLLATE utf8_unicode_ci,
 			         dateCreated        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 			         PRIMARY KEY (submissionId),
 			         FOREIGN KEY (submitterId) REFERENCES Users(userId),
@@ -105,12 +103,22 @@ class DBMaker {
 			$sql = "INSERT INTO Submissions (submissionId, submitterId, assignmentId, submissionFile) 
 	                             VALUES (:submissionId, :submitterId, :assignmentId, :submissionFile)";
 			$st = $db->prepare ($sql);
+			$sourceFile = dirname(__FILE__).DIRECTORY_SEPARATOR.'test.txt';
+			
+			$destFile = Configuration::getUploadPath().DIRECTORY_SEPARATOR . $dbName.'_submitter_1_assign_1.txt';
+			copy($sourceFile, $destFile);
 			$st->execute (array (':submissionId' => 1, ':submitterId' => 1, ':assignmentId' => 1,
-					             ':submissionFile' => 'Kay1.txt'));
+					             ':submissionFile' => $destFile));
+			
+			$destFile = Configuration::getUploadPath().DIRECTORY_SEPARATOR . $dbName.'_submitter_1_assign_2.txt';
+			copy($sourceFile, $destFile);
 			$st->execute (array (':submissionId' => 2, ':submitterId' => 1, ':assignmentId' => 2,
-					             ':submissionFile' => 'Kay2.txt'));
+					':submissionFile' => $destFile));
+			
+			$destFile = Configuration::getUploadPath().DIRECTORY_SEPARATOR. $dbName.'_submitter_2_assign_1.txt';
+			copy($sourceFile, $destFile);
 			$st->execute (array (':submissionId' => 3, ':submitterId' => 2, ':assignmentId' => 1,
-					             ':submissionFile' => 'John1.txt'));
+					':submissionFile' => $destFile));
 			
 			$sql = "INSERT INTO Reviews (reviewId, submissionId, reviewerId, score, review)
 	                             VALUES (:reviewId, :submissionId, :reviewerId, :score, :review)";
@@ -142,8 +150,7 @@ class DBMaker {
 		// Delete a database named $dbName
 		try {
 			$dbspec = 'mysql:host=localhost;dbname=' . $dbName . ";charset=utf8";
-			self::setConfigurationPath(null); //Make sure path is set
-			$passArray = parse_ini_file(self::$configPath);
+			$passArray = parse_ini_file(Configuration::getConfigurationPath());
 			$username = $passArray["username"];
 			$password = $passArray["password"];
 			$options = array (PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION);
@@ -155,13 +162,6 @@ class DBMaker {
 		}
 	}
 	
-	public static function setConfigurationPath($path = null) {
-		if (!is_null($path))
-			self::$configPath = $path;
-		elseif (self::$configPath == null)
-			self::$configPath = dirname(__FILE__).DIRECTORY_SEPARATOR."..".
-			DIRECTORY_SEPARATOR. ".." . DIRECTORY_SEPARATOR.
-			".." . DIRECTORY_SEPARATOR . "myConfig.ini";
-	}
+
 }
 ?>

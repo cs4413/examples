@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__FILE__).'\..\..\WebContent\models\Configuration.class.php';
 require_once dirname(__FILE__).'\..\..\WebContent\models\Database.class.php';
 require_once dirname(__FILE__).'\..\..\WebContent\models\Messages.class.php';
 require_once dirname(__FILE__).'\..\..\WebContent\models\Submission.class.php';
@@ -6,7 +7,7 @@ require_once dirname(__FILE__).'\..\..\WebContent\models\SubmissionsDB.class.php
 require_once dirname(__FILE__).'\..\..\WebContent\models\User.class.php';
 require_once dirname(__FILE__).'\..\..\WebContent\models\UsersDB.class.php';
 require_once dirname(__FILE__).'\..\..\WebContent\tests\DBMaker.class.php';
-
+require_once dirname(__FILE__).'\DBMakerUnit.class.php';
 
 class SubmissionsDBTest extends PHPUnit_Framework_TestCase {
 	
@@ -23,17 +24,21 @@ class SubmissionsDBTest extends PHPUnit_Framework_TestCase {
   
   public function testInsertValidSubmission() {
   	DBMakerUnit::createDB('ptest');
+  	Configuration::setUploadPath(DBMakerUnit::$unitUploadPath);
   	$beforeCount = count(SubmissionsDB::getSubmissionsBy());
-    $validTest = array("submitterName" => "George", "assignmentId" => "1",
-  		                "submissionFile" => "myText.apl");
+  	$_FILES['submissionFile'] = array('name' => 'V:\test.txt',
+  			                          'tmp_name' => 'V:\testtemp.txt');
+  	$this->assertTrue(copy($_FILES['submissionFile']['name'], $_FILES['submissionFile']['tmp_name']),
+  	     'It should have a temporary file to copy');
+    $validTest = array("submitterName" => "George", 
+    		           "assignmentId" => "1");
   	$s1 = new Submission($validTest);
   	$submission = SubmissionsDB::addSubmission($s1);
   	$this->assertTrue(!is_null($submission), 'The inserted submission should not be null');
-
-  	$this->assertTrue(empty($submission->getErrors()), 'The returned submission should not have errors');
-  	$afterCount = count(SubmissionsDB::getSubmissionsBy());
-  	$this->assertEquals($afterCount, $beforeCount + 1,
-  			'The database should have one more submission after insertion');
+  	$this->assertTrue(!empty($submission->getSubmissionFile()), 'The returned submission should have a file name');
+  	$this->assertTrue(!empty($submission->getError('submissionFile')), 
+  			'The unit test does not allow upload');
+  	$this->assertEquals($submission->getErrorCount(), 1, 'The only error should be file upload');
   }
   
   public function testInsertDuplicateSubmission() {

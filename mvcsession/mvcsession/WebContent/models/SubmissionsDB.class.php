@@ -6,18 +6,22 @@ class SubmissionsDB {
 		$query = "INSERT INTO Submissions (submissionFile, assignmentId, submitterId)
 		                      VALUES(:submissionFile, :assignmentId, :submitterId)";
 		try {
-			$db = Database::getDB ();
 			if (is_null($submission) || $submission->getErrorCount() > 0)
 				return $submission;
+			$db = Database::getDB ();
 			$users = UsersDB::getUsersBy('userName', $submission->getSubmitterName());
-			if (is_null($users) || empty($users)){
+			if (empty($users)) {
 				$submission->setError('submitterName', 'SUBMITTER_NAME_DOES_NOT_EXIST');
 				return $submission;
 			}
+			$submission->setSubmitterId($users[0]->getUserId());	
+			$submission = self::uploadFile($submission);
+			if ($submission->getErrorCount() > 0)
+				return $submission;
 			$statement = $db->prepare ($query);
-			$statement->bindValue(":submissionFile", $submission->getSubmission());
+			$statement->bindValue(":submissionFile", $submission->getSubmissionFile());
 			$statement->bindValue(":assignmentId", $submission->getassignmentId());
-			$statement->bindValue(":submitterId", $users[0]->getUserId());
+			$statement->bindValue(":submitterId", $submission->getSubmitterId());
 			$statement->execute ();
 			$statement->closeCursor();
 			$returnId = $db->lastInsertId("submissionId");
@@ -65,6 +69,7 @@ class SubmissionsDB {
 		foreach ($rowSets as $submissionRow ) {
 			$submission = new Submission($submissionRow);
 			$submission->setSubmissionId($submissionRow['submissionId']);
+			$submission->setSubmissionFile($submissionRow['submissionFile']);
 			array_push ($submissions, $submission);
 		}
 		return $submissions;
@@ -106,7 +111,9 @@ class SubmissionsDB {
 			$submission->setError('assignmentId', 'SUBMISSION_ASSIGNMENT_NUMBERS_DO_NOT_MATCH');
 			if ($submission->getErrorCount() > 0)
 				return $submission;
-	
+	        $submission = self::uploadFile($submission);
+	        if ($submission->getErrorCount() > 0)
+				return $submission;
 			$query = "UPDATE Submissions SET submissionFile = :submissionFile
 	    			                 WHERE submissionId = :submissionId";
 	
@@ -120,6 +127,28 @@ class SubmissionsDB {
 		}
 		return $submission;
 	}
+	
+	public static function uploadFile($submission) {
+	
+		if (!isset($_FILES["submissionFile"]) ||
+				!isset($_FILES["submissionFile"]["name"]) ||
+				!isset($_FILES["submissionFile"]["tmp_name"])) {
+					$submission->setError('submissionFile', 'SUBMISSION_UPLOAD_ERROR');
+		}
+	
+		if ($submission->getErrorCount() > 0)
+			return $submission;
+		$info = new SplFileInfo(basename($_FILES["submissionFile"]["name"]));
+		$dbName = Database::getDBName();	
+		$targetFile = Configuration::getUploadPath().
+				DIRECTORY_SEPARATOR. $dbName .'_submitter_' . $submission->getSubmissionId() . '_assign_' .
+				$submission->getAssignmentId(). '.' .$info->getExtension();
+		$submission->setSubmissionFile($targetFile);
+		if (!move_uploaded_file($_FILES["submissionFile"]["tmp_name"], $targetFile))
+			$submission->setError('submissionFile', 'SUBMISSION_UPLOAD_ERROR');
+		return $submission;
+	}
+	
 	
 }
 ?>

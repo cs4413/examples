@@ -1,13 +1,16 @@
 <?php
 class Submission {
-	private $uploadDir = 'uploads';
+
 	private $errorCount;
 	private $errors;
 	private $formInput;
 	private $assignmentId;
 	private $submissionFile;
 	private $submissionId;
+	private $submitterId;
 	private $submitterName;
+	private $filename;
+	private $fileTempName;
 	
 	public function __construct($formInput = null) {
 		$this->formInput = $formInput;
@@ -34,6 +37,7 @@ class Submission {
 		return $this->assignmentId;
 	}
 	
+	
 	public function getSubmissionFile() {
 		return $this->submissionFile;
 	}
@@ -42,10 +46,10 @@ class Submission {
 		return $this->submissionId;
 	}
 	
-	public function getSubmission() {
-		return "Placeholder for upload";
+	public function getSubmitterId() {
+		return $this->submitterId;
 	}
-
+	
 	public function getSubmitterName() {
 		return $this->submitterName;
 	}
@@ -68,21 +72,31 @@ class Submission {
 		}
 	}
 	
+	public function setSubmissionFile($filename) {
+		// Set the value of the submissionFile to $filename
+		$this->submissionFile = $filename;
+	}
+	
 	public function setSubmissionId($id) {
 		// Set the value of the submissionId to $id
 		$this->submissionId = $id;
+	}
+	
+	public function setSubmitterId($id) {
+		// Set the value of the submitterId to $id
+		$this->submitterId = $id;
 	}
 	
 	public function __toString() {
 		$errorStr = "";
 		foreach($this->errors as $error)
 			$errorStr = $errorStr . " ". $error;
-			
-		$str = "Submitter name: ".$this->submitterName."<br>".
-			    "Assignment id: ".$this->assignmentId."<br>".
-				"Submission file: ".$this->submissionFile."<br>".
-		        "Submission id: ". $this->submissionId."<br>".
-		        "Errors: " . $errorStr;
+		echo $this->assignmentId;	
+		$str = 'Submitter name: '.$this->submitterName.'<br>'.
+			   'Assignment id: '.$this->assignmentId.'<br>'.
+			   'Submission file: '.$this->submissionFile.'<br>'.				
+		       'Submission id: '. $this->submissionId.'<br>'.
+		       'Errors: ' . $errorStr;
 		return $str;
 	}
 	
@@ -100,14 +114,14 @@ class Submission {
 	private function initialize() {
 		$this->errorCount = 0;
 		$this->submissionId = 0;
+		$this->submissionFile = "";
 		$this->errors = array();
 		if (is_null($this->formInput)) {
 			$this->submitterName = "";
-	 	    $this->submissionFile = "";
+			$this->assignmentId = 0;
 		} else  {	 
 		   $this->validateSubmitterName();
 		   $this->validateAssignmentId();
-		   $this->validateSubmissionFile();
 		}
 	}
 	
@@ -139,17 +153,5 @@ class Submission {
 		}
 	}
 	
-	private function validateSubmissionFile() {
-		// Submission file upload has not been done yet.
-		$this->submissionFile = '';
-		if (!isset($this->formInput['submissionFile'])) {
-  		   $this->setError('submissionFile', 'SUBMISSION_EMPTY');
-		   return;
-		}
-		$this->submissionFile = $this->formInput['submissionFile'];
-		if (empty($this->submissionFile)) 
-			$this->submissionFile = $this->submitterName . $this->assignmentId. '.txt';
-			
-	}
 }
 ?>

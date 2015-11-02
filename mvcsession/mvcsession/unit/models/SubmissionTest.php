@@ -6,9 +6,7 @@ require_once dirname(__FILE__).'\..\..\WebContent\models\User.class.php';
 class SubmissionTest extends PHPUnit_Framework_TestCase {
 	
   public function testValidSubmissionCreate() {
-  	$validTest = array("submitterName" => "krobbins", "assignmentId" => "1",
-		           "submissionFile" => array("name" => "myText.apl", 
-		           		                     "tmp_name" => "temp.1"));
+  	$validTest = array("submitterName" => "krobbins", "assignmentId" => "1");
     $s1 = new Submission($validTest);
     $this->assertTrue(is_a($s1, 'Submission'),
 		'It should create a valid Submission object when valid input is provided');
@@ -16,13 +14,15 @@ class SubmissionTest extends PHPUnit_Framework_TestCase {
     		'It should not have errors when creating a valid submission');
   }
   
-  public function testInvalidNoSubmissionFileName() {
-  	$invalidTest = array("submitterName" => "krobbins", "assignmentId" => "1");
-  	$s1 = new Submission($invalidTest);
-  	$this->assertGreaterThan(0, $s1->getErrorCount(),
-  			'It should have an error if the submission upload was not correct');
-  
+  public function testInvalidSubmissionCreate() {
+  	$validTest = array("submitterName" => "krobbins");
+  	$s1 = new Submission($validTest);
+  	$this->assertTrue(is_a($s1, 'Submission'),
+  			'It should create a valid Submission object when valid input is provided');
+  	$this->assertGreaterThan(0, $s1->getErrorCount(), 
+  			'It should have an error when no submission');
   }
   
+
 }
 ?>

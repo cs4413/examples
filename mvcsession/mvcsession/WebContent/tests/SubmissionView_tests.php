@@ -59,5 +59,15 @@ $_SESSION = array('submission' => $s1, 'base' => "mvcsession");
 echo $s1;
 SubmissionView::showUpdate();
 ?>
+
+<h2>It should allow creating a new submission</h2>
+<?php 
+$validSubmission = array("submitterName" => "krobbins", "assignmentId" => "1",
+		           "submissionFile" => "myText.apl");
+$s1 = new Submission($validSubmission);
+$_SESSION = array('submission' => $s1, 'base' => "mvcsession");
+echo $s1;
+SubmissionView::showNew();
+?>
 </body>
 </html>

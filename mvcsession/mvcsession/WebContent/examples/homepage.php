@@ -95,6 +95,7 @@
 
       <footer>
         <p>&copy; Kay Robbins, UTSA 2015</p>
+        <p><a href="/mvcsession/submission/download/1" download="submission1.txt">Download submission 1</a></p>
         
         <div>Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> and by
         <a href="http://www.flaticon.com/authors/bogdan-rosu" title="Bogdan Rosu">

@@ -10,6 +10,7 @@
 
 <?php
 include_once("../controllers/UserController.class.php");
+include_once("../models/Configuration.class.php");
 include_once("../models/Database.class.php");
 include_once("../models/Messages.class.php");
 include_once("../models/Review.class.php");

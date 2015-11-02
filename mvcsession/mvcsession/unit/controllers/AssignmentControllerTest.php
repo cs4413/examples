@@ -1,5 +1,6 @@
 <?php
 require_once dirname ( __FILE__ ) . '\..\..\WebContent\controllers\AssignmentController.class.php';
+require_once dirname ( __FILE__ ) . '\..\..\WebContent\models\Configuration.class.php';
 require_once dirname ( __FILE__ ) . '\..\..\WebContent\models\Database.class.php';
 require_once dirname ( __FILE__ ) . '\..\..\WebContent\models\Messages.class.php';
 require_once dirname ( __FILE__ ) . '\..\..\WebContent\models\Assignment.class.php';
@@ -10,6 +11,7 @@ require_once dirname ( __FILE__ ) . '\..\..\WebContent\views\HomeView.class.php'
 require_once dirname ( __FILE__ ) . '\..\..\WebContent\views\MasterView.class.php';
 require_once dirname ( __FILE__ ) . '\..\..\WebContent\views\AssignmentView.class.php';
 require_once dirname(__FILE__).'\..\..\WebContent\tests\DBMaker.class.php';
+require_once dirname(__FILE__).'\..\models\DBMakerUnit.class.php';
 
 class AssignmentControllerTest extends PHPUnit_Framework_TestCase {
 	
@@ -29,7 +31,7 @@ class AssignmentControllerTest extends PHPUnit_Framework_TestCase {
 				          'action' => 'new', 'arguments' => null);
 		AssignmentController::run ();
 		$output = ob_get_clean();
-		$this->assertFalse ( empty ( $output ), "It should show something from a POST" );
+		$this->assertFalse (empty ($output), "It should show something from a POST" );
 	}
 	
 	/**
