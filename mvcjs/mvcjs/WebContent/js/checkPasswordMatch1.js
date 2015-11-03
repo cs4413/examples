@@ -7,6 +7,10 @@ function checkPasswordMatch() {
 	var password = document.getElementById("password").value;
 	var retyped = document.getElementById("retypedPassword").value;
 	error.innerHTML = passwordMatch(password, retyped);
+	if (error.innerHTML == "")
+		return true;
+	else
+		return false;
 }
 
 function passwordMatch(password, retyped) {

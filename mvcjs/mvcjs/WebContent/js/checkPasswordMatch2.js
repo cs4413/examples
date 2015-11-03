@@ -5,7 +5,12 @@
 function checkPasswordMatch() {
 	var password = $("#password").val();
 	var retyped = $("#retypedPassword").val();
-	$("#retypedError").html(passwordMatch(password, retyped));
+	var errorText = passwordMatch(password, retyped);
+	$("#retypedError").html(errorText);
+	if (errorText == "")
+		return true;
+	else
+		return false;
 }
 
 function passwordMatch(password, retyped) {
