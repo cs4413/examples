@@ -1,5 +1,5 @@
 <?php  
-function registerForm($user) {
+function registerFormOnSubmit($user) {
 
    echo '<form action ="../controllers/registerController.php" 
    		 method="Post" onsubmit="return checkPasswordMatch();">';

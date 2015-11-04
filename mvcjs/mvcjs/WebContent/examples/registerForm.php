@@ -2,7 +2,7 @@
 function registerForm($user) {
 
    echo '<form action ="../controllers/registerController.php" 
-   		 method="Post" onsubmit="return checkPasswordMatch();">';
+   		 method="Post" >';
    echo '<p>User name: <input type="text" name ="userName"';
    if (!is_null($user) && !empty($user->getUserName())) 
    	  echo 'value = "'. $user->getUserName() .'"';

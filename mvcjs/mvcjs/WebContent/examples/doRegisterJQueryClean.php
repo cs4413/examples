@@ -15,9 +15,8 @@
 <body>
 
 <?php
-require_once(dirname(__FILE__). "./registerFormRevisited.php");
-
-registerFormRevisited(null);
+  require_once(dirname(__FILE__). "./registerFormClean.php");
+  registerFormClean(null);
 ?>
 </body>
 </html>
