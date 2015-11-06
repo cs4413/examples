@@ -8,11 +8,11 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<title>Ajax demos - Example 3</title>
+<title>Ajax demos JSON Post Ajax</title>
 </head>
 <body>
 	<div class="container">
-		<h1>Ajax demo - Example 3 - JSON with post</h1>
+		<h1>Ajax demo - JSON with post</h1>
 
 		<form method="Post">
 			<p>
@@ -21,13 +21,13 @@
 			</p>
 
 			<p>
-				Password: <input id="password" type="password" name="userPassword">
+				Password: <input id="password" type="password" name="password">
 				<span id="passwordError" class="error"></span>
 			</p>
 
 			<p>
 				Retype password: <input id="retypedPassword" type="password"
-					name="userPasswordRetyped"> <span
+					name="retypedPassowrd"> <span
 					id="retypedError" class="error"></span>
 			</p>
 
@@ -36,14 +36,11 @@
 			</p>
 		</form>
 	</div>
-	
-	<script src="jquery/jquery-2.1.1.min.js"></script>
-	<script src="bootstrap/3.3.0/js/bootstrap.min.js"></script>
-	<script>
+<script>
 $(document).ready(function(){
   $("#userName").blur(function(){
     $.ajax({type: "POST",
-    	    url:"controllers/jsonPostController.php",
+    	    url:"/jstest/controllers/jsonPostController.php",
     	    data: $(this).serialize(),
     	    dataType: 'json',
     	    success: function(result){$("#userNameError").html(JSON.stringify(result));},

@@ -1,7 +1,7 @@
 <?php  
 function registerFormClean($user) {
 
-   echo '<form action ="../controllers/registerController.php"  method="Post">';
+   echo '<form action ="/jstest/examples/examples.php"  method="Post">';
    echo '<p>User name: <input type="text" name ="userName"';
    if (!is_null($user) && !empty($user->getUserName())) 
    	  echo 'value = "'. $user->getUserName() .'"';
@@ -21,7 +21,7 @@ function registerFormClean($user) {
    echo '</span></p>';
 
    echo '<p>Retype password: <input id="retypedPassword" type="password" 
-   		name ="passwordRetyped">';
+   		name ="retypedPassword">';
    echo '<span id="retypedError" class="error"></span></p>';
 
    echo '<p><input type = "submit" name = "submit" value="Submit"></p>';

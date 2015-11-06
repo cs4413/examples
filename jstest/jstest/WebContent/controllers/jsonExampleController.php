@@ -10,8 +10,8 @@
    $outArray['numbers'] = $myNumbers;
    $outArray['date'] = date("Y-m-d h:i:s a");
    
-   //echo json_encode($outArray);
+   echo json_encode($outArray);
    
-   echo $outArray;
+   //print_r($outArray);
 ?>
 

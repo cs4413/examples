@@ -32,27 +32,27 @@
 </li>
 <li> Expansion using JQuery
 <a href="topic17JQuery.html">topic 17: JQuery</a></li>
-<li> Function example 
+<li> Function example
 <a href="functionExample.html">Function example</a></li>
 </ul>
 
 <h3>Ajax examples</h3>
 
 <ul>
-<li><a href="controllers/timeDownloadController.php">timeDownloadController.php</a><br>
-	Output directly from the controller.</li>
-<li><a href="controllers/timeZoneController.php">timeZoneController.php</a><br>
-	Get the default time zone.</li>
-<li><a href="example1.html">example1.html</a><br> Use
-	JQuery Ajax to get the current time from the server without refresh.</li>
-<li><a href="controllers/jsonExampleController.php">jsonExampleController.php</a><br>
-	JSON example controller.</li>
-<li><a href="example2.html">example2.html</a><br> Use
-	JQuery Ajax to get the JSON string from the server without refresh.</li>
-<li><a href="controllers/jsonPostController.php">jsonPostController.php</a><br>
-	JSON post controller.</li>
-<li><a href="example3.html">example3.html</a><br> Use
-	JQuery Ajax to post to the server without refresh.</li>	
+<li><a href="/jstest/controllers/timeDownloadController.php">timeDownloadController.php</a><br>
+Output directly from the controller.</li>
+<li><a href="/jstest/controllers/timeZoneController.php">timeZoneController.php</a><br>
+Get the default time zone.</li>
+<li><a href="/jstest/examples/currentTimeAjax.html">currentTimeAjax.html</a><br> Use
+JQuery Ajax to get the current time from the server without refresh.</li>
+<li><a href="/jstest/controllers/jsonExampleController.php">jsonExampleController.php</a><br>
+JSON example controller.</li>
+<li><a href="/jstest/examples/jsonTimeAjax.html">jsonTimeAjax.html</a><br> Use
+JQuery Ajax to get the JSON string from the server without refresh.</li>
+<li><a href="/jstest/controllers/jsonPostController.php">jsonPostController.php</a><br>
+JSON post controller.</li>
+<li><a href="/jstest/examples/jsonPostAjax.html">jsonPostAjax.html</a><br> Use
+JQuery Ajax to post to the server without refresh.</li>
 </ul>
 
 <h3>Tests</h3>

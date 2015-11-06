@@ -8,11 +8,11 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<title>Ajax demos - Example 2</title>
+<title>Ajax demos - Json time using Ajax</title>
 </head>
 <body>
 	<div class="container">
-		<h1>Ajax demo - Example 2 - JSON</h1>
+		<h1>Ajax demo - Json time</h1>
 
 		<h2>
 			JSON string is: <span id="jsonString"></span>
@@ -25,7 +25,7 @@
 $(document).ready(function(){
   $("button").click(function(){
     $.ajax({type: "GET",
-    	    url:"controllers/jsonExampleController.php", 
+    	    url:"/jstest/controllers/jsonExampleController.php", 
     	    dataType: 'json',
     	    success: function(result){$("#jsonString").html(JSON.stringify(result));},
             error: function() {

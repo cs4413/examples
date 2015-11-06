@@ -14,7 +14,7 @@
 		$_SESSION['authenticated'] = false;
 	switch ($control) {
 		default:
-				header("Location: /$base/examples/index.html");		
+			header("Location: /$base/examples/examples.php");		
 	};
 	ob_end_flush();
 	

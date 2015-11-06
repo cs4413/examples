@@ -1,7 +1,7 @@
 <?php  
 function registerFormOnSubmit($user) {
 
-   echo '<form action ="../controllers/registerController.php" 
+   echo '<form action ="/jstest/examples/examples.php"
    		 method="Post" onsubmit="return checkPasswordMatch();">';
    echo '<p>User name: <input type="text" name ="userName"';
    if (!is_null($user) && !empty($user->getUserName())) 
@@ -12,7 +12,7 @@ function registerFormOnSubmit($user) {
    	   echo $user->getError("userName");
    echo '</span></p>';
 
-   echo '<p>Password: <input id="password" type="password" name ="userPassword"';
+   echo '<p>Password: <input id="password" type="password" name ="password"';
    if (!is_null($user) && !empty($user->getUserPassword())) 
    	   echo 'value = "'. $user->getUserPassword() .'"';
    echo '>';
@@ -22,7 +22,7 @@ function registerFormOnSubmit($user) {
    echo '</span></p>';
 
    echo '<p>Retype password: <input id="retypedPassword" type="password" 
-   		name ="userPasswordRetyped" onblur="checkPasswordMatch()">';
+   		name ="retypedPassword" onblur="checkPasswordMatch()">';
    echo '<span id="retypedError" class="error"></span></p>';
 
    echo '<p><input type = "submit" name = "submit" value="Submit"></p>';
