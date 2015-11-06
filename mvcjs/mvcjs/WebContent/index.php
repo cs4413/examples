@@ -13,8 +13,29 @@
 	if (!isset($_SESSION['authenticated'])) 
 		$_SESSION['authenticated'] = false;
 	switch ($control) {
+		case "assignment":
+			AssignmentController::run();
+			break;
+		case "information":
+			InformationView::show();
+			break;
+		case "login" :
+			LoginController::run ();
+			break;
+		case "logout" :
+			LogoutController::run ();
+			break;
+		case "review" :
+			ReviewController::run ();
+			break;
+		case "submission" :
+			SubmissionController::run ();
+			break;
+		case "user" :
+			UserController::run ();
+			break;
 		default:
-				header("Location: /$base/examples/index.html");		
+			HomeView::show();		
 	};
 	ob_end_flush();
 	
