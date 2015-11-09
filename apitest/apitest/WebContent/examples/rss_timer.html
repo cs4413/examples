@@ -1,0 +1,63 @@
+<!DOCTYPE html lang="en">
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="../css/jumbotron.css">
+<title>RSS demo using JQuery Ajax with interval timer</title>
+<script>
+$(document).ready(
+	function() {
+		window.setInterval(function(){
+			var rssUrl = "../controllers/rssOddController.php";
+		    $.ajax({type: "GET",
+		    	    url: rssUrl, 
+		    	    dataType: 'text',
+		    	    success: function(result){
+		    	    	var myDate = new Date();
+		    	    	$("#rssOutput").html(myDate.toString() + "<br>" + result);},
+		            error: function() {
+		            	alert ('Failed to download feed');
+		            }
+		           });
+		
+			}, 6000);
+});
+</script>
+</head>
+<body>
+<div class="container">
+<h1>RSS demo using JQuery Ajax with interval timer</h1>
+
+<h4>Script</h4>
+<pre>
+$(document).ready(
+	function() {
+		window.setInterval(function(){
+			var rssUrl = "../controllers/rssOddController.php";
+		    $.ajax({type: "GET",
+		    	    url: rssUrl, 
+		    	    dataType: 'text',
+		    	    success: function(result){
+		    	    	var myDate = new Date();
+		    	    	$("#rssOutput").html(myDate.toString() + "<br>" + result);},
+		            error: function() {
+		            	alert ('Failed to download feed');
+		            }
+		           });
+		
+			}, 6000);
+});
+</pre>
+
+<h4>The feed</h4>
+<div id="rssOutput">RSS-feed will be listed here...</div>
+</div>
+</body>
+</html> 

@@ -1,0 +1,55 @@
+<!DOCTYPE html lang="en">
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="../css/jumbotron.css">
+<title>RSS example 1: straight AJAX</title>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    google.load("feeds", "1");
+
+    function OnLoad() {
+    	  // Query for president feeds on cnn.com
+    	  var query = 'site:cnn.com president';
+    	  google.feeds.findFeeds(query, findDone);
+    	}
+
+    	function findDone(result) {
+    	  // Make sure we didn't get an error.
+    	  if (!result.error) {
+    	    // Get content div
+    	    var content = document.getElementById('content');
+    	    var html = '';
+
+    	    // Loop through the results and print out the title of the feed and link to
+    	    // the url.
+    	    for (var i = 0; i < result.entries.length; i++) {
+    	      var entry = result.entries[i];
+    	      html += '<p><a href="/feed/v1/' + entry.url + '">' + entry.title + '</a></p>';
+    	    }
+    	    content.innerHTML = html;
+    	  }
+    	}
+
+    	google.setOnLoadCallback(OnLoad);
+</script>
+ <title>rssExample5 - Google API - needs referer URL</title>
+  </head>
+  <body>
+    <div id="feed"></div>
+  </body>
+</html>

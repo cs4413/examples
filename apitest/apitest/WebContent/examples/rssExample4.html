@@ -1,0 +1,43 @@
+<!DOCTYPE html lang="en">
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="../css/jumbotron.css">
+<title>rssExample4 - Google API - needs referer URL</title>
+
+<script type="text/javascript">
+    google.load("feeds", "1");
+    function initialize() {
+      var feed = new google.feeds.Feed("http://fastpshb.appspot.com/feed/1/fastpshb");
+      feed.load(function(result) {
+        if (!result.error) {
+          var container = document.getElementById("feed");
+          for (var i = 0; i < result.feed.entries.length; i++) {
+            var entry = result.feed.entries[i];
+            var div = document.createElement("div");
+            div.appendChild(document.createTextNode(entry.title));
+            container.appendChild(div);
+          }
+        }
+      });
+    }
+    google.setOnLoadCallback(initialize);
+</script>
+</head>
+<body>
+<div class="container">
+<h1>rssExample4 - Google API - needs referer URL</h1>
+
+<h4>Script</h4>
+<pre></pre>
+    <div id="feed"></div>
+</div>
+  </body>
+</html>
