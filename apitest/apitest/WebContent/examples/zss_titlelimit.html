@@ -1,20 +1,24 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+﻿<!DOCTYPE html lang="en">
+<html>
 <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="../js/jquery.zrssfeed.min.js" type="text/javascript"></script>
 
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<meta http-equiv="content-language" content="en" />
-
-<link href="jquery.zrssfeed.css" rel="stylesheet" type="text/css" />
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-<script src="jquery.zrssfeed.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="../css/jumbotron.css">
+<link rel="stylesheet" href="../css/jquery.zrssfeed.css" type="text/css" />
 
 <title>zRSSFeed - How to limit feed title lengths</title>
 
 <script type="text/javascript">
 $(document).ready(function () {
-	$('#test').rssfeed('http://feeds.reuters.com/reuters/oddlyEnoughNews',{},function(e) {
+	$('#test').rssfeed('http://feeds.reuters.com/reuters/peopleNews',{},function(e) {
 		$('h4 a',e).each(function(i) {
 			var title = $(this).text();
 			if (title.length > 14) $(this).text(title.substring(0,14)+'...');
@@ -32,7 +36,7 @@ $(document).ready(function () {
 <h4>Script</h4>
 <pre>
 $(document).ready(function () {
-	$('#test').rssfeed('http://feeds.reuters.com/reuters/oddlyEnoughNews',{},function(e) {
+	$('#test').rssfeed('http://feeds.reuters.com/reuters/peopleNews',{},function(e) {
 
 		$('h4 a',e).each(function(i) {
 
