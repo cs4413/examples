@@ -17,7 +17,7 @@ class AssignmentsDBTest extends PHPUnit_Framework_TestCase {
   public function testGetAllAssignments() {
   	  DBMakerUnit::createDB('ptest');
   	  $assignments = AssignmentsDB::getAssignmentsBy();
-  	  $this->assertEquals(4, count($assignments), 
+  	  $this->assertEquals(8, count($assignments), 
   	  		'It should fetch all of the assignments in the test database');
 
   	  foreach ($assignments as $assignment) 
@@ -63,8 +63,8 @@ class AssignmentsDBTest extends PHPUnit_Framework_TestCase {
 
   public function testGetAssignmentByAssignmentOwnerName() {
   	DBMakerUnit::createDB('ptest');
-    $assignments = AssignmentsDB::getAssignmentsBy('assignmentOwnerName', 'Alice');
-    $this->assertEquals(count($assignments), 1, 'Alice should have one assignment');
+    $assignments = AssignmentsDB::getAssignmentsBy('assignmentOwnerName', 'Kay');
+    $this->assertEquals(count($assignments), 4, 'Kay should have four assignments');
     foreach($assignments as $assignment) {
     	$this->assertTrue(is_a($assignment, "Assignment"),
     			'The returned values should be Assignment objects');
@@ -72,5 +72,13 @@ class AssignmentsDBTest extends PHPUnit_Framework_TestCase {
     			"The returned assignments should have no errors");
     }
   }
+  
+  public function testGetAssignmentRowSetsByAssignmentOwnerName() {
+  	DBMakerUnit::createDB('ptest');
+  	$assignments = AssignmentsDB::getAssignmentRowSetsBy('assignmentOwnerName', 'Kay');
+  	
+  	$this->assertEquals(count($assignments), 4, 'Kay should have four assignments');
+  }
+  
 }
 ?>

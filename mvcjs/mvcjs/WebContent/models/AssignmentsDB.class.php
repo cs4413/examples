@@ -38,7 +38,7 @@ class AssignmentsDB {
 			$db = Database::getDB ();
 			$query = "SELECT Assignments.assignmentId, Assignments.assignmentDescription, 
 	   		          Assignments.assignmentTitle, Users.userName as assignmentOwnerName
-	   		          FROM Assignments LEFT JOIN Users ON Assignments.assignmentId = Users.userId";
+	   		          FROM Assignments LEFT JOIN Users ON Assignments.assignmentOwnerId = Users.userId";
 
 			if (!is_null($type)) {
 				if (!in_array($type, $allowedTypes))

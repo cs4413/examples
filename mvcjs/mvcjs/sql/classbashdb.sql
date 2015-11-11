@@ -66,8 +66,16 @@ INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription,
        (3, 1, 'This is a third assignment', 'Assignment 3');
 INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription, assignmentTitle) VALUES
        (4, 1, 'This is a fourth assignment', 'Assignment 4');       
-	  
-INSERT INTO Submissions (submissionId, submitterId, assignmentId, submissionFile) VALUES 
+INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription, assignmentTitle) VALUES
+       (5, 2, 'This is the fifth assignment', 'Assignment 4');
+INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription, assignmentTitle) VALUES
+       (6, 2, 'This is the sixth assignment', 'Assignment 5');
+INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription, assignmentTitle) VALUES
+       (7, 3, 'This is the seventh assignment', 'Assignment 7');
+INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription, assignmentTitle) VALUES
+       (8, 4, 'This is the eighth assignment', 'Assignment 8');       
+
+       INSERT INTO Submissions (submissionId, submitterId, assignmentId, submissionFile) VALUES 
 	   (1, 1, 1, 'Kay1.txt');  
 INSERT INTO Submissions (submissionId, submitterId, assignmentId, submissionFile) VALUES 
 	   (2, 1, 2, 'Kay2.txt');

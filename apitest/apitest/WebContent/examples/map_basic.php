@@ -18,7 +18,6 @@ $configPath = dirname(__FILE__).DIRECTORY_SEPARATOR."..".
 	  	      DIRECTORY_SEPARATOR. ".." . DIRECTORY_SEPARATOR.
 		      ".." . DIRECTORY_SEPARATOR . "myConfig.ini";
 $passArray = parse_ini_file($configPath);
-$key = $passArray["googlekey"];
 $key = 'http://maps.googleapis.com/maps/api/js?key='.$passArray["googlekey"].'&sensor=false';
 echo '<script type="text/javascript" src="'.$key.'"></script>';
 ?>

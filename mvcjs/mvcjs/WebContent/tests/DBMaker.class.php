@@ -98,8 +98,20 @@ class DBMaker {
 			                     ':assignmentTitle' => 'Assignment 3'));
 			$st->execute (array (':assignmentId' => 4 , ':assignmentOwnerId' => 1, 
 			                     ':assignmentDescription' =>  'This is a fourth assignment', 
-			                     ':assignmentTitle' => 'Assignment 4'));			                     
-			 
+			                     ':assignmentTitle' => 'Assignment 4'));
+			$st->execute (array (':assignmentId' => 5 , ':assignmentOwnerId' => 2,
+			                     ':assignmentDescription' =>  'This is a fifth assignment',
+			                     ':assignmentTitle' => 'Assignment 5'));
+			$st->execute (array (':assignmentId' => 6 , ':assignmentOwnerId' => 2,
+			                     ':assignmentDescription' =>  'This is a sixth assignment',
+			                     ':assignmentTitle' => 'Assignment 6'));
+			$st->execute (array (':assignmentId' => 7 , ':assignmentOwnerId' => 3,
+			                     ':assignmentDescription' =>  'This is a seventh assignment',
+			                     ':assignmentTitle' => 'Assignment 7'));
+			$st->execute (array (':assignmentId' => 8 , ':assignmentOwnerId' => 4,
+			                     ':assignmentDescription' =>  'This is the eighth assignment',
+			                     ':assignmentTitle' => 'Assignment 8'));
+			
 			$sql = "INSERT INTO Submissions (submissionId, submitterId, assignmentId, submissionFile) 
 	                             VALUES (:submissionId, :submitterId, :assignmentId, :submissionFile)";
 			$st = $db->prepare ($sql);

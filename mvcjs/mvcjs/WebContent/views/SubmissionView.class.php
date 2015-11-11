@@ -69,17 +69,21 @@ class SubmissionView {
    public static function showNew() {
    	  $_SESSION['headertitle'] = "Create a new submission";
       $_SESSION['styles'] = array('jumbotron.css');
+      $_SESSION['scripts'] = array('assign.js');
    	  MasterView::showHeader();
    	  MasterView::showNavbar();
    	  self::showNewDetails();
    	  $_SESSION['footertitle'] = "<h3>Submission footer</h3>";
    	  MasterView::showFooter();
+   	  $_SESSION['styles'] = array();
+   	  $_SESSION['scripts'] = array();
    }
    
    public static function showNewDetails() {
    	  $submission = (array_key_exists('submission', $_SESSION))?$_SESSION['submission']:null;
    	  $base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
-	  echo '<div class="container-fluid">';
+   	  $instructors = (array_key_exists('instructors', $_SESSION))?$_SESSION['instructors']:array();
+   	  echo '<div class="container-fluid">';
 	  echo '<div class="row">';
 	  echo '<div class="col-md-3 col-sm-2 col-xs-1"></div>';
 	  echo '<div class="col-md-6 col-sm-8 col-xs-10">';
@@ -107,20 +111,23 @@ class SubmissionView {
    		 echo 'value = "'. $submission->getSubmitterName() .'"';
    	  echo 'required>';
    	  echo '</div>';
-   	
-   	  echo '<div class="form-group">'; //Assignment number
-   	  echo '<label for="assignmentId">Assignment Id: ';
-      echo '<span class="label label-danger">';
-   	  if (!is_null($submission))
-   		 echo $submission->getError('assignmentId');
-   	  echo '</span></label>';
-   	  echo '<input class="form-control" type = "number" min="1" id = "assignmentId"
-	   		 required name ="assignmentId"';
-   	  if (!is_null($submission))
-   		 echo 'value = "'. $submission->getAssignmentId() .'"';
-   	  echo '>';
-   	  echo '</div>'; 
    	  
+   	  echo '<div class="form-group">';
+   	  echo '<label for="instructor">Select instructor:</label>';
+   	  echo '<select class="form-control" id="instructor" size="3" name="instructor">';
+   	  foreach ($instructors as $instructor)
+   	  	echo '<option value="'.$instructor.'">'.$instructor.'</option>';
+   	  echo '</select>';
+   	  echo '</div>';
+   	  
+   	  echo '<div class="form-group">';
+   	  echo '<label for="assignmentId">Select assignment:</label>';
+   	  echo '<select class="form-control" id="assignmentId" size="3" name="assignmentId">';
+   	  echo '<option value="temp1">Temp 1</option>';
+   	  echo '</select>';
+   	  echo '</div>';
+ 
+   	 
    	  echo '<div class="form-group">';  // File upload
    	  echo '<input type="hidden" name="MAX_FILE_SIZE" value="500000" />';
    	  echo '<label for="submissionFile">Upload submission:';
@@ -140,6 +147,70 @@ class SubmissionView {
       echo '</div>';	
    }
    
+// public static function showNewDetails() {
+// 	$submission = (array_key_exists('submission', $_SESSION))?$_SESSION['submission']:null;
+// 	$base = (array_key_exists('base', $_SESSION))?$_SESSION['base']:"";
+// 	echo '<div class="container-fluid">';
+// 	echo '<div class="row">';
+// 	echo '<div class="col-md-3 col-sm-2 col-xs-1"></div>';
+// 	echo '<div class="col-md-6 col-sm-8 col-xs-10">';
+// 	echo '<h1>'.$_SESSION['headertitle'].'</h1>';
+
+// 	echo '<form role = "form" enctype="multipart/form-data"
+//    		   action ="/'.$base.'/submission/new" method="Post">';
+
+// 	// Error at the top of the form
+// 	if (!is_null($submission) && !empty($submission->getError('submissionId'))) {
+// 		echo  '<div class="form-group">';
+// 		echo  '<label><span class="label label-danger">';
+// 		echo  $submission->getError('submissionId');
+// 		echo '</span></label></div>';
+// 	}
+
+// 	echo '<div class="form-group">'; // Submitter name
+// 	echo '<label for="submitterName">Submitter name:';
+// 	echo '<span class="label label-danger">';
+// 	if (!is_null($submission))
+// 		echo $submission->getError('submitterName');
+// 	echo '</span></label>';
+// 	echo '<input type="text" class="form-control" id = "submitterName" name="submitterName"';
+// 	if (!is_null($submission))
+// 		echo 'value = "'. $submission->getSubmitterName() .'"';
+// 	echo 'required>';
+// 	echo '</div>';
+
+// 	echo '<div class="form-group">'; //Assignment number
+// 	echo '<label for="assignmentId">Assignment Id: ';
+// 	echo '<span class="label label-danger">';
+// 	if (!is_null($submission))
+// 		echo $submission->getError('assignmentId');
+// 	echo '</span></label>';
+// 	echo '<input class="form-control" type = "number" min="1" id = "assignmentId"
+// 	   		 required name ="assignmentId"';
+// 	if (!is_null($submission))
+// 		echo 'value = "'. $submission->getAssignmentId() .'"';
+// 	echo '>';
+// 	echo '</div>';
+
+// 	echo '<div class="form-group">';  // File upload
+// 	echo '<input type="hidden" name="MAX_FILE_SIZE" value="500000" />';
+// 	echo '<label for="submissionFile">Upload submission:';
+// 	echo '<span class="label label-danger">';
+// 	if (!is_null($submission))
+// 		echo $submission->getError('submissionFile');
+// 	echo '</span></label>';
+// 	echo '<input name="submissionFile"
+//    	  		id = "submissionFile" type="file" required />';
+// 	echo '</div>';
+
+// 	echo '<button type="submit" class="btn btn-default">Submit</button>';
+// 	echo '</form>';
+// 	echo '</div>';
+// 	echo '<div class="col-md-3 col-sm-2 col-xs-1"></div>';
+// 	echo '</div>';
+// 	echo '</div>';
+// }
+
    public static function showUpdate() {
 	  $_SESSION['headertitle'] = "Update submission";
 	  $_SESSION['styles'] = array('Jumbotron.css');
@@ -217,5 +288,6 @@ class SubmissionView {
 	   	echo '<div class="col-md-3 col-sm-2 col-xs-1"></div>';
 	   	echo '</div>';
 	   	echo '</div>';
+
    }
 }

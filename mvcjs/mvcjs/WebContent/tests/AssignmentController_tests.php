@@ -59,6 +59,13 @@ $_SESSION = array('base' => 'mvcsession', 'control' => 'assignment',
 AssignmentController::run();
 ?>
 
-
+<h2>It should produce the assignment lists for a given owner</h2>
+<?php 
+$myDb = DBMaker::create('ptest');
+$_SERVER ["REQUEST_METHOD"] = "GET";
+$_SESSION = array('base' => 'mvcsession', 'control' => 'assignment',
+		             'action' =>'instructor', 'arguments' => "Kay");
+AssignmentController::run();
+?>
 </body>
 </html>

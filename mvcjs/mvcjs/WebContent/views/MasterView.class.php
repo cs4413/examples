@@ -9,16 +9,41 @@ class MasterView {
         echo '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">';
         echo '<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>';
         echo '<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>';
-        
-        $styles = (array_key_exists('styles', $_SESSION))? $_SESSION['styles']: array();
         $base = (array_key_exists('base', $_SESSION))? $_SESSION['base']: "";
+        $scripts = (array_key_exists('scripts', $_SESSION))? $_SESSION['scripts']: array();
+       
+        echo '<script src="/mvcjs/js/assign.js"></script>';
+//         echo '<script src="/';
+//         echo $base;
+//         echo '/js/';
+//         echo $scripts[0];
+//         echo '"></script>';
+//         $script = $scripts[0];
+//         $base = 'mvcjs';
+//         for ($i = 0; $i < count($scripts); $i++) {
+//         	echo '<script src="/';
+//         	echo $base;
+//         	echo '/js/';
+//         	echo $scripts[i];
+//         	echo '"></script>';
+//         }
+        //echo '<script scr="/'.$base.'/js/assign.js'. '"></script>';
+        //echo '<script scr="/'.$base.'/js/assign.js"></script>';
+//         $a = array();
+//         foreach ($scripts as $script)  {
+//         	array_push($a, $script);
+//         	echo '<script scr="/'.$base.'/js/'.$script. '"></script>';
+//         }
+        $styles = (array_key_exists('styles', $_SESSION))? $_SESSION['styles']: array();
         foreach ($styles as $style ) 
            echo '<link href="/'.$base.'/css/'.$style. '" rel="stylesheet">';
+      
         $title = (array_key_exists('headertitle', $_SESSION))? $_SESSION['headertitle']: "";
         echo "<title>$title</title>";
         echo "</head><body>";
+
     }
-    
+
     public static function showNavBar() {
     	// Show the navbar
     	$base = (array_key_exists('base', $_SESSION))? $_SESSION['base']: "";

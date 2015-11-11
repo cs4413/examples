@@ -77,10 +77,21 @@ echo "Count after = $afterCount<br>";
   Database::clearDB();
   $db = Database::getDB('ptest');
  
-  $assignments = AssignmentsDB::getAssignmentsBy('assignmentOwnerName', 'Alice');
-  echo "<br>Number of assignments by Alice is ". count($assignments);
+  $assignments = AssignmentsDB::getAssignmentsBy('assignmentOwnerName', 'Kay');
+  echo "<br>Number of assignments by Kay is ". count($assignments);
   foreach ($assignments as $assignment)
   	echo "<br>Assignment: $assignment<br>";
+   
+?>
+
+<h2>It should get a assignment row sets by assignment owner name</h2>
+<?php
+  DBMaker::create('ptest');
+  Database::clearDB();
+  $db = Database::getDB('ptest');
+ 
+  $assignments = AssignmentsDB::getAssignmentRowSetsBy('assignmentOwnerName', 'Kay');
+  print_r($assignments);
    
 ?>
 

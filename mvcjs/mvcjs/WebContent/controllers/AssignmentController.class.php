@@ -6,6 +6,10 @@ class AssignmentController {
 		$action = $_SESSION['action'];
 		$arguments = $_SESSION['arguments'];
 		switch ($action) {
+			case "instructor":
+				$assignmentRows = AssignmentsDB::getAssignmentRowSetsBy('assignmentOwnerName', $arguments);
+				echo json_encode($assignmentRows);
+				break;
 			case "new":
 				self::newAssignment();
 				break;

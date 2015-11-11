@@ -10,6 +10,8 @@ class SubmissionController {
         		self::downloadSubmission();
         		break;
         	case "new":
+        		$instructors = UsersDB::getUserValuesBy('userName');
+        		$_SESSION['instructors'] = $instructors;
         		self::newSubmission();
         		break;
         	case "show":

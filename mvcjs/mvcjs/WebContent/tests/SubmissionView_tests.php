@@ -65,7 +65,9 @@ SubmissionView::showUpdate();
 $validSubmission = array("submitterName" => "krobbins", "assignmentId" => "1",
 		           "submissionFile" => "myText.apl");
 $s1 = new Submission($validSubmission);
-$_SESSION = array('submission' => $s1, 'base' => "mvcsession");
+$instructors = array("Kay", "John", "Alice");
+$_SESSION = array('submission' => $s1, 'base' => "mvcsession", 
+		          'instructors' => $instructors);
 echo $s1;
 SubmissionView::showNew();
 ?>
