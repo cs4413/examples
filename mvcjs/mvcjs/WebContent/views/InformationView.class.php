@@ -9,6 +9,9 @@ class InformationView {
 	  $_SESSION['footertitle'] = "<h3>The footer goes here</h3>";
       MasterView::showHomeFooter();
       MasterView::showPageEnd();
+      unset($_SESSION['headertitle']);
+      unset($_SESSION['styles']);
+      unset($_SESSION['footertitle']);
   }
 
    public static function showDetails() { 

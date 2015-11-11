@@ -9,6 +9,9 @@ class AssignmentView {
 		self::showDetails();
 		$_SESSION['footertitle'] ="<h3>The assignment footer</h3>";
         MasterView::showFooter();
+        unset($_SESSION['headertitle']);
+        unset($_SESSION['styles']);
+        unset($_SESSION['footertitle']);
 	}
 	
 	public static function showAll() {
@@ -20,6 +23,9 @@ class AssignmentView {
 		self::showAllDetails();
 		$_SESSION['footertitle'] ='<h3>Assignments list footer</h3>';
 		MasterView::showFooter();
+		unset($_SESSION['headertitle']);
+		unset($_SESSION['styles']);
+		unset($_SESSION['footertitle']);
 	}
 	
 	public static function showAllDetails() {
@@ -73,6 +79,9 @@ class AssignmentView {
 		self::showNewDetails();
 		$_SESSION['footertitle'] = "<h3>Review footer</h3>";
 		MasterView::showFooter();
+		unset($_SESSION['headertitle']);
+		unset($_SESSION['styles']);
+		unset($_SESSION['footertitle']);
 	}
 	
 	public static function showNewDetails() {
@@ -154,6 +163,8 @@ class AssignmentView {
 		MasterView::showHeader();
 		MasterView::showNavbar();
 		self::showUpdateDetails();
+		unset($_SESSION['headertitle']);
+		unset($_SESSION['styles']);
 	}	
 		
 	public static function showUpdateDetails() {

@@ -6,6 +6,8 @@ class LoginView {
 		LoginView::showDetails();
 		$_SESSION['footertitle'] = "<h3>The footer goes here</h3>";
 		MasterView::showFooter();
+		unset($_SESSION['headertitle']);
+		unset($_SESSION['footertitle']);
 	}
 	
 	public static function showDetails() {

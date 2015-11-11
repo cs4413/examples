@@ -75,8 +75,10 @@ class SubmissionView {
    	  self::showNewDetails();
    	  $_SESSION['footertitle'] = "<h3>Submission footer</h3>";
    	  MasterView::showFooter();
-   	  $_SESSION['styles'] = array();
-   	  $_SESSION['scripts'] = array();
+      unset($_SESSION['headertitle']);
+      unset($_SESSION['styles']);
+      unset($_SESSION['scripts']);
+      unset($_SESSION['footertitle']);
    }
    
    public static function showNewDetails() {
@@ -219,6 +221,9 @@ class SubmissionView {
 	  self::showUpdateDetails();
 	  $_SESSION['footertitle'] = "The submission update footer";
 	  MasterView::showFooter();
+	  unset($_SESSION['headertitle']);
+	  unset($_SESSION['styles']);
+	  unset($_SESSION['footertitle']);
    }
    
    public static function showUpdateDetails() {

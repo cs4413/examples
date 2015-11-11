@@ -93,7 +93,7 @@ class MasterView {
 	    	echo '<div class="form-group">';
 	    	echo '<input type="text" placeholder="User name" class="form-control" name ="userName" ';
 	        if (!is_null($user)) 
-	   	        echo 'value = "'. $user->getUserName();
+	   	        echo 'value = "'. $user->getUserName().'"';
 	    	echo 'required></div>';
 	    	echo '<div class="form-group">';
 	    	echo '<input type="password" placeholder="Password" 

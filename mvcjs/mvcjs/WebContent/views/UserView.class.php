@@ -8,6 +8,9 @@ class UserView {
 		self::showDetails();
 		$_SESSION['footertitle'] ="<h3>User footer</h3>";
         MasterView::showFooter();
+        unset($_SESSION['headertitle']);
+        unset($_SESSION['styles']);
+        unset($_SESSION['footertitle']);
 	}
 	
 	public static function showAll() {
@@ -19,6 +22,9 @@ class UserView {
 		self::showAllDetails();
 		$_SESSION['footertitle'] ='<h3>Users list footer</h3>';
 		MasterView::showFooter();
+		unset($_SESSION['headertitle']);
+		unset($_SESSION['styles']);
+		unset($_SESSION['footertitle']);
 	}
 	
 	public static function showAllDetails() {
@@ -88,6 +94,9 @@ class UserView {
 		self::showNewDetails();
 		$_SESSION['footertitle'] = "<h3>New user footer</h3>";
 		MasterView::showFooter();
+		unset($_SESSION['headertitle']);
+		unset($_SESSION['styles']);
+		unset($_SESSION['footertitle']);
 	}
 		
 	public static function showNewDetails() {

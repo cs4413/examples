@@ -9,6 +9,9 @@ class ReviewView {
 		ReviewView::showDetails();
 		$_SESSION['footertitle'] ="<h3>The review footer</h3>";
         MasterView::showFooter();
+        unset($_SESSION['headertitle']);
+        unset($_SESSION['styles']);
+        unset($_SESSION['footertitle']);
 	}
 	
 	public static function showAll() {
@@ -20,6 +23,9 @@ class ReviewView {
 		ReviewView::showAllDetails();
 		$_SESSION['footertitle'] ='<h3>Reviews list footer</h3>';
 		MasterView::showFooter();
+		unset($_SESSION['headertitle']);
+		unset($_SESSION['styles']);
+		unset($_SESSION['footertitle']);
 	}
 	
 	public static function showAllDetails() {
@@ -75,6 +81,9 @@ class ReviewView {
 		self::showNewDetails();
 		$_SESSION['footertitle'] = "<h3>Review footer</h3>";
 		MasterView::showFooter();
+		unset($_SESSION['headertitle']);
+		unset($_SESSION['styles']);
+		unset($_SESSION['footertitle']);
 	}
 	
 	public static function showNewDetails() {
@@ -152,6 +161,8 @@ class ReviewView {
 		MasterView::showHeader();
 		MasterView::showNavbar();
 		self::showUpdateDetails();
+		unset($_SESSION['headertitle']);
+		unset($_SESSION['styles']);
 	}	
 		
 	public static function showUpdateDetails() {
