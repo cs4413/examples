@@ -23,11 +23,11 @@ class UsersDBTest extends PHPUnit_Framework_TestCase {
   public function testInsertValidUser() {
    	DBMakerUnit::createDB('ptest');
   	$beforeCount = count(UsersDB::getUsersBy());
-  	$validTest = array("userName" => "krobbins", "password" => "123");
+  	$validTest = array("userName" => "krobbins", "password" => "xxx1");
   	$s1 = new User($validTest);
   	$newUser = UsersDB::addUser($s1);
   	$this->assertEquals(0, $newUser->getErrorCount(), 
-  			'The inserted user should not have users');
+  			'The inserted user should not have errors');
   	$afterCount = count(UsersDB::getUsersBy());
   	$this->assertEquals($afterCount, $beforeCount + 1,
   			'The database should have one more user after insertion');
@@ -37,7 +37,7 @@ class UsersDBTest extends PHPUnit_Framework_TestCase {
   	ob_start();
  	DBMakerUnit::createDB('ptest');
   	$beforeCount = count(UsersDB::getUsersBy());
-  	$duplicateTest = array("userName" => "Kay", "password" => "123");
+  	$duplicateTest = array("userName" => "Kay", "password" => "xxx1");
   	$s1 = new User($duplicateTest);
   	$newUser = UsersDB::addUser($s1);
   	$this->assertGreaterThan(0, $newUser->getErrorCount(), 
@@ -57,6 +57,7 @@ class UsersDBTest extends PHPUnit_Framework_TestCase {
 	$this->assertEquals($user->getUserName(), 'Kay',
 			'Before the update it should have user name Kay');
 	$parms['userName'] = 'Kay1';
+	$parms['passwordHash'] = $user->getPasswordHash();
 	$newUser = new User($parms);
 	$newUser->setUserId(1);
 	$user = UsersDB::updateUser($newUser);

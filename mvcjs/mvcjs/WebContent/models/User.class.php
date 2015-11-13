@@ -3,7 +3,7 @@ class User {
 	private $errorCount;
 	private $errors;
 	private $formInput;
-	private $password;   // will ultimately be a hash
+	private $password;
 	private $passwordHash;
 	private $userId;
 	private $userName;
@@ -32,12 +32,8 @@ class User {
 		return $this->errors;
 	}
 	
-	public function getPassword() {
-		return $this->password;
-	}
-	
-	public function getPasswordRetry() {
-		return $this->password;
+	public function getPasswordHash() {
+		return $this->passwordHash;
 	}
 	
 	public function getUserId() {
@@ -48,11 +44,9 @@ class User {
 		return $this->userName;
 	}
 	
-
 	public function getParameters() {
 		// Return data fields as an associative array
 		$paramArray = array("userName" => $this->userName,
-				            "password" => $this->password,
 				            "userId" => $this->userId
 		); 
 		return $paramArray;
@@ -66,6 +60,11 @@ class User {
 		}
 	}
 	
+	public function verifyPassword($hash) {
+		// Set the value of passwordHash to hash
+		return password_verify($this->password, $hash);
+	}
+	
 	public function setUserId($id) {
 		// Set the value of the userId to $id
 		$this->userId = $id;
@@ -75,9 +74,10 @@ class User {
 		$errorStr = "";
 		foreach($this->errors as $error)
 			$errorStr = $errorStr . " ". $error;
-		$str = "User name: ".$this->userName."<br>Password: ".$this->password . 
-		       "<br>User id: ". $this->userId.
-		        "<br>Errors:  $errorStr<br>";
+		$str = "User name: ".$this->userName."<br>
+				Password hash: ".$this->passwordHash."<br> 
+		        User id: ". $this->userId."<br> 
+		        Errors:  ".$errorStr. "<br>";
 		return $str;
 	}
 	
@@ -95,9 +95,11 @@ class User {
 	private function initialize() {
 		$this->errorCount = 0;
 		$this->errors = array();
+		$this->userId = null;
 		if (is_null($this->formInput)) {
-			$this->userName = "";
+			$this->userName = "";	   
 	 	    $this->password = "";
+	 	    $this->passwordHash = "";
 		} else  {	 
 		   $this->validateUserName();
 		   $this->validatePassword();
@@ -117,9 +119,17 @@ class User {
 	
 	private function validatePassword() {
 		// Password should not be blank
-		$this->password = $this->extractForm('password');
-		if (empty($this->password))
-			$this->setError('password', 'PASSWORD_EMPTY');
+		if (isset($this->formInput['password'])) {
+		    $this->password = $this->extractForm('password');
+		    $this->passwordHash = password_hash($this->password, PASSWORD_DEFAULT);
+		    if (empty($this->password))   
+			   $this->setError('password', 'PASSWORD_EMPTY');	
+		    // Other password requirements implemented here;
+		   
+		} elseif (isset($this->formInput['passwordHash'])) 
+			$this->passwordHash =  $this->formInput['passwordHash'];
+		else
+			$this->setError('password', 'USER_PASSWORD_INCORRECT');
 	}
 }
 ?>

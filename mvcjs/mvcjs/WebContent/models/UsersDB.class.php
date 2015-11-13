@@ -3,15 +3,15 @@ class UsersDB {
 	
 	public static function addUser($user) {
 		// Inserts the User object $user into the Users table and returns userId
-		$query = "INSERT INTO Users (userName, password)
-		                      VALUES(:userName, :password)";
+		$query = "INSERT INTO Users (userName, passwordHash)
+		                      VALUES(:userName, :passwordHash)";
 		try {
 			if (is_null($user) || $user->getErrorCount() > 0)
 				return $user;
 			$db = Database::getDB ();
 			$statement = $db->prepare ($query);
 			$statement->bindValue(":userName", $user->getUserName());
-			$statement->bindValue(":password", $user->getPassword());	
+			$statement->bindValue(":passwordHash", $user->getPasswordHash());	
 			$statement->execute ();
 			$statement->closeCursor();
 			$user->setUserId($db->lastInsertId("userId"));
@@ -27,7 +27,7 @@ class UsersDB {
 		$userRowSets = array();
 		try {
 			$db = Database::getDB ();
-			$query = "SELECT userId, userName, password FROM Users";
+			$query = "SELECT userId, userName, passwordHash FROM Users";
 			if (!is_null($type)) {
 			    if (!in_array($type, $allowedTypes))
 					throw new PDOException("$type not an allowed search criterion for Users");
@@ -92,12 +92,12 @@ class UsersDB {
 			if ($user->getErrorCount() > 0)
 				return $user;
 	
-			$query = "UPDATE Users SET userName = :userName, password = :password
+			$query = "UPDATE Users SET userName = :userName, passwordHash = :passwordHash
 	    			                 WHERE userId = :userId";
 	
 			$statement = $db->prepare ($query);
 			$statement->bindValue(":userName", $user->getUserName());
-			$statement->bindValue(":password", $user->getPassword());
+			$statement->bindValue(":passwordHash", $user->getPasswordHash());
 			$statement->bindValue(":userId", $user->getUserId());
 			$statement->execute ();
 			$statement->closeCursor();

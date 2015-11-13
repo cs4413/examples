@@ -61,7 +61,7 @@ DBMaker::create('ptest');
 Database::clearDB();
 $db = Database::getDB('ptest');
 echo "Number of users in db before added is: ". count(UsersDB::getUsersBy()) ."<br>";
-$duplicateUser = new User(array("userName" => "Kay", "password" => "XXX"));
+$duplicateUser = new User(array("userName" => "Kay", "password" => "xxx1"));
 $userId = UsersDB::addUser($duplicateUser);
 echo "Number of users in db after added is: ". count(UsersDB::getUsersBy()) ."<br>";
 echo "User ID of new user is: $userId<br>";

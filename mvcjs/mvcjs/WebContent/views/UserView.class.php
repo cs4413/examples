@@ -136,8 +136,6 @@ class UserView {
 			echo $user->getError('password');
 		echo '</span></label>';
 		echo '<input type="password" class="form-control" id = "password" name="password"';
-		if (!is_null($user))
-			echo 'value = "'. $user->getPassword() .'"';
 		echo 'required>';
 		echo '</div>';
 		
@@ -148,8 +146,6 @@ class UserView {
 			echo $user->getError('password');
 		echo '</span></label>';
 		echo '<input type="password" class="form-control" id = "passwordRetry" name="passwordRetry"';
-		if (!is_null($user))
-			echo 'value = "'. $user->getPasswordRetry() .'"';
 		echo 'required>';
 		echo '</div>';
 		

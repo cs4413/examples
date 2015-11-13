@@ -40,4 +40,5 @@ USER_DOES_NOT_EXIST A user with this Id does not exist
 USER_NAME_EMPTY Your user name can not be empty or only contain white space
 USER_NAME_HAS_INVALID_CHARS Your user name can only contain letters, numbers, dashes and underscores
 USER_NAME_DOES_NOT_EXIST This user name does not exist
+USER_PASSWORD_INCORRECT Your password is incorrect
 USER_INVALID User could not be created

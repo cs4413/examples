@@ -24,7 +24,7 @@ class DBMaker {
 			$st = $db->prepare ( "CREATE TABLE Users (
 				  userId             int(11) NOT NULL AUTO_INCREMENT,
 				  userName           varchar (255) UNIQUE NOT NULL COLLATE utf8_unicode_ci,
-				  password           varchar(255) NOT NULL COLLATE utf8_unicode_ci,
+				  passwordHash           varchar(255) NOT NULL COLLATE utf8_unicode_ci,
 				  dateCreated        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 				  PRIMARY KEY (userId)
 				)ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;");
@@ -74,14 +74,18 @@ class DBMaker {
 			         )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;");
 			$st->execute ();
 				
-			$sql = "INSERT INTO Users (userId, userName, password) VALUES
-		                          (:userId, :userName, :password)";
+			$sql = "INSERT INTO Users (userId, userName, passwordHash) VALUES
+		                          (:userId, :userName, :passwordHash)";
 			$st = $db->prepare ( $sql );
-			$st->execute (array (':userId' => 1, ':userName' => 'Kay', ':password' => 'xxx'));
-			$st->execute (array (':userId' => 2, ':userName' => 'John', ':password' => 'yyy'));
-			$st->execute (array (':userId' => 3, ':userName' => 'Alice', ':password' => 'zzz'));
-			$st->execute (array (':userId' => 4, ':userName' => 'George', ':password' => 'www'));
-			
+			$st->execute (array (':userId' => 1, ':userName' => 'Kay', 
+					             ':passwordHash' => password_hash('xxx1', PASSWORD_DEFAULT)));
+			$st->execute (array (':userId' => 2, ':userName' => 'John', 
+					             ':passwordHash' => password_hash('xxx2', PASSWORD_DEFAULT)));
+			$st->execute (array (':userId' => 3, ':userName' => 'Alice', 
+					             ':passwordHash' => password_hash('xxx3', PASSWORD_DEFAULT)));
+			$st->execute (array (':userId' => 4, ':userName' => 'George', 
+					             ':passwordHash' => password_hash('xxx4', PASSWORD_DEFAULT)));
+
 			$sql = "INSERT INTO Assignments (assignmentId, assignmentOwnerId, 
 			          assignmentDescription, assignmentTitle) VALUES
 			          (:assignmentId, :assignmentOwnerId, :assignmentDescription, :assignmentTitle)";
