@@ -11,7 +11,7 @@ require_once dirname ( __FILE__ ) . '\..\..\WebContent\views\SubmissionView.clas
 require_once dirname(__FILE__).'\..\..\WebContent\tests\DBMaker.class.php';
 
 class SubmissionControllerTest extends PHPUnit_Framework_TestCase {
-	
+	protected $base = 'mvcjs';
 	/**
 	 * @runInSeparateProcess
 	 */
@@ -22,7 +22,7 @@ class SubmissionControllerTest extends PHPUnit_Framework_TestCase {
 		$_POST = array("userName" => "krobbins", "assignmentNumber" => "1",
 		           "submissionFile" => array("name" => "myText.apl", 
 		           		                     "tmp_name" => "temp.1"));
-		$_SESSION = array('base' => 'mvcsession', 'control' => 'submission',
+		$_SESSION = array('base' => $this->base, 'control' => 'submission',
 				'action' =>'new', 'arguments' => null);
 
 		SubmissionController::run ();
@@ -37,7 +37,7 @@ class SubmissionControllerTest extends PHPUnit_Framework_TestCase {
 		ob_start ();
  	    DBMakerUnit::createDB('ptest');
 		$_SERVER ["REQUEST_METHOD"] = "GET";
-		$_SESSION = array('base' => 'mvcsession', 'control' => 'submission',
+		$_SESSION = array('base' => $this->base, 'control' => 'submission',
 				'action' =>'new', 'arguments' => null);
 
 		SubmissionController::run ();

@@ -14,7 +14,7 @@ require_once dirname(__FILE__).'\..\..\WebContent\tests\DBMaker.class.php';
 require_once dirname(__FILE__).'\..\models\DBMakerUnit.class.php';
 
 class AssignmentControllerTest extends PHPUnit_Framework_TestCase {
-	
+	protected $base = 'mvcjs';
 	/**
 	 * @runInSeparateProcess
 	 */
@@ -27,7 +27,7 @@ class AssignmentControllerTest extends PHPUnit_Framework_TestCase {
 	           	   "assignmentTitle" => "This title A",
 		           "assignmentDescription" => "This was a great presentation"
 		          );
-		$_SESSION = array('base' => 'mvcsession', 'control' =>'assignment', 
+		$_SESSION = array('base' => $this->base, 'control' =>'assignment', 
 				          'action' => 'new', 'arguments' => null);
 		AssignmentController::run ();
 		$output = ob_get_clean();
@@ -41,7 +41,7 @@ class AssignmentControllerTest extends PHPUnit_Framework_TestCase {
 		ob_start ();
  	    DBMakerUnit::createDB('ptest');
 		$_SERVER ["REQUEST_METHOD"] = "GET";
-		$_SESSION = array('base' => 'mvcsession', 'control' =>'assignment',
+		$_SESSION = array('base' => $this->base, 'control' =>'assignment',
 				          'action' => 'new', 'arguments' => null);
 
 		AssignmentController::run();

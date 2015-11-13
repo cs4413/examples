@@ -12,7 +12,7 @@ require_once dirname ( __FILE__ ) . '\..\..\WebContent\views\ReviewView.class.ph
 require_once dirname(__FILE__).'\..\..\WebContent\tests\DBMaker.class.php';
 
 class UserControllerTest extends PHPUnit_Framework_TestCase {
-	
+	protected $base = 'mvcjs';
 	/**
 	 * @runInSeparateProcess
 	 */
@@ -21,7 +21,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase {
  	    DBMakerUnit::createDB('ptest');
 		$_SERVER ["REQUEST_METHOD"] = "POST";
 		$_POST =  array("userName" => "Granger", "password" => "XXX");
-		$_SESSION = array('base' => 'mvcsession', 'action' => 'new', 'arguments' => null);
+		$_SESSION = array('base' => $this->base, 'action' => 'new', 'arguments' => null);
 		UserController::run ();
 		$output = ob_get_clean();
 		$this->assertFalse ( empty ( $output ), "It should show something from a POST" );
@@ -34,7 +34,7 @@ class UserControllerTest extends PHPUnit_Framework_TestCase {
 		ob_start ();
  	    DBMakerUnit::createDB('ptest');
 		$_SERVER ["REQUEST_METHOD"] = "GET";
-		$_SESSION = array('base' => 'mvcsession', 'action' => 'new', 'arguments' => null);
+		$_SESSION = array('base' => $this->base, 'action' => 'new', 'arguments' => null);
 
 		UserController::run();
 		$output = ob_get_clean();

@@ -11,6 +11,7 @@ require_once dirname ( __FILE__ ) . '\..\..\WebContent\views\MasterView.class.ph
 require_once dirname(__FILE__).'\..\..\WebContent\tests\DBMaker.class.php';
 
 class LoginControllerTest extends PHPUnit_Framework_TestCase {
+	protected $base = 'mvcjs';
 	/**
 	 * @runInSeparateProcess
 	 */
@@ -20,7 +21,7 @@ class LoginControllerTest extends PHPUnit_Framework_TestCase {
 		$_SERVER ["REQUEST_METHOD"] = "POST";
 		$_SERVER ["HTTP_HOST"] = "localhost";
 		$_POST = array ("userName" => "Kay", "password" => "xyz");
-		$_SESSION = array('base' => 'mvcsession');
+		$_SESSION = array('base' => $this->base);
         LoginController::run();
 		$output = ob_get_clean();
 		$this->assertFalse ( empty ( $output ), "It should show something from a POST" );
@@ -34,7 +35,7 @@ class LoginControllerTest extends PHPUnit_Framework_TestCase {
  	    $db = DBMakerUnit::createDB('ptest');
 		$_SERVER ["REQUEST_METHOD"] = "GET";
 		$_SERVER ["HTTP_HOST"] = "localhost";
-		$_SESSION = array('base' => 'mvcsession');
+		$_SESSION = array('base' => $this->base);
 
         LoginController::run();
 		$output = ob_get_clean ();

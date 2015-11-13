@@ -13,7 +13,7 @@ require_once dirname ( __FILE__ ) . '\..\..\WebContent\views\ReviewView.class.ph
 require_once dirname(__FILE__).'\..\..\WebContent\tests\DBMaker.class.php';
 
 class ReviewControllerTest extends PHPUnit_Framework_TestCase {
-	
+	protected $base = 'mvcjs';
 	/**
 	 * @runInSeparateProcess
 	 */
@@ -26,7 +26,7 @@ class ReviewControllerTest extends PHPUnit_Framework_TestCase {
 	           	   "score" => "5",
 		           "review" => "This was a great presentation"
 		          );
-		$_SESSION = array('base' => 'mvcsession', 'control' => 'review', 'action' => 'new', 'arguments' => null);
+		$_SESSION = array('base' => $this->base, 'control' => 'review', 'action' => 'new', 'arguments' => null);
 		ReviewController::run ();
 		$output = ob_get_clean();
 		$this->assertFalse ( empty ( $output ), "It should show something from a POST" );
@@ -39,7 +39,7 @@ class ReviewControllerTest extends PHPUnit_Framework_TestCase {
 		ob_start ();
  	    DBMakerUnit::createDB('ptest');
 		$_SERVER ["REQUEST_METHOD"] = "GET";
-		$_SESSION = array('base' => 'mvcsession', 'control' => 'review', 'action' => 'new', 'arguments' => null);
+		$_SESSION = array('base' => $this->base, 'control' => 'review', 'action' => 'new', 'arguments' => null);
 
 		ReviewController::run();
 		$output = ob_get_clean();

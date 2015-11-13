@@ -5,11 +5,12 @@ require_once dirname(__FILE__).'\..\..\WebContent\views\MasterView.class.php';
 require_once dirname(__FILE__).'\..\..\WebContent\views\UserView.class.php';
 
 class UserViewTest extends PHPUnit_Framework_TestCase {
+	protected $base = 'mvcjs';
 	
   public function testShowUserViewWithUser() {
   	ob_start();
   	$validTest = array("userName" => "krobbins", "password" =>"xxx");
-  	$_SESSION = array('user' => new User($validTest), 'base' => 'mvcsession');
+  	$_SESSION = array('user' => new User($validTest), 'base' => $this->base);
   	$validSubmission = array("submitterName" => "krobbins", "assignmentNumber" => "1",
   			"submissionFile" => "myText.apl");
   	$_SESSION['userSubmissions'] = array(new Submission($validSubmission));
@@ -28,7 +29,7 @@ class UserViewTest extends PHPUnit_Framework_TestCase {
   
   public function testShowUserViewWithNullUser() {
   	 ob_start();
-     $_SESSION = array('user' => null, 'base' => 'mvcsession');
+     $_SESSION = array('user' => null, 'base' => $this->base);
      $return = UserView::show();
      $output = ob_get_clean();
      $this->assertFalse(empty($output),
@@ -55,7 +56,7 @@ class UserViewTest extends PHPUnit_Framework_TestCase {
   	 ob_start();
      $user = new User(array("userName" => "Kay", "password" => "xxx"));
      $user -> setUserId(1);
-   	 $_SESSION = array('users' => array($user), 'base' => "mvcsession");
+   	 $_SESSION = array('users' => array($user), 'base' => $this->base);
    	 UserView::showUpdate();
    	 $output = ob_get_clean();
    	 $this->assertFalse(empty($output), "It should show the user update form");

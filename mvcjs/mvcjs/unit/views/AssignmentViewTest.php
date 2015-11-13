@@ -5,6 +5,7 @@ require_once dirname(__FILE__).'\..\..\WebContent\views\AssignmentView.class.php
 require_once dirname(__FILE__).'\..\..\WebContent\views\MasterView.class.php';
 
 class AssignmentViewTest extends PHPUnit_Framework_TestCase {
+	protected $base = 'mvcjs';
 	
   public function testShowAssignmentViewWithAssignment() {
   	ob_start();
@@ -14,7 +15,7 @@ class AssignmentViewTest extends PHPUnit_Framework_TestCase {
 		               "assignmentDescription" => "This was a great presentation"
 		              );
     $s1 = new Assignment($validTest);
-  	$_SESSION = array('assignment' => $s1, 'base' => 'mvcsession');
+  	$_SESSION = array('assignment' => $s1, 'base' => $this->base);
     AssignmentView::show();
     $output = ob_get_clean();
     $this->assertFalse(empty($output), 
@@ -33,7 +34,7 @@ class AssignmentViewTest extends PHPUnit_Framework_TestCase {
   	$s2 = new Assignment($validTest);
   	$s2 -> setAssignmentId(2);
   	$assignments = array($s1, $s2);
-  	$_SESSION = array('assignments' => $assignments, 'base' => 'mvcsession',
+  	$_SESSION = array('assignments' => $assignments, 'base' => $this->base,
   			          'headertitle' => 'Assignment table',
   			          'footertitle' => 'This is a footer');
   	AssignmentView::showall();
@@ -60,7 +61,7 @@ class AssignmentViewTest extends PHPUnit_Framework_TestCase {
   	);
   	$assignment = new Assignment($validTest);
   	$assignment->setAssignmentId(1);
-  	$_SESSION = array('assignment' => $assignment, 'base' => "mvcsession");
+  	$_SESSION = array('assignment' => $assignment, 'base' => $this->base);
   	AssignmentView::showUpdate();
   	$output = ob_get_clean();
   	$this->assertFalse(empty($output),

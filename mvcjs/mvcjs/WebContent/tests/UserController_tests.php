@@ -24,13 +24,14 @@ include_once("../views/MasterView.class.php");
 include_once("../views/SubmissionView.class.php");
 include_once("../views/UserView.class.php");
 include_once("./DBMaker.class.php");
+$base = 'mvcjs';
 ?>
 
 <h2>It should should show a user that exists</h2>
 <?php 
 DBMaker::create('ptest');
 $_SERVER ["REQUEST_METHOD"] = "POST";
-$_SESSION = array('base' => 'mvcsession', 'control' => 'user', 
+$_SESSION = array('base' => $base, 'control' => 'user', 
 	                      'action' =>'show', 'arguments' => 1);
 UserController::run();
 ?>
@@ -39,7 +40,7 @@ UserController::run();
 <?php 
 DBMaker::create('ptest');
 $_SERVER ["REQUEST_METHOD"] = "GET";
-$_SESSION = array('base' => 'mvcsession', 'control' => 'user',
+$_SESSION = array('base' => $base, 'control' => 'user',
 		             'action' =>'show', 'arguments' => 0);
 UserController::run();
 ?>
@@ -48,7 +49,7 @@ UserController::run();
 <?php 
 $db = DBMaker::create('ptest');
 $_SERVER ["REQUEST_METHOD"] = "POST";
-$_SESSION = array('base' => 'mvcsession', 'control' => 'user',
+$_SESSION = array('base' => $base, 'control' => 'user',
 		             'action' =>'update', 'arguments' => 1);
 $_POST = array("userName" => 'Kay1', 'password' => 'xxx');
 print_r($_POST);

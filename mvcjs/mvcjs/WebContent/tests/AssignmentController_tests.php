@@ -5,7 +5,7 @@
 <title>Basic tests for Assignment Controller</title>
 </head>
 <body>
-<h1>Review controller tests</h1>
+<h1>Assignment controller tests</h1>
 
 <?php
 include_once("../controllers/AssignmentController.class.php");
@@ -21,13 +21,14 @@ include_once("../views/HomeView.class.php");
 include_once("../views/MasterView.class.php");
 include_once("../views/AssignmentView.class.php");
 include_once("./DBMaker.class.php");
+$base = 'mvcjs'
 ?>
 
 <h2>It should should show a assignment that exists</h2>
 <?php
 $myDb = DBMaker::create('ptest');
 $_SERVER ["REQUEST_METHOD"] = "POST";
-$_SESSION = array('base' => 'mvcsession', 'control' => 'assignment',
+$_SESSION = array('base' => $base, 'control' => 'assignment',
 		'action' =>'show', 'arguments' => 1);
 AssignmentController::run();
 ?>
@@ -36,7 +37,7 @@ AssignmentController::run();
 <?php 
 $myDb = DBMaker::create('ptest');
 $_SERVER ["REQUEST_METHOD"] = "GET";
-$_SESSION = array('base' => 'mvcsession', 'control' => 'assignment',
+$_SESSION = array('base' => $base, 'control' => 'assignment',
 		             'action' =>'show', 'arguments' => 0);
 AssignmentController::run();
 ?>
@@ -45,7 +46,7 @@ AssignmentController::run();
 <?php 
 $myDb = DBMaker::create('ptest');
 $_SERVER ["REQUEST_METHOD"] = "GET";
-$_SESSION = array('base' => 'mvcsession', 'control' => 'assignment',
+$_SESSION = array('base' => $base, 'control' => 'assignment',
 		             'action' =>'new', 'arguments' => null);
 AssignmentController::run();
 ?>
@@ -54,7 +55,7 @@ AssignmentController::run();
 <?php 
 $myDb = DBMaker::create('ptest');
 $_SERVER ["REQUEST_METHOD"] = "GET";
-$_SESSION = array('base' => 'mvcsession', 'control' => 'assignment',
+$_SESSION = array('base' => $base, 'control' => 'assignment',
 		             'action' =>'update', 'arguments' => 1);
 AssignmentController::run();
 ?>
@@ -63,7 +64,7 @@ AssignmentController::run();
 <?php 
 $myDb = DBMaker::create('ptest');
 $_SERVER ["REQUEST_METHOD"] = "GET";
-$_SESSION = array('base' => 'mvcsession', 'control' => 'assignment',
+$_SESSION = array('base' => $base, 'control' => 'assignment',
 		             'action' =>'instructor', 'arguments' => "Kay");
 AssignmentController::run();
 ?>

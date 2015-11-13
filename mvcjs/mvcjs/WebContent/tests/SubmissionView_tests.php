@@ -12,6 +12,7 @@ include_once("../models/Messages.class.php");
 include_once("../models/Submission.class.php");
 include_once("../views/MasterView.class.php");
 include_once("../views/SubmissionView.class.php");
+$base = 'mvcjs';
 ?>
 
 <h2>It should show a Submission with a header and footer</h2>
@@ -19,7 +20,7 @@ include_once("../views/SubmissionView.class.php");
 $validSubmission = array("submitterName" => "krobbins", "assignmentId" => "1",
 		           "submissionFile" => "myText.apl");
 $s1 = new Submission($validSubmission);
-$_SESSION = array('submission' => $s1, 'base' => "mvcsession");
+$_SESSION = array('submission' => $s1, 'base' => $base);
 
 SubmissionView::show();
 ?>
@@ -36,7 +37,7 @@ $submissions = array($s1, $s1);
 $_SESSION = array('submissions' => $submissions,
    		            'headerTitle' => "ClassBash Submissions",
 		            'footerTitle' => "<h3>The footer goes here</h3>",
-		            'base' => "mvcsession");
+		            'base' => $base);
 SubmissionView::showall();
 ?> 
  
@@ -45,7 +46,7 @@ SubmissionView::showall();
 $s1 -> setSubmissionId(1);
 $submissions = array($s1, $s1);
 $_SESSION = array('submissions' => $submissions,
-		            'base' => "mvcsession");
+		            'base' => $base);
 SubmissionView::showall();
 ?>  
 
@@ -55,7 +56,7 @@ $validSubmission = array("submitterName" => "krobbins", "assignmentId" => "1",
 		           "submissionFile" => "myText.apl");
 $s1 = new Submission($validSubmission);
 $s1->setSubmissionId(1);
-$_SESSION = array('submission' => $s1, 'base' => "mvcsession");
+$_SESSION = array('submission' => $s1, 'base' => $base);
 echo $s1;
 SubmissionView::showUpdate();
 ?>
@@ -66,7 +67,7 @@ $validSubmission = array("submitterName" => "krobbins", "assignmentId" => "1",
 		           "submissionFile" => "myText.apl");
 $s1 = new Submission($validSubmission);
 $instructors = array("Kay", "John", "Alice");
-$_SESSION = array('submission' => $s1, 'base' => "mvcsession", 
+$_SESSION = array('submission' => $s1, 'base' => $base, 
 		          'instructors' => $instructors);
 echo $s1;
 SubmissionView::showNew();

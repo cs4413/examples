@@ -11,14 +11,13 @@
 include_once("../models/Messages.class.php");
 include_once("../views/InformationView.class.php");
 include_once("../views/MasterView.class.php");
+$base = 'mvcjs';
 ?>
 
 <h2>It should call show without crashing</h2>
 <?php 
-$_SESSION = array("base" => "mvcsession");
+$_SESSION = array("base" => $base);
 InformationView::show();
-?>
-
 ?>
 </body>
 </html>

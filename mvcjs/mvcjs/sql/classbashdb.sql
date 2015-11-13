@@ -6,7 +6,7 @@ DROP TABLE if EXISTS Users;
 CREATE TABLE Users (
   userId             int(11) NOT NULL AUTO_INCREMENT,
   userName           varchar (255) UNIQUE NOT NULL COLLATE utf8_unicode_ci,
-  password           varchar(255) NOT NULL COLLATE utf8_unicode_ci,
+  passwordHash       varchar(255) NOT NULL COLLATE utf8_unicode_ci,
   dateCreated        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (userId)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -50,13 +50,13 @@ CREATE TABLE Reviews (
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO Users (userId, userName, password) VALUES 
-	   (1, 'Kay', 'xxx');  
+	   (1, 'Kay', '$2y$10$sUTZdNoUtZdTvqvknua48uZ6gPHYowwVzS/fTzk.Pj05yDwo9cwly');  
 INSERT INTO Users (userId, userName,  password) VALUES 
-	   (2, 'John', 'yyy');
+	   (2, 'John', '$2y$10$8Ze8hcqVk4JEc.KxUe5rwu8VJlNMwQl2011bQbWUqgQoAibrmPl2O');
 INSERT INTO Users (userId, userName, password) VALUES 
-	   (3, 'Alice', 'xxx');  
+	   (3, 'Alice', '$2y$10$dvDLipM9th2wkaZOAtUv.e8zihWHXeEAjfLhJmY143YqAucqq8DKC');  
 INSERT INTO Users (userId, userName,  password) VALUES 
-	   (4, 'George', 'yyy');
+	   (4, 'George', '$2y$10$fd8PAEk0ja4j0jxCa0dmUOX.6cAMEkqIdMTNFC38R9T.nWNFLUu6S');
 	   
 INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription, assignmentTitle) VALUES
        (1, 1, 'This is an assignment', 'Assignment 1');
@@ -75,7 +75,7 @@ INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription,
 INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription, assignmentTitle) VALUES
        (8, 4, 'This is the eighth assignment', 'Assignment 8');       
 
-       INSERT INTO Submissions (submissionId, submitterId, assignmentId, submissionFile) VALUES 
+INSERT INTO Submissions (submissionId, submitterId, assignmentId, submissionFile) VALUES 
 	   (1, 1, 1, 'Kay1.txt');  
 INSERT INTO Submissions (submissionId, submitterId, assignmentId, submissionFile) VALUES 
 	   (2, 1, 2, 'Kay2.txt');

@@ -14,12 +14,13 @@ include_once("../models/Submission.class.php");
 include_once("../models/User.class.php");
 include_once("../views/UserView.class.php");
 include_once("../views/MasterView.class.php");
+$base = 'mvcjs';
 ?>
 
 <h2>It should show successfully when user is passed to show</h2>
 <?php 
 $validTest = array("userName" => "krobbins", "password" =>"xxx");
-$_SESSION = array('user' => new User($validTest), 'base' => 'mvcsession');
+$_SESSION = array('user' => new User($validTest), 'base' => $base);
 $validSubmission = array("submitterName" => "krobbins", "assignmentId" => "1",
 		"submissionFile" => "myText.apl");
 $_SESSION['userSubmissions'] = array(new Submission($validSubmission));
@@ -39,7 +40,7 @@ $s1 -> setUserId(1);
 $s2 = new User(array("userName" => "John", "password" => "yyy"));
 $s2 -> setUserId(2);
 
-$_SESSION = array('users' => array($s1, $s2), 'base' => 'mvcsession', 'arguments' =>null);
+$_SESSION = array('users' => array($s1, $s2), 'base' => $base, 'arguments' =>null);
 UserView::showall();
 ?>
 
@@ -49,7 +50,7 @@ $validTest = array("userName" => "Kay", "password" => "xxx");
 $user = new User($validTest);
 $user->setUserId(1);
 echo $user;
-$_SESSION = array('users' => array($user), 'base' => "mvcsession");
+$_SESSION = array('users' => array($user), 'base' => $base);
 UserView::showUpdate();
 ?>
 </body>

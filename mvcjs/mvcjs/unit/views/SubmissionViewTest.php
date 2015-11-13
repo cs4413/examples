@@ -5,13 +5,14 @@ require_once dirname(__FILE__).'\..\..\WebContent\views\MasterView.class.php';
 require_once dirname(__FILE__).'\..\..\WebContent\views\SubmissionView.class.php';
 
 class SubmissionViewTest extends PHPUnit_Framework_TestCase {
+	protected $base = 'mvcjs';
 	
   public function testShowSubmissionViewWithSubmission() {
   	ob_start();
   	$validTest = array("submitterName" => "krobbins", "assignmentId" => "1",
 		               "submissionFile" => "myText.apl");
   	$s1 = new Submission($validTest);
-  	$_SESSION = array('submission' => $s1, 'base' => 'mvcsession');
+  	$_SESSION = array('submission' => $s1, 'base' => $this->base);
     SubmissionView::show();
     $output = ob_get_clean();
     $this->assertFalse(empty($output), 
@@ -23,7 +24,7 @@ class SubmissionViewTest extends PHPUnit_Framework_TestCase {
   	$validTest = array("submitterName" => "krobbins", "assignmentId" => "1",
   			"submissionFile" =>  "myText.apl");
   	$s1 = new Submission($validTest);
-  	$_SESSION = array('submission' => $s1, 'base' => 'mvcsession');
+  	$_SESSION = array('submission' => $s1, 'base' => $this->base);
 
   	SubmissionView::show();
   	$output = ob_get_clean();
@@ -38,7 +39,7 @@ class SubmissionViewTest extends PHPUnit_Framework_TestCase {
   	$s1 = new Submission($validTest);
   	$s1 -> setSubmissionId(1);
   	$submissions = array($s1, $s1);
-  	$_SESSION = array('submissions' => $submissions, 'base' => 'mvcsession');
+  	$_SESSION = array('submissions' => $submissions, 'base' => $this->base);
   	SubmissionView::showall();
   	$output = ob_get_clean();
   	$this->assertFalse(empty($output),
@@ -52,7 +53,7 @@ class SubmissionViewTest extends PHPUnit_Framework_TestCase {
   	$s1 = new Submission($validTest);
   	$s1 -> setSubmissionId(1);
   	$submissions = array($s1, $s1);
-  	$_SESSION = array('submissions' => $submissions, 'base' => 'mvcsession');
+  	$_SESSION = array('submissions' => $submissions, 'base' => $this->base);
 
   	SubmissionView::showall();
   	$output = ob_get_clean();
@@ -66,7 +67,7 @@ class SubmissionViewTest extends PHPUnit_Framework_TestCase {
   		     "submissionFile" => "myText.apl");
       $s1 = new Submission($validSubmission);
       $s1->setSubmissionId(1);
-      $_SESSION = array('submission' => $s1, 'base' => "mvcsession");
+      $_SESSION = array('submission' => $s1, 'base' => $this->base);
       SubmissionView::showUpdate();
   	  $output = ob_get_clean();
       $this->assertFalse(empty($output), "It should show an update form");
@@ -77,7 +78,7 @@ class SubmissionViewTest extends PHPUnit_Framework_TestCase {
   	$validSubmission = array("submitterName" => "krobbins", "assignmentId" => "1",
   			"submissionFile" => "myText.apl");
   	$s1 = new Submission($validSubmission);
-  	$_SESSION = array('submission' => $s1, 'base' => "mvcsession");
+  	$_SESSION = array('submission' => $s1, 'base' => $this->base);
   	SubmissionView::showNew();
   	$output = ob_get_clean();
   	$this->assertFalse(empty($output), "It should show a new form");

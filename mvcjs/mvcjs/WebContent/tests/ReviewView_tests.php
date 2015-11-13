@@ -12,6 +12,7 @@ include_once("../models/Messages.class.php");
 include_once("../models/Review.class.php");
 include_once("../views/MasterView.class.php");
 include_once("../views/ReviewView.class.php");
+$base = 'mvcjs';
 ?>
 
 <h2>It should call show </h2>
@@ -30,7 +31,7 @@ $input = array("reviewerName" => "Kay",
 $theReview = new Review($input);
 echo "The review $theReview";
 echo "The reviewer name is ". $theReview->getReviewerName() ."<br>";
-$_SESSION = array('reviews' => array($theReview), 'base' => "mvcsession");
+$_SESSION = array('reviews' => array($theReview), 'base' => $base);
 ReviewView::show();
 ?>
 
@@ -40,7 +41,7 @@ $input = array("reviewerName" => "Kay#");
 $theReview = new Review($input);
 echo "The review $theReview";
 echo "The reviewer name is ". $theReview->getReviewerName() ."<br>";
-$_SESSION = array('review' => $theReview, 'base' => "mvcsession");
+$_SESSION = array('review' => $theReview, 'base' => $base);
 ReviewView::show();
 ?>
 
@@ -54,7 +55,7 @@ $validTest = array("reviewerName" => "Kay",
 $review = new Review($validTest);
 $review->setReviewId(1);
 echo $review;
-$_SESSION = array('review' => $review, 'base' => "mvcsession");
+$_SESSION = array('review' => $review, 'base' => $base);
 ReviewView::showUpdate();
 ?>
 </body>

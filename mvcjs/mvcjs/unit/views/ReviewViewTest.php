@@ -6,6 +6,7 @@ require_once dirname(__FILE__).'\..\..\WebContent\views\MasterView.class.php';
 require_once dirname(__FILE__).'\..\..\WebContent\views\ReviewView.class.php';
 
 class ReviewViewTest extends PHPUnit_Framework_TestCase {
+	protected $base = 'mvcjs';
 	
   public function testShowReviewViewWithReview() {
   	ob_start();
@@ -15,7 +16,7 @@ class ReviewViewTest extends PHPUnit_Framework_TestCase {
 		               "review" => "This was a great presentation"
 		              );
     $s1 = new Review($validTest);
-  	$_SESSION = array('review' => $s1, 'base' => 'mvcsession');
+  	$_SESSION = array('review' => $s1, 'base' => $this->base);
     ReviewView::show();
     $output = ob_get_clean();
     $this->assertFalse(empty($output), 
@@ -43,7 +44,7 @@ class ReviewViewTest extends PHPUnit_Framework_TestCase {
   	$s2 = new Review($validTest);
   	$s2 -> setReviewId(2);
   	$reviews = array($s1, $s2);
-  	$_SESSION = array('reviews' => $reviews, 'base' => 'mvcsession',
+  	$_SESSION = array('reviews' => $reviews, 'base' => $this->base,
   			          'headertitle' => 'Submission table',
   			          'footertitle' => 'This is a footer');
   	ReviewView::showall();
@@ -70,7 +71,7 @@ class ReviewViewTest extends PHPUnit_Framework_TestCase {
   	);
   	$review = new Review($validTest);
   	$review->setReviewId(1);
-  	$_SESSION = array('review' => $review, 'base' => "mvcsession");
+  	$_SESSION = array('review' => $review, 'base' => $this->base);
   	ReviewView::showUpdate();
   	$output = ob_get_clean();
   	$this->assertFalse(empty($output),

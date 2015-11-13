@@ -12,13 +12,14 @@ include_once("../models/Messages.class.php");
 include_once("../models/User.class.php");
 include_once("../views/LoginView.class.php");
 include_once("../views/MasterView.class.php");
+$base='mvcjs';
 ?>
 
 <h2>It should show when $user has an input</h2>
 <?php 
 $validTest = array("userName" => "krobbins",  "password" => "xyz");
 $s1 = new User($validTest);
-$_SESSION = array('user' => $s1, 'base' => 'mvcsession');
+$_SESSION = array('user' => $s1, 'base' => $base);
 LoginView::show();
 ?>
 
@@ -26,7 +27,7 @@ LoginView::show();
 <?php 
 $invalidTest = array("userName" => "krobbins");
 $s1 = new User($invalidTest);
-$_SESSION = array('user' => $s1, 'base' => 'mvcsession');
+$_SESSION = array('user' => $s1, 'base' => $base);
 LoginView::show();
 ?>
 

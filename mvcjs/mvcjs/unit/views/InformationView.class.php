@@ -5,10 +5,11 @@ require_once dirname(__FILE__).'\..\..\WebContent\views\InformationView.class.ph
 require_once dirname(__FILE__).'\..\..\WebContent\views\MasterView.class.php';
 
 class InformationViewTest extends PHPUnit_Framework_TestCase {
+	protected $base = 'mvcjs';
 	
   public function testShowInformationView() {
   	ob_start();
-  	$_SESSION = array("base" => "mvcsession");
+  	$_SESSION = array("base" => $this->base);
   	InformationView::show();
   	$output = ob_get_clean();
   	$this->assertFalse(empty($output),

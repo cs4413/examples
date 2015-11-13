@@ -4,6 +4,7 @@ class User {
 	private $errors;
 	private $formInput;
 	private $password;   // will ultimately be a hash
+	private $passwordHash;
 	private $userId;
 	private $userName;
 

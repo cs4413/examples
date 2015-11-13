@@ -5,11 +5,12 @@ require_once dirname(__FILE__).'\..\..\WebContent\views\LoginView.class.php';
 require_once dirname(__FILE__).'\..\..\WebContent\views\MasterView.class.php';
 
 class LoginViewTest extends PHPUnit_Framework_TestCase {
+	protected $base = 'mvcjs';
 	
   public function testShowLoginViewWithUser() {
   	$validTest = array("userName" => "krobbins", "password" => "123");
   	$s1 = new User($validTest);
-  	$_SESSION = array('user' => $s1, 'base' => 'mvcsession');
+  	$_SESSION = array('user' => $s1, 'base' => $this->base);
   	ob_start();
   	LoginView::show();
   	$output = ob_get_clean();
@@ -18,7 +19,7 @@ class LoginViewTest extends PHPUnit_Framework_TestCase {
   }
   
   public function testShowLoginViewWithNullUser() {
-  	$_SESSION = array('base' => 'mvcsession');
+  	$_SESSION = array('base' => $this->base);
   	ob_start();
   	$return = LoginView::show();
   	$output = ob_get_clean();

@@ -12,6 +12,7 @@ include_once("../models/Messages.class.php");
 include_once("../models/Assignment.class.php");
 include_once("../views/MasterView.class.php");
 include_once("../views/AssignmentView.class.php");
+$base = 'mvcjs';
 ?>
 
 <h2>It should call show </h2>
@@ -30,7 +31,7 @@ $input = array("assignmentOwnerName" => "Kay",
 $theAssignment = new Assignment($input);
 echo "The assignment $theAssignment";
 echo "The assignment owner name is ". $theAssignment->getAssignmentOwnerName() ."<br>";
-$_SESSION = array('Assignments' => array($theAssignment), 'base' => "mvcsession");
+$_SESSION = array('Assignments' => array($theAssignment), 'base' => $base);
 AssignmentView::show();
 ?>
 
@@ -40,7 +41,7 @@ $input = array("AssignmenterName" => "Kay#");
 $theAssignment = new Assignment($input);
 echo "The assignment $theAssignment";
 echo "The assignment owner name is ". $theAssignment->getAssignmentOwnerName() ."<br>";
-$_SESSION = array('assignment' => $theAssignment, 'base' => "mvcsession");
+$_SESSION = array('assignment' => $theAssignment, 'base' => $base);
 AssignmentView::show();
 ?>
 
@@ -54,7 +55,7 @@ $validTest = array("assignmentOwnerName" => "Kay",
 $assignment = new Assignment($validTest);
 $assignment->setAssignmentId(1);
 echo $assignment;
-$_SESSION = array('assignment' => $assignment, 'base' => "mvcsession");
+$_SESSION = array('assignment' => $assignment, 'base' => $base);
 AssignmentView::showUpdate();
 ?>
 </body>
