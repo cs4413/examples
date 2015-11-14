@@ -10,13 +10,16 @@
 <?php
 include_once("../models/Messages.class.php");
 include_once("../models/Assignment.class.php");
+echo "due date: ".date('Y-m-d G:i:s')."<br>";
 ?>
 
 <h2>It should create a valid Assignment object when all input is provided</h2>
 <?php 
 $validTest = array("assignmentDescription" => "This is a description of the assignment",
     	           	"assignmentTitle" => "This is an assignment title",
-             	   "assignmentOwnerName" => "George");
+             	   "assignmentOwnerName" => "George",
+		           "assignmentDueDate" => date('Y-m-d G:i:s'));
+
 $s1 = new Assignment($validTest);
 echo "The object is: $s1<br>";
 $test1 = (is_object($s1))?'':

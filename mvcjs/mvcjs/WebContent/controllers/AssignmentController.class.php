@@ -3,7 +3,7 @@ class AssignmentController {
 
 	public static function run() {
 		// Perform actions related to a review
-		$action = $_SESSION['action'];
+		$action = (array_key_exists('action', $_SESSION))?$_SESSION['action']:"";
 		$arguments = $_SESSION['arguments'];
 		switch ($action) {
 			case "instructor":

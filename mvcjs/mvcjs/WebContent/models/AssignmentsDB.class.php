@@ -3,8 +3,10 @@ class AssignmentsDB {
 	
 	public static function addAssignment($assignment) {
 		// Inserts $assignment into the Assignments table and returns assignmentId
-		$query = "INSERT INTO Assignments (assignmentOwnerId, assignmentTitle, assignmentDescription)
-		                      VALUES(:assignmentOwnerId, :assignmentTitle, :assignmentDescription)";
+		$query = "INSERT INTO Assignments (assignmentOwnerId, assignmentTitle, 
+				       assignmentDescription, assignmentDueDate)
+		               VALUES(:assignmentOwnerId, :assignmentTitle, 
+				       :assignmentDescription, :assignmentDueDate)";
 		try {
 			$db = Database::getDB ();
 			if (is_null($assignment) || $assignment->getErrorCount() > 0)
@@ -19,6 +21,7 @@ class AssignmentsDB {
 			$statement->bindValue(":assignmentTitle", $assignment->getAssignmentTitle());
 			$statement->bindValue(":assignmentDescription", $assignment->getAssignmentDescription());
 			$statement->bindValue(":assignmentOwnerId", $users[0]->getUserId());
+			$statement->bindValue(":assignmentDueDate", $assignment->getAssignmentDueDate());
 			$statement->execute ();
 			$statement->closeCursor();
 			$returnId = $db->lastInsertId("assignmentId");
@@ -31,13 +34,15 @@ class AssignmentsDB {
 	
 	public static function getAssignmentRowSetsBy($type = null, $value = null) {
 		// Returns the rows of Assignments whose $type field has value $value
-		$allowedTypes = array("assignmentId", "assignmentOwnerName", "assignmentTitle", "assignmentDescription");
+		$allowedTypes = array("assignmentId", "assignmentOwnerName", "assignmentTitle", 
+				              "assignmentDescription", "assignmentDueDate");
 		$typeAlias = array("assignmentOwnerName" => "Users.userName");
 		$assignmentRowSets = array();
 		try {
 			$db = Database::getDB ();
 			$query = "SELECT Assignments.assignmentId, Assignments.assignmentDescription, 
-	   		          Assignments.assignmentTitle, Users.userName as assignmentOwnerName
+	   		          Assignments.assignmentTitle, Users.userName as assignmentOwnerName,
+					  Assignments.assignmentDueDate
 	   		          FROM Assignments LEFT JOIN Users ON Assignments.assignmentOwnerId = Users.userId";
 
 			if (!is_null($type)) {
@@ -106,13 +111,14 @@ class AssignmentsDB {
 				return $assignment;
 	
 			$query = "UPDATE Assignments SET assignmentDescription = :assignmentDescription,
-					    assignmentTitle = :assignmentTitle
+					    assignmentTitle = :assignmentTitle, assignmentDueDate =:assignmentDueDate,
 	    			    WHERE assignmentId = :assignmentId";
 	
 			$statement = $db->prepare ($query);
 			$statement->bindValue(":assignmentDescription", $assignment->getAssignmentDescription());
 			$statement->bindValue(":assignmentTitle", $assignment->getAssignmentTitle());
 			$statement->bindValue(":assignmentId", $assignment->getAssignmentId());
+			$statement->bindValue(":assignmentDueDate", $assignment->getAssignmentDueDate());
 			$statement->execute ();
 			$statement->closeCursor();
 		} catch (Exception $e) { // Not permanent error handling

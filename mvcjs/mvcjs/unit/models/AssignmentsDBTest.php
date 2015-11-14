@@ -31,7 +31,8 @@ class AssignmentsDBTest extends PHPUnit_Framework_TestCase {
   	$validTest = array("assignmentOwnerName" => "Kay",
   			"assignmentId" => "1",
   			"assignmentTitle" => "This was a title",
-  			"assignmentDescription" => "This was a great presentation"
+  			"assignmentDescription" => "This was a great presentation",
+  			"assignmentDueDate" => date('Y-m-d G:i:s')
   	);
   	$s1 = new Assignment($validTest);
   	$assignment = AssignmentsDB::addAssignment($s1);

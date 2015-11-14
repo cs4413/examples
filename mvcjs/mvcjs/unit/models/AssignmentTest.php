@@ -7,8 +7,10 @@ class AssignmentTest extends PHPUnit_Framework_TestCase {
   public function testValidAssignmentCreate() {
   	ob_start();
     $validTest = array("assignmentDescription" => "This is a description of the assignment",
-    	           	"assignmentTitle" => "This is an assignment title",
-             	   "assignmentOwnerName" => "George");
+    	            "assignmentTitle" => "This is an assignment title",
+             	      "assignmentOwnerName" => "George",
+    		          "assignmentDueDate" => date('Y-m-d G:i:s')
+    );
     $s1 = new Assignment($validTest);   
     $this->assertTrue(is_a($s1, 'Assignment'), 
     	'It should create a valid Assignment object when valid input is provided');

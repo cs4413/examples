@@ -17,7 +17,8 @@ CREATE TABLE Assignments (
   assignmentOwnerId      int(11) NOT NULL,
   assignmentDescription  varchar (4096) COLLATE utf8_unicode_ci,
   assignmentTitle        varchar (255) COLLATE utf8_unicode_ci,
-  dateCreated            TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  assignmentCreationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  assignmentDueDate      TIMESTAMP NOT NULL,
   PRIMARY KEY (assignmentId),
   FOREIGN KEY (assignmentOwnerId) REFERENCES Users(userId)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -49,31 +50,39 @@ CREATE TABLE Reviews (
   CONSTRAINT rid_subid UNIQUE (reviewerId, submissionId)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-INSERT INTO Users (userId, userName, password) VALUES 
+INSERT INTO Users (userId, userName, passwordHash) VALUES 
 	   (1, 'Kay', '$2y$10$sUTZdNoUtZdTvqvknua48uZ6gPHYowwVzS/fTzk.Pj05yDwo9cwly');  
-INSERT INTO Users (userId, userName,  password) VALUES 
+INSERT INTO Users (userId, userName,  passwordHash) VALUES 
 	   (2, 'John', '$2y$10$8Ze8hcqVk4JEc.KxUe5rwu8VJlNMwQl2011bQbWUqgQoAibrmPl2O');
-INSERT INTO Users (userId, userName, password) VALUES 
+INSERT INTO Users (userId, userName, passwordHash) VALUES 
 	   (3, 'Alice', '$2y$10$dvDLipM9th2wkaZOAtUv.e8zihWHXeEAjfLhJmY143YqAucqq8DKC');  
-INSERT INTO Users (userId, userName,  password) VALUES 
+INSERT INTO Users (userId, userName,  passwordHash) VALUES 
 	   (4, 'George', '$2y$10$fd8PAEk0ja4j0jxCa0dmUOX.6cAMEkqIdMTNFC38R9T.nWNFLUu6S');
 	   
-INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription, assignmentTitle) VALUES
-       (1, 1, 'This is an assignment', 'Assignment 1');
-INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription, assignmentTitle) VALUES
-       (2, 1, 'This is another assignment', 'Assignment 2');
-INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription, assignmentTitle) VALUES
-       (3, 1, 'This is a third assignment', 'Assignment 3');
-INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription, assignmentTitle) VALUES
-       (4, 1, 'This is a fourth assignment', 'Assignment 4');       
-INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription, assignmentTitle) VALUES
-       (5, 2, 'This is the fifth assignment', 'Assignment 4');
-INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription, assignmentTitle) VALUES
-       (6, 2, 'This is the sixth assignment', 'Assignment 5');
-INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription, assignmentTitle) VALUES
-       (7, 3, 'This is the seventh assignment', 'Assignment 7');
-INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription, assignmentTitle) VALUES
-       (8, 4, 'This is the eighth assignment', 'Assignment 8');       
+INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription, 
+        assignmentTitle, assignmentDueDate) VALUES
+       (1, 1, 'This is an assignment', 'Assignment 1', '2015-11-14 22:40:19');
+INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription, 
+        assignmentTitle, assignmentDueDate) VALUES
+       (2, 1, 'This is another assignment', 'Assignment 2','2015-11-18 22:30:19');
+INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription, 
+        assignmentTitle, assignmentDueDate) VALUES
+       (3, 1, 'This is a third assignment', 'Assignment 3', '2015-12-14 22:40:19');
+INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription, 
+        assignmentTitle, assignmentDueDate) VALUES
+       (4, 1, 'This is a fourth assignment', 'Assignment 4', '2016-01-14 22:40:19');       
+INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription, 
+        assignmentTitle, assignmentDueDate) VALUES
+       (5, 2, 'This is the fifth assignment', 'Assignment 5', '2015-12-11 14:40:19');
+INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription,
+        assignmentTitle, assignmentDueDate) VALUES
+       (6, 2, 'This is the sixth assignment', 'Assignment 6', '2015-12-24 22:45:19');
+INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription, 
+        assignmentTitle, assignmentDueDate) VALUES
+       (7, 3, 'This is the seventh assignment', 'Assignment 7', '2015-11-30 22:40:19');
+INSERT INTO Assignments (assignmentId, assignmentOwnerId, assignmentDescription, 
+        assignmentTitle, assignmentDueDate) VALUES
+       (8, 4, 'This is the eighth assignment', 'Assignment 8', '2015-11-23 22:40:19');       
 
 INSERT INTO Submissions (submissionId, submitterId, assignmentId, submissionFile) VALUES 
 	   (1, 1, 1, 'Kay1.txt');  

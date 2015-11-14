@@ -40,7 +40,8 @@ $db = Database::getDB('ptest');
 $beforeCount = count(AssignmentsDB::getAssignmentsBy());
 $validTest = array("assignmentOwnerName" => "Kay",
 		    "assignmentTitle" => "Another great assignment title",
-  			"assignmentDescription" => "This was a great presentation"
+  			"assignmentDescription" => "This was a great presentation",
+	   	     "assignmentDueDate" => date('Y-m-d G:i:s')
   	);
 $s1 = new Assignment($validTest);
 $s1New = AssignmentsDB::addAssignment($s1);
@@ -59,7 +60,7 @@ $db = Database::getDB('ptest');
 $beforeCount = count(AssignmentsDB::getAssignmentsBy());
 $assignments = AssignmentsDB::getAssignmentsBy('assignmentId', 1);
 $currentAssignment = $assignments[0];
-echo "Current review: $currentAssignment<br>";
+echo "Current assignment: $currentAssignment<br>";
 $parms = $currentAssignment->getParameters();
 $parms['assignment'] = 'new assignment text';
 $newAssignment = new Assignment($parms);

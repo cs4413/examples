@@ -7,6 +7,8 @@ class Assignment {
 	private $assignmentId;
 	private $assignmentOwnerName;
 	private $assignmentTitle;
+	private $assignmentCreationDate;
+	private $assignmentDueDate;
 
 	public function __construct($formInput = null) {
 		$this->formInput = $formInput;
@@ -29,8 +31,16 @@ class Assignment {
 		return $this->errors;
 	}
 	
+	public function getAssignmentCreationDate() {
+		return $this->assignmentCreationDate;
+	}
+	
 	public function getAssignmentDescription() {
 		return $this->assignmentDescription;
+	}
+	
+	public function getAssignmentDueDate() {
+		return $this->assignmentDueDate;
 	}
 		
 	public function getAssignmentId() {
@@ -50,7 +60,9 @@ class Assignment {
 		$paramArray = array("assignmentId" => $this->assignmentId,
 				            "assignmentTitle" => $this->assignmentTitle,
 			            	"assignmentDescription" => $this->assignmentDescription,
-				            "assignmentOwnerName" => $this->assignmentOwnerName
+				            "assignmentOwnerName" => $this->assignmentOwnerName,
+				            "assignmentCreationDate" => $this->assignmentCreationDate,
+				            "assignmentDueDate" => $this->assignmentDueDate
 		); 
 		return $paramArray;
 	}
@@ -75,7 +87,9 @@ class Assignment {
 		$str = "Assignment Id: ".$this->assignmentId.
 		       "Assignment title: ".$this->assignmentTitle.
 		       " Assignment owner name: ".$this->assignmentOwnerName.
-		       " Assignment description: ".$this->assignmentDescription;
+		       " Assignment description: ".$this->assignmentDescription. 
+		       " Assignment creation date: ".$this->assignmentCreationDate.
+		       " Assignment due date: ".$this->assignmentDueDate;
 		if (!empty($errorStr))
 		    $str = $str. " Errors: [$errorStr.]";
 		return $str;
@@ -94,6 +108,8 @@ class Assignment {
 	private function initialize() {
 		$this->errorCount = 0;
 		$this->assignmentId = 0;
+		$this->assignmentCreationDate = date('Y-m-d G:i:s');
+		$this->assignmentDueDate = date('Y-m-d G:i:s');
 		$this->errors = array ();
 		if (is_null ($this->formInput)) {
 			$this->assignmentDescription = "";
@@ -102,6 +118,7 @@ class Assignment {
 			$this->validateAssignmentDescription();
 			$this->validateAssignmentOwnerName();
 			$this->validateAssignmentTitle();
+			$this->validateAssignmentDueDate();
 		}
 	}
 	
@@ -110,6 +127,13 @@ class Assignment {
 		$this->assignmentDescription = $this->extractForm('assignmentDescription');
 		if (empty($this->assignmentDescription)) 
 			$this->setError('assignmentDescription', 'ASSIGNMENT_DESCRIPTION_EMPTY');
+	}
+	
+	private function validateAssignmentDueDate() {
+		// Assignment due date should not be empty
+		$this->assignmentDueDate = $this->extractForm('assignmentDueDate');
+		if (empty($this->assignmentDueDate))
+			$this->setError('assignmentDueDate', 'ASSIGNMENT_DUE_DATE_EMPTY');
 	}
 	
 	private function validateAssignmentOwnerName() {

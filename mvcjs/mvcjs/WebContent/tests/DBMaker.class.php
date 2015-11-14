@@ -37,7 +37,8 @@ class DBMaker {
 			         assignmentOwnerId      int(11) NOT NULL,
 			         assignmentDescription  varchar (4096) COLLATE utf8_unicode_ci,
 			         assignmentTitle        varchar (255) COLLATE utf8_unicode_ci,
-			         dateCreated            TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+			         assignmentCreationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+					 assignmentDueDate      TIMESTAMP NOT NULL,
 			         PRIMARY KEY (assignmentId),
 			         FOREIGN KEY (assignmentOwnerId) REFERENCES Users(userId)
 			         )ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;");
@@ -87,34 +88,43 @@ class DBMaker {
 					             ':passwordHash' => password_hash('xxx4', PASSWORD_DEFAULT)));
 
 			$sql = "INSERT INTO Assignments (assignmentId, assignmentOwnerId, 
-			          assignmentDescription, assignmentTitle) VALUES
-			          (:assignmentId, :assignmentOwnerId, :assignmentDescription, :assignmentTitle)";
+			          assignmentDescription, assignmentTitle, assignmentDueDate) VALUES
+			          (:assignmentId, :assignmentOwnerId, :assignmentDescription, 
+					   :assignmentTitle, :assignmentDueDate)";
 			$st = $db->prepare ($sql);
 			
 			$st->execute (array (':assignmentId' => 1 , ':assignmentOwnerId' => 1, 
 			                     ':assignmentDescription' =>  'This is an assignment', 
-			                     ':assignmentTitle' => 'Assignment 1'));
+			                     ':assignmentTitle' => 'Assignment 1',	  
+			                     ':assignmentDueDate' => '2015-11-14 22:40:19'));
 			$st->execute (array (':assignmentId' => 2 , ':assignmentOwnerId' => 1, 
 			                     ':assignmentDescription' =>  'This is another assignment', 
-			                     ':assignmentTitle' => 'Assignment 2'));
+			                     ':assignmentTitle' => 'Assignment 2',	  
+			                     ':assignmentDueDate' => '2015-11-18 22:30:19'));
 			$st->execute (array (':assignmentId' => 3 , ':assignmentOwnerId' => 1, 
 			                     ':assignmentDescription' =>  'This is a third assignment', 
-			                     ':assignmentTitle' => 'Assignment 3'));
+			                     ':assignmentTitle' => 'Assignment 3',	  
+			                     ':assignmentDueDate' => '2015-12-14 22:40:19'));
 			$st->execute (array (':assignmentId' => 4 , ':assignmentOwnerId' => 1, 
 			                     ':assignmentDescription' =>  'This is a fourth assignment', 
-			                     ':assignmentTitle' => 'Assignment 4'));
+			                     ':assignmentTitle' => 'Assignment 4',	  
+			                     ':assignmentDueDate' => '2016-01-14 22:40:19'));
 			$st->execute (array (':assignmentId' => 5 , ':assignmentOwnerId' => 2,
 			                     ':assignmentDescription' =>  'This is a fifth assignment',
-			                     ':assignmentTitle' => 'Assignment 5'));
+			                     ':assignmentTitle' => 'Assignment 5',	  
+			                     ':assignmentDueDate' => '2015-12-11 14:40:19'));
 			$st->execute (array (':assignmentId' => 6 , ':assignmentOwnerId' => 2,
 			                     ':assignmentDescription' =>  'This is a sixth assignment',
-			                     ':assignmentTitle' => 'Assignment 6'));
+			                     ':assignmentTitle' => 'Assignment 6',	  
+			                     ':assignmentDueDate' => '2015-12-24 22:45:19'));;
 			$st->execute (array (':assignmentId' => 7 , ':assignmentOwnerId' => 3,
 			                     ':assignmentDescription' =>  'This is a seventh assignment',
-			                     ':assignmentTitle' => 'Assignment 7'));
+			                     ':assignmentTitle' => 'Assignment 7',	  
+			                     ':assignmentDueDate' => '2015-11-30 22:40:19'));
 			$st->execute (array (':assignmentId' => 8 , ':assignmentOwnerId' => 4,
 			                     ':assignmentDescription' =>  'This is the eighth assignment',
-			                     ':assignmentTitle' => 'Assignment 8'));
+			                     ':assignmentTitle' => 'Assignment 8',	  
+			                     ':assignmentDueDate' => '2015-11-23 22:40:19'));;
 			
 			$sql = "INSERT INTO Submissions (submissionId, submitterId, assignmentId, submissionFile) 
 	                             VALUES (:submissionId, :submitterId, :assignmentId, :submissionFile)";

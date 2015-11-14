@@ -1,4 +1,5 @@
 ASSIGNMENT_DESCRIPTION_EMPTY You must provide a non-empty assignment description
+ASSIGNMENT_DUE_DATE_EMPTY You must provide an assignment due date
 ASSIGNMENT_DOES_NOT_EXIST The assignment Id does not correspond to an existing assignment
 ASSIGNMENT_NUMBER_EMPTY You must give an assignment number
 ASIGNMENT_NUMBER_INVALID The assignment must correspond to an existing assignment
