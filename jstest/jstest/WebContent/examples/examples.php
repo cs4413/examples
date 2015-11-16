@@ -55,6 +55,15 @@ JSON post controller.</li>
 JQuery Ajax to post to the server without refresh.</li>
 </ul>
 
+<h3>Image tests</h3>
+<ul>
+<li><a href="/jstest/examples/testImageData.php">/jstest/examples/testImageData.php</a></li>
+<li><a href="/jstest/examples/imageForm1.php">/jstest/examples/imageForm1.php</a></li>
+<li><a href="/jstest/examples/imageForm2.php">/jstest/examples/imageForm2.php</a></li>
+<li><a href="/jstest/examples/imageForm3.php">/jstest/examples/imageForm3.php</a></li>
+<li><a href="/jstest/examples/imageForm4.php">/jstest/examples/imageForm4.php</a></li>
+</ul>
+
 <h3>Tests</h3>
 <ul>
 <li><a href="./tests/testall.html">testall</a></li>
