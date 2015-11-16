@@ -3,6 +3,7 @@
  */
 $(document).ready(
    function() {
+	  $("#assignmentDueDate").datetimepicker();
       $("#instructor").change(
     	  function () { 
     		  var option = $("#instructor option:selected").val();
@@ -10,7 +11,7 @@ $(document).ready(
        	   	  $.ajax(
        	   	      {type: "GET",
     	    	  url: url,
-    	    	  dataType: 'json',
+    	    	  dataType: "json",
     	    	  success: 
     	    		  function(result){
 	    	     	      var el = $("#assignmentId");

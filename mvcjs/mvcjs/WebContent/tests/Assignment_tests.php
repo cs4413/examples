@@ -10,15 +10,14 @@
 <?php
 include_once("../models/Messages.class.php");
 include_once("../models/Assignment.class.php");
-echo "due date: ".date('Y-m-d G:i:s')."<br>";
 ?>
 
 <h2>It should create a valid Assignment object when all input is provided</h2>
 <?php 
 $validTest = array("assignmentDescription" => "This is a description of the assignment",
-    	           	"assignmentTitle" => "This is an assignment title",
+    	           "assignmentTitle" => "This is an assignment title",
              	   "assignmentOwnerName" => "George",
-		           "assignmentDueDate" => date('Y-m-d G:i:s'));
+		           "assignmentDueDate" => '2015-11-15 15:20:00');
 
 $s1 = new Assignment($validTest);
 echo "The object is: $s1<br>";
@@ -28,6 +27,19 @@ echo $test1;
 $test2 = (empty($s1->getErrors()))?'':
 'Failed:It not have errors when valid input is provided<br>';
 echo $test2;
+?>
+
+<h2>It should do formatted date conversion</h2>
+<?php 
+$testDate = '2015-11-15 19:50';
+$validTest = array("assignmentDescription" => "This is a description of the assignment",
+    	           	"assignmentTitle" => "This is an assignment title",
+             	   "assignmentOwnerName" => "George",
+		           "assignmentDueDate" => '2015-11-15 15:20:00');
+
+$s1 = new Assignment($validTest);
+echo "Default formatting: " .$s1->getAssignmentDueDate()->format('m-d-Y G:i')."<br>";
+echo "Other formatting: " . $s1->getAssignmentDueDateFormatted('m-d-Y G:i')."<br>";
 ?>
 
 <h2>It should extract the parameters that went in</h2>

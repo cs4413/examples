@@ -32,7 +32,7 @@ class AssignmentsDBTest extends PHPUnit_Framework_TestCase {
   			"assignmentId" => "1",
   			"assignmentTitle" => "This was a title",
   			"assignmentDescription" => "This was a great presentation",
-  			"assignmentDueDate" => date('Y-m-d G:i:s')
+  			"assignmentDueDate" => '2015-11-30 20:10:15'
   	);
   	$s1 = new Assignment($validTest);
   	$assignment = AssignmentsDB::addAssignment($s1);
@@ -51,7 +51,8 @@ class AssignmentsDBTest extends PHPUnit_Framework_TestCase {
 	 $assignments = AssignmentsDB::getAssignmentsBy('assignmentId', 1);
 	 $currentAssignment = $assignments[0];
 	 $parms = $currentAssignment->getParameters();
-	 $parms['assignment'] = 'new assignment text';
+	 $parms['assignmentDescription'] = 'new assignment text';
+	 $parms['assignmentDueDate'] = '2015-11-30 20:10:15';
 	 $newAssignment = new Assignment($parms);
 	 $newAssignment->setAssignmentId($currentAssignment->getAssignmentId());
 	 $updatedAssignment = AssignmentsDB::updateAssignment($newAssignment);
@@ -60,7 +61,12 @@ class AssignmentsDBTest extends PHPUnit_Framework_TestCase {
 	 		'The number of assignments in the database should not change after update');
 	 $this->assertEquals($updatedAssignment->getAssignmentId(), $newAssignment->getAssignmentId(),
 	 		'The id of the updated assignment should remain the same'); 
-  }
+	 $this->assertEquals($updatedAssignment->getAssignmentDescription(), 'new assignment text',
+	 		'The assignment description should be updated');
+	 $date = $updatedAssignment->getAssignmentDueDateFormatted('Y-m-d G:i:s');
+	 $this->assertEquals($date, '2015-11-30 20:10:15',
+	 		'The assignment due date should be updated');
+  } 
 
   public function testGetAssignmentByAssignmentOwnerName() {
   	DBMakerUnit::createDB('ptest');

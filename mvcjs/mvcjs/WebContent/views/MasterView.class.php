@@ -5,13 +5,16 @@ class MasterView {
         echo '<meta charset="utf-8">';
         echo '<meta http-equiv="X-UA-Compatible" content="IE=edge">';
         echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
-        echo '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">';
-        echo '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">';
+  
         echo '<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>';
         echo '<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>';
+        echo '<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>';
         $base = (array_key_exists('base', $_SESSION))? $_SESSION['base']: "";
+        //echo '<script scr = "/'.$base.'/js/jquery-ui-min.js"></script>';
+        //echo '<script scr = "/'.$base.'/js/jquery-ui-timepicker-addon.js"></script>';
         $scripts = (array_key_exists('scripts', $_SESSION))? $_SESSION['scripts']: array();
-       
+       // echo '<script src="/mvcjs/js/jquery-ui-min.js"></script>';
+        echo '<script src="/mvcjs/js/jquery-ui-timepicker-addon.js"></script>';
         echo '<script src="/mvcjs/js/assign.js"></script>';
 //         echo '<script src="/';
 //         echo $base;
@@ -34,6 +37,10 @@ class MasterView {
 //         	array_push($a, $script);
 //         	echo '<script scr="/'.$base.'/js/'.$script. '"></script>';
 //         }
+        echo '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">';
+        echo '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">';
+        echo '<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">';
+        echo '<link rel="stylesheet" href="/'.$base.'/css/jquery-ui-timepicker-addon.css">';
         $styles = (array_key_exists('styles', $_SESSION))? $_SESSION['styles']: array();
         foreach ($styles as $style ) 
            echo '<link href="/'.$base.'/css/'.$style. '" rel="stylesheet">';

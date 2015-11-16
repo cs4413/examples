@@ -25,7 +25,8 @@ class AssignmentControllerTest extends PHPUnit_Framework_TestCase {
 		$_POST =  array("assignmentOwnerName" => "Kay",
              	   "assignmentId" => "3",
 	           	   "assignmentTitle" => "This title A",
-		           "assignmentDescription" => "This was a great presentation"
+		           "assignmentDescription" => "This was a great presentation",
+				   "assignmentDueDate" => "12/30/2015 10:15"
 		          );
 		$_SESSION = array('base' => $this->base, 'control' =>'assignment', 
 				          'action' => 'new', 'arguments' => null);
@@ -48,6 +49,25 @@ class AssignmentControllerTest extends PHPUnit_Framework_TestCase {
 		$output = ob_get_clean();
 		$this->assertFalse ( empty ( $output ), "It should show something from a GET" );
 	}
+	
+	/**
+	 * @runInSeparateProcess
+	 */
+	public function testCallRunFromSuccessfulPost() {
+		ob_start();
+		DBMakerUnit::createDB('ptest');
+		$_SERVER ["REQUEST_METHOD"] = "POST";
+		$_SESSION = array('base' => $this->base, 'control' => 'assignment',
+				'action' =>'new', 'arguments' => null);
+		$_POST = array('assignmentOwnerName' => 'George',
+				'assignmentTitle' => 'A great assignment for all',
+				'assignmentDueDate' => '11/18/2015 13:16',
+				'assignmentDescription' => 'Write your life story');
+		AssignmentController::run();
+		$output = ob_get_clean();
+		$this->assertFalse ( empty ( $output ), "It should show something from a SUCCESSFUL POST" );
+	}
+
 }
 
 ?>

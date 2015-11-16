@@ -21,7 +21,8 @@ class AssignmentsDB {
 			$statement->bindValue(":assignmentTitle", $assignment->getAssignmentTitle());
 			$statement->bindValue(":assignmentDescription", $assignment->getAssignmentDescription());
 			$statement->bindValue(":assignmentOwnerId", $users[0]->getUserId());
-			$statement->bindValue(":assignmentDueDate", $assignment->getAssignmentDueDate());
+			$statement->bindValue(":assignmentDueDate", 
+					$assignment->getAssignmentDueDateFormatted('Y-m-d G:i:s'));
 			$statement->execute ();
 			$statement->closeCursor();
 			$returnId = $db->lastInsertId("assignmentId");
@@ -103,22 +104,25 @@ class AssignmentsDB {
 			if (is_null($assignment) || $assignment->getErrorCount() > 0)
 				return $assignment;
 			$checkAssignment = AssignmentsDB::getAssignmentsBy('assignmentId', $assignment->getAssignmentId());
+			
 			if (empty($checkAssignment))
 				$assignment->setError('assignmentId', 'ASSIGNMENT_DOES_NOT_EXIST');
 			elseif ($checkAssignment[0]->getAssignmentOwnerName() != $assignment->getAssignmentOwnerName())
 			    $assignment->setError('assignmentOwnerName', 'ASSIGNMENT_OWNER_NAME_DOES_NOT_MATCH');
+			
 			if ($assignment->getErrorCount() > 0)
 				return $assignment;
 	
 			$query = "UPDATE Assignments SET assignmentDescription = :assignmentDescription,
-					    assignmentTitle = :assignmentTitle, assignmentDueDate =:assignmentDueDate,
+					    assignmentTitle = :assignmentTitle, assignmentDueDate = :assignmentDueDate
 	    			    WHERE assignmentId = :assignmentId";
 	
 			$statement = $db->prepare ($query);
 			$statement->bindValue(":assignmentDescription", $assignment->getAssignmentDescription());
 			$statement->bindValue(":assignmentTitle", $assignment->getAssignmentTitle());
-			$statement->bindValue(":assignmentId", $assignment->getAssignmentId());
-			$statement->bindValue(":assignmentDueDate", $assignment->getAssignmentDueDate());
+			$statement->bindValue(":assignmentId", $assignment->getAssignmentId());	
+			$statement->bindValue(":assignmentDueDate", 
+					        $assignment->getAssignmentDueDateFormatted('Y-m-d G:i:s'));
 			$statement->execute ();
 			$statement->closeCursor();
 		} catch (Exception $e) { // Not permanent error handling

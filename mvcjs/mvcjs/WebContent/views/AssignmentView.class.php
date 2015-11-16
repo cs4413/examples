@@ -37,8 +37,8 @@ class AssignmentView {
 		echo '<div class="table-responsive">';
 		echo '<table class="table table-striped">';
 		echo '<thead>';
-		echo '<tr><th>Assignment Id</th><th>Assignment Owner</th>
-			 <th>Title</th><th>Description</th></tr>';
+		echo '<tr><th>Id</th><th>Owner</th>
+			 <th>Title</th><th>Due date</th><th>Description</th></tr>';
 		echo '</thead>';
 		echo '<tbody>';
 	
@@ -48,6 +48,7 @@ class AssignmentView {
 			echo '<td>'. $assignment->getAssignmentOwnerName().'</td>';
 			echo '<td><a href="/'.$base.'/assignment/show/'.$assignment->getAssignmentId().'">';
 			echo  $assignment->getAssignmentTitle().'</a></td>';
+			echo '<td>'. $assignment->getAssignmentDueDateFormatted('m-d-Y G:i').'</td>';
 			echo '<td>'.$assignment->getAssignmentDescription().'</td>';
 			echo '<td><a href="/'.$base.'/assignment/update/'.$assignment->getAssignmentId().'">Update</a></td>';
 	        echo '</tr>';
@@ -66,18 +67,19 @@ class AssignmentView {
 	    	echo '<h2>Assignment: '.$assignment->getAssignmentId().'</h2>';
 			echo '<p>Assignment owner name: '.$assignment->getAssignmentOwnerName().'</p>';
 			echo '<p>Assignment title: '. $assignment->getAssignmentTitle() .'</p>';
+			echo '<p>Assignment due date: '. $assignment->getAssignmentDueDateFormatted('m-d-Y G:i') .'</p>';
 			echo '<p>Description:<br> '. $assignment->getAssignmentDescription() .'</p>';
 			echo '</div>';
 		}
 	}
 	
 	public static function showNew() {
-		$_SESSION['headertitle'] = "Create a new ClassBash review";
+		$_SESSION['headertitle'] = "New assignment";
 		$_SESSION['styles'] = array('jumbotron.css');
 		MasterView::showHeader();
 		MasterView::showNavbar();
 		self::showNewDetails();
-		$_SESSION['footertitle'] = "<h3>Review footer</h3>";
+		$_SESSION['footertitle'] = "<h3>Assignment footer</h3>";
 		MasterView::showFooter();
 		unset($_SESSION['headertitle']);
 		unset($_SESSION['styles']);
@@ -117,25 +119,25 @@ class AssignmentView {
 	   echo '</div>';
 	   
 	   echo '<div class="form-group">';
-	   echo '<label for="assignmentId">Assignment Id:</label>';
-	   echo '<input type="text" class="form-control" name="assignmentId" id="assignmentId';
-	   if (!is_null($assignment)) 
-		   echo 'value = "'. $assignment->getAssignmentId() .'"';
+	   echo '<label for="assignmentTitle">Assignment title:';
+	   echo '<span class="label label-danger">';
+	   if (!is_null($assignment))
+	   	echo $assignment->getError('assignmentTitle');
+	   echo '</span></label>';
+	   echo '<input class="form-control" type="text" name="assignmentTitle" id="assignmentTitle';
+	   if (!is_null($assignment))
+	   	echo 'value = "'. $assignment->getAssignmentTitle() .'"';
 	   echo 'required>';
 	   echo '</div>';
 	   
 	   echo '<div class="form-group">';
-	   echo '<label for="assignmentTitle">Assignment title:';
-	   echo '<span class="label label-danger">';
+	   echo '<label for="assignmentDueDate">Assignment due date:</label>';
+	   echo '<input type="text" class="form-control" id = "assignmentDueDate" name="assignmentDueDate"';
 	   if (!is_null($assignment))
-	     	echo $assignment->getError('assignmentTitle');
-	   echo '</span></label>';
-	   echo '<input class="form-control" type="text" name="assignmentTitle" id="assignmentTitle';
-	   if (!is_null($assignment))
-	   	  echo 'value = "'. $assignment->getAssignmentTitle() .'"';
+	     	echo 'value = "'. $assignment->getAssignmentDueDateFormatted('m-d-Y G:i') .'"';
 	   echo 'required>';
 	   echo '</div>';
-	   
+	      
 	   echo '<div class="form-group">';
 	   echo '<label for="review">Assignment description:';
 	   echo '<span class="label label-danger">';
@@ -219,6 +221,14 @@ class AssignmentView {
    	    echo '</span></label>';
 		echo '<input class="form-control" type="text" name="assignmentTitle" id = "assignmentTitle"';
 		echo 'value = "'. $assignment->getAssignmentTitle() .'"';
+		echo 'required>';
+		echo '</div>';
+		
+		echo '<div class="form-group">';
+		echo '<label for="assignmentDueDate">Assignment due date:</label>';
+		echo '<input type="text" class="form-control" id = "assignmentDueDate" name="assignmentDueDate"';
+		if (!is_null($assignment))
+			echo 'value = "'. $assignment->getAssignmentDueDateFormatted('m/d/Y G:i') .'"';
 		echo 'required>';
 		echo '</div>';
 			

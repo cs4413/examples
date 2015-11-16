@@ -7,7 +7,7 @@ class Assignment {
 	private $assignmentId;
 	private $assignmentOwnerName;
 	private $assignmentTitle;
-	private $assignmentCreationDate;
+	//private $assignmentCreationDate;
 	private $assignmentDueDate;
 
 	public function __construct($formInput = null) {
@@ -43,6 +43,13 @@ class Assignment {
 		return $this->assignmentDueDate;
 	}
 		
+	public function getAssignmentDueDateFormatted($fString) {
+		if (!is_a($this->assignmentDueDate, 'DateTime'))
+			return "";
+		else
+		    return $this->assignmentDueDate->format($fString);
+	}
+	
 	public function getAssignmentId() {
 		return $this->assignmentId;
 	}
@@ -61,8 +68,7 @@ class Assignment {
 				            "assignmentTitle" => $this->assignmentTitle,
 			            	"assignmentDescription" => $this->assignmentDescription,
 				            "assignmentOwnerName" => $this->assignmentOwnerName,
-				            "assignmentCreationDate" => $this->assignmentCreationDate,
-				            "assignmentDueDate" => $this->assignmentDueDate
+				            "assignmentDueDate" => $this->getAssignmentDueDateFormatted('Y-m-d G:i:s')
 		); 
 		return $paramArray;
 	}
@@ -87,9 +93,8 @@ class Assignment {
 		$str = "Assignment Id: ".$this->assignmentId.
 		       "Assignment title: ".$this->assignmentTitle.
 		       " Assignment owner name: ".$this->assignmentOwnerName.
-		       " Assignment description: ".$this->assignmentDescription. 
-		       " Assignment creation date: ".$this->assignmentCreationDate.
-		       " Assignment due date: ".$this->assignmentDueDate;
+		       " Assignment description: ".$this->assignmentDescription.     
+		       " Assignment due date: ".$this->getAssignmentDueDateFormatted('Y-m-d G:i:s');
 		if (!empty($errorStr))
 		    $str = $str. " Errors: [$errorStr.]";
 		return $str;
@@ -108,8 +113,7 @@ class Assignment {
 	private function initialize() {
 		$this->errorCount = 0;
 		$this->assignmentId = 0;
-		$this->assignmentCreationDate = date('Y-m-d G:i:s');
-		$this->assignmentDueDate = date('Y-m-d G:i:s');
+		//$this->assignmentCreationDate = new DateTime("now");
 		$this->errors = array ();
 		if (is_null ($this->formInput)) {
 			$this->assignmentDescription = "";
@@ -131,9 +135,14 @@ class Assignment {
 	
 	private function validateAssignmentDueDate() {
 		// Assignment due date should not be empty
-		$this->assignmentDueDate = $this->extractForm('assignmentDueDate');
-		if (empty($this->assignmentDueDate))
+		$date = $this->extractForm('assignmentDueDate');
+		if (empty($date))
 			$this->setError('assignmentDueDate', 'ASSIGNMENT_DUE_DATE_EMPTY');
+		else { 
+			$this->assignmentDueDate = DateTime::createFromFormat('Y-m-d G:i:s', $date);
+			if (!$this->assignmentDueDate)
+				$this->setError('assignmentDueDate', 'ASSIGNMENT_DUE_DATE_INVALID');
+		}
 	}
 	
 	private function validateAssignmentOwnerName() {

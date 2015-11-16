@@ -34,15 +34,21 @@ class AssignmentController {
 		// Process a new assignment
 		$assignment = null;
 		if ($_SERVER["REQUEST_METHOD"] == "POST")  {
+			$date = array_key_exists('assignmentDueDate', $_POST)?$_POST['assignmentDueDate']:"";
+			$date = DateTime::createFromFormat('m/d/Y G:i', $date);
+			if ($date)
+				$date = $date->format('Y-m-d G:i:s');
+			$_POST['assignmentDueDate'] = $date;
 			$assignment = new Assignment($_POST);
 			$assignment =AssignmentsDB::addAssignment($assignment);
 		}
 		if (is_null($assignment) || $assignment->getErrorCount() != 0) {
 			$_SESSION['assignment'] = $assignment;
+			echo $assignment;
 			AssignmentView::showNew();
 		} else {
 			HomeView::show();	
-			header('Location: /'.$_SESSION['base']);
+			//header('Location: /'.$_SESSION['base']);
 		}		
 	}
 	
@@ -51,7 +57,7 @@ class AssignmentController {
 		$assignments = AssignmentsDB::getAssignmentsBy('assignmentId', $_SESSION['arguments']);
 		if (empty($assignments)) {
 			HomeView::show();
-			header('Location: /'.$_SESSION['base']);
+			//header('Location: /'.$_SESSION['base']);
 		} elseif ($_SERVER["REQUEST_METHOD"] == "GET") {
 			$_SESSION['assignment'] = $assignments[0];
 			AssignmentView::showUpdate();
@@ -61,16 +67,21 @@ class AssignmentController {
 			                  $_POST['assignmentTitle']:$assignment[0]->getAssignmentTitle();
 			$parms['assignmentDescription'] = (array_key_exists('assignmentDescription', $_POST))?
 		                    	$_POST['assignmentDescription']:$assignments[0]->getAssignmentDescription();
-			$assignment = new Assignment($parms);
-			$assignment->setAssignmentId($assignments[0]->getAssignmentId());
+			$date = array_key_exists('assignmentDueDate', $_POST)?$_POST['assignmentDueDate']:"";
+			
+			$date = DateTime::createFromFormat('m/d/Y G:i', $date);
+			if ($date)
+				$date = $date->format('Y-m-d G:i:s');
+			$parms['assignmentDueDate'] = $date;
+			$assignment = new Assignment($parms);			
+			$assignment->setAssignmentId($assignments[0]->getAssignmentId());			
 			$assignment = AssignmentsDB::updateAssignment($assignment);
-		
 		    if ($assignment->getErrorCount() != 0) {
 			   $_SESSION['assignment'] = $assignment;
 		   	   AssignmentView::showUpdate();
 		    } else {
 			   HomeView::show();
-			   header('Location: /'.$_SESSION['base']);
+			   //header('Location: /'.$_SESSION['base']);
 		    }
 		}
 	}
