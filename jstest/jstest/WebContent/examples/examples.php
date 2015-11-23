@@ -64,6 +64,20 @@ JQuery Ajax to post to the server without refresh.</li>
 <li><a href="/jstest/examples/imageForm4.php">/jstest/examples/imageForm4.php</a></li>
 </ul>
 
+<h3>XML tests</h3>
+<ul>
+	<li><a href="../controllers/simpleXML.php">simpleXML.php</a><br>
+	 PhP simpleXML parser examples.</li>
+    <li><a href="../controllers/DOMXMLParser.php">DOMXMLParser.php</a><br>
+		 PhP DOM XML parser examples.</li>
+	<li><a href="DOMExample1.html">DOMExample1.html</a><br>
+		 Accessing a DOM element by ID.</li>
+    <li><a href="DOMExample2.html">DOMExample2.html</a><br>
+		 Accessing a DOM element by tag name.</li>
+    <li><a href="DOMExample3.html">DOMExample3.html</a><br>
+		 Adding some elements.</li>   
+</ul>
+
 <h3>Tests</h3>
 <ul>
 <li><a href="./tests/testall.html">testall</a></li>
