@@ -78,6 +78,18 @@ JQuery Ajax to post to the server without refresh.</li>
 		 Adding some elements.</li>   
 </ul>
 
+<h3>Other technology examples</h3>
+<ul>
+<li><a href="jQueryMobile.html">jQueryMobile.html</a><br>
+JQuery Mobile example</li>
+<li><a href="mathml.html">mathml.html</a><br>
+Some examples of MathML</li>
+<li><a href="icons.html">icons.html</a><br>
+Using icons</li>
+<li><a href="svg.html">svg.html</a><br>
+SVG graphics</li></li>
+</ul>
+
 <h3>Tests</h3>
 <ul>
 <li><a href="./tests/testall.html">testall</a></li>

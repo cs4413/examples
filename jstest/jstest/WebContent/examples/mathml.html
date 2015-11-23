@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MathML in HTML5</title>
+ <script type="text/javascript"
+          src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+</head>
+<body>
+
+  <h1>MathML in HTML5</h1>
+
+
+<h3>Square root of two</h3>
+    <math>
+      <msqrt>
+        <mn>2</mn>
+      </msqrt>
+    </math>
+  </p>
+  
+
+<h3>A matrix</h3>
+<math xmlns='http://www.w3.org/1998/Math/MathML' display='block'>
+  <mi>A</mi>
+  <mo>=</mo>
+  <mfenced open='[' close=']' separators=''>
+    <mtable>
+      <mtr>
+        <mtd><mi>a</mi></mtd>
+        <mtd><mi>b</mi></mtd>
+      </mtr>
+      <mtr>
+        <mtd><mi>c</mi></mtd>
+        <mtd><mi>d</mi></mtd>
+      </mtr>
+    </mtable>
+  </mfenced>
+</math>
+
+<h3>An algebraic expression</h3>
+<math xmlns='http://www.w3.org/1998/Math/MathML' display='block'>
+  <mrow>
+    <mfrac><mn>1</mn><mn>2</mn></mfrac>
+    <msub><mi>m</mi><mn>1</mn></msub>
+    <msubsup>
+      <mi>u</mi>
+      <mn>1</mn>
+      <mn>2</mn>
+    </msubsup>
+  </mrow>
+  <mo>+</mo>
+  <mrow>
+    <mfrac><mn>1</mn><mn>2</mn></mfrac>
+    <msub><mi>m</mi><mn>2</mn></msub>
+    <msubsup>
+      <mi>u</mi>
+      <mn>2</mn>
+      <mn>2</mn>
+    </msubsup>
+  </mrow>
+</math>
+</body>
+</html>
