@@ -132,9 +132,10 @@ class AssignmentView {
 	   
 	   echo '<div class="form-group">';
 	   echo '<label for="assignmentDueDate">Assignment due date:</label>';
-	   echo '<input type="text" class="form-control" id = "assignmentDueDate" name="assignmentDueDate"';
+	   echo '<input type="text" class="form-control" 
+	   		id = "assignmentDueDate" name="assignmentDueDate"';
 	   if (!is_null($assignment))
-	     	echo 'value = "'. $assignment->getAssignmentDueDateFormatted('m-d-Y G:i') .'"';
+	     	echo 'value = "'. $assignment->getAssignmentDueDateFormatted('m/d/Y G:i') .'"';
 	   echo 'required>';
 	   echo '</div>';
 	      
