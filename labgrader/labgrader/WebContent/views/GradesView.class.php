@@ -36,7 +36,8 @@ class GradesView {
               for ($k = 1; $k <= $labs; $k++) {
               	  $labString = $student->getLabString($k);
               	  $labURL = "http://".$ip."/".$labString;
-              	  $retCode = Site::getHTTPReturnCode($labURL);
+              	  //$retCode = Site::getHTTPReturnCode($labURL);
+              	  $retCode = 200;
               	  $classSpec = ($retCode >= 400)? 'class="error"':'';
               	  //$classString = 'class = "error"';
               	  echo '<td ' .$classSpec.'><a href="'.$labURL.'">'.$labString.'</a></td>';
